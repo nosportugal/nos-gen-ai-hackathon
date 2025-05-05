@@ -24,7 +24,7 @@ To clone a GitHub repository (or your fork) using Google Colab, you can use the 
 
 🔗 Where to find the link:
 1. **Open Google Colab**:
-    Go to Google Colab and create a new notebook.
+    Go to Google Colab and create a **new notebook**.
 2. **Navigate to Your Fork**:  
    Go to your GitHub account and find your fork of the repository. It will be listed under your username.
 3. **Get the Clone URL**:  
