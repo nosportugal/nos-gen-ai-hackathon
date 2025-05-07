@@ -2,21 +2,25 @@ import requests
 import yaml
 import os
 from text_utils import extract_text_from_pdf, remove_all_special_characters
-
+from tkinter import filedialog as fd
 API_KEY_FILE = os.path.abspath("nos-gen-ai-hackathon/API_key.yaml")
-if (os.path.exists("nos-gen-ai-hackathon/API_key.yaml") == False):
-    with open(API_KEY_FILE, 'w') as file:
-        key = input("You don't have a key set yet. Please enter your Google API key:\n")
-        file.write(f"GOOGLE_API_KEY: {key}")
-        
-# Replace this with your actual API key
-with open(os.path.abspath("nos-gen-ai-hackathon/API_key.yaml"), 'r') as file:
-    keys = yaml.safe_load(file)
-    
-API_KEY = keys["GOOGLE_API_KEY"] 
-API_URL = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={API_KEY}"
+API_URL = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key="
 
-FILE = "/home/rodrigo/Documents/NOSHackathon/nos-gen-ai-hackathon/raw_data/document_to_anonymize.pdf"
+
+
+def load_api_key(file_path: str) -> dict:
+    if (os.path.exists("nos-gen-ai-hackathon/API_key.yaml") == False):
+        with open(API_KEY_FILE, 'w') as file:
+            key = input("You don't have a key set yet. Please enter your Google API key:\n")
+            file.write(f"GOOGLE_API_KEY: {key}")
+        
+    # Replace this with your actual API key
+    with open(os.path.abspath("nos-gen-ai-hackathon/API_key.yaml"), 'r') as file:
+        return yaml.safe_load(file)
+
+keys = load_api_key(API_KEY_FILE)
+
+API_KEY = keys["GOOGLE_API_KEY"] 
 
 def read_pdf(file_path: str) -> str:
     text = extract_text_from_pdf(file_path)
@@ -47,7 +51,7 @@ def generate_content(prompt_text: str, temperature: float) -> dict:
         }
     }
 
-    response = requests.post(API_URL, headers=headers, json=body)
+    response = requests.post(API_URL + API_KEY, headers=headers, json=body)
 
     return response.json()
 
@@ -68,6 +72,7 @@ def read_file(file_path: str) -> str:
         raise ValueError("Unsupported file format. Only .pdf and .txt files are supported.")
 
 # Example usage
+
 initial_prompt = """You are a data protection assistant tasked with anonymizing a Portuguese medical document in strict compliance with the GDPR (General Data Protection Regulation). The document contains sensitive personal, biometric, medical, and financial information.
 
 Your goal is to redact or replace all personally identifiable information (PII) and sensitive data so that the resulting text retains its structure and semantic meaning but cannot be used to re-identify the individual(s). all values must be a '*' and non-traceable.
@@ -133,7 +138,9 @@ Final Output Instructions:
     Do not include any explanation or comments—output the anonymized document only.
 
     Ensure no real-world personal data remains in the document.\n\n"""
+file = fd.askopenfilename(title="Select a file", filetypes=[("PDF files", "*.pdf"), ("Text files", "*.txt")])
 file_prompt = read_file(FILE)
+
 output = generate_content(initial_prompt + file_prompt, 0.0)
 # Get only the response text
 response_text = output['candidates'][0]['content']['parts'][0]['text']
