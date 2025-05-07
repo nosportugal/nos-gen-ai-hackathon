@@ -47,7 +47,7 @@ def remove_all_special_characters(text: str) -> str:
 
     return text.strip()
 
-def readpfy():
+def readpdf():
   #You can modify the filename below with any PDF path you upload
   pdf_path = "./raw_data/document_to_anonymize.pdf"
   # 🚀 Run this function to extract the text on your chosen PDF!
@@ -61,3 +61,4 @@ def readpfy():
     f.write(raw_text_cleaned)
 
   print(f"✅ Text extracted and saved to: {txt_path}")
+  return raw_text_cleaned
