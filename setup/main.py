@@ -6,6 +6,12 @@
 import requests
 from readpdf import readpdf
 
+#Alter this in case you want to change the prompt
+txt_path = "/content/prompt.txt"
+
+with open(txt_path, "r") as f:
+  file_content = f.read()
+
 API_KEY = "AIzaSyCBkJwTvPlz9jR2RTbZLJe7K0rNRci-3CY"
 API_URL = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={API_KEY}"
 
@@ -40,8 +46,11 @@ def generate_content(prompt_text: str, temperature: float) -> dict:
 
     return response.json()
 
-prompt = pdf_to_txt
-output = generate_content(prompt, 0.0)
+pdf_dados = pdf_to_txt
+prompt = file_content
+output = generate_content(prompt + pdf_to_txt, 0.0)
 
 # Get only the response text
 response_text = output['candidates'][0]['content']['parts'][0]['text']
+
+print(response_text)
