@@ -55,7 +55,7 @@ Converting PDF documents to text can be essential for leveraging existing conten
 In this section, we will outline the expectations for project submission. Understanding these guidelines is crucial to ensure your work is evaluated correctly. There are specific methods and criteria for submission, which you should follow closely to enhance your chances of success. Make sure to read through the following points carefully.
 For more detailed information on the submission process and what is expected, please refer to the [Submission Process Guide](submission/README.md).
 
-🔑 API Key Management
+## 🔑 API Key Management
 
 To ensure the security of your API key, please follow these guidelines:
 
