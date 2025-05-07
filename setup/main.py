@@ -4,10 +4,12 @@
 #####################################################
 
 import requests
+from readpdf import readpdf
 
 API_KEY = "AIzaSyCBkJwTvPlz9jR2RTbZLJe7K0rNRci-3CY"
 API_URL = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={API_KEY}"
 
+pdf_to_txt = readpdf()
 
 def generate_content(prompt_text: str, temperature: float) -> dict:
     """Generates content based on the given prompt text and temperature.
@@ -38,8 +40,7 @@ def generate_content(prompt_text: str, temperature: float) -> dict:
 
     return response.json()
 
-#Alter this name in case your prompt .txt has another name
-prompt = "Prompt.txt"
+prompt = pdf_to_txt
 output = generate_content(prompt, 0.0)
 
 # Get only the response text
