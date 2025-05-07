@@ -1,1 +1,2 @@
-vais receber um texto com informações sobre pacientes de um hospital e vais censorar com '*' as informações sensíveis de cada
+vais receber um txt e o teu objetivo é encrontrar os dados sensiveis que te vou indicar a seguir e transformar cada palavra desses dados em '*' os criterios são os seguintes:
+Dados que revelem a origem racial ou étnica, dados genéticos, dados biométricos, dados relativos à saúde, dados à vida sexual
