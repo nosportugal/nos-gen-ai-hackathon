@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Upload PDF or Enter Text</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f7f7f7;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+
+    header {
+      background-color: #4a90e2;
+      color: white;
+      padding: 40px 0 20px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 36px;
+    }
+
+    p.description {
+      font-size: 18px;
+      margin: 10px 0 30px;
+    }
+
+    #drop_zone {
+      width: 400px;
+      height: 200px;
+      margin: 30px auto 10px;
+      border: 3px dashed #4a90e2;
+      background-color: white;
+      color: #4a90e2;
+      font-size: 18px;
+      line-height: 200px;
+      border-radius: 12px;
+      transition: border-color 0.3s, background-color 0.3s;
+    }
+
+    #drop_zone.hover {
+      background-color: #e6f0ff;
+      border-color: #2c70c9;
+    }
+
+    textarea {
+      width: 400px;
+      height: 150px;
+      margin-top: 30px;
+      padding: 10px;
+      font-size: 16px;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+      resize: vertical;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #4a90e2;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    #output {
+      margin-top: 30px;
+      width: 80%;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      font-family: monospace;
+      white-space: pre-wrap;
+      text-align: left;
+      color: #333;
+    }
+
+    footer {
+      margin-top: 40px;
+      color: #888;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Submit Your Content</h1>
+    <p class="description">Drop a PDF file or paste some text below, then submit.</p>
+  </header>
+
+  <div id="drop_zone">Drop PDF here</div>
+
+  <p>OR</p>
+
+  <textarea id="text_input" placeholder="Paste or write your text here..."></textarea><br>
+
+  <button onclick="submitInput()">Submit</button>
+
+  <div id="output"></div>
+
+  <footer>
+  </footer>
+
+  <script>
+    const dropZone = document.getElementById("drop_zone");
+
+    dropZone.addEventListener("dragover", function (e) {
+      e.preventDefault();
+      dropZone.classList.add("hover");
+    });
+
+    dropZone.addEventListener("dragleave", function () {
+      dropZone.classList.remove("hover");
+    });
+
+    dropZone.addEventListener("drop", function (e) {
+      e.preventDefault();
+      dropZone.classList.remove("hover");
+
+      const file = e.dataTransfer.files[0];
+      if (file && file.type === "application/pdf") {
+        const formData = new FormData();
+        formData.append("pdf", file);
+
+        fetch("/upload", {
+          method: "POST",
+          body: formData,
+        })
+          .then(response => response.text())
+          .then(data => showOutput("PDF processed:\n" + data))
+          .catch(err => showOutput("Error: " + err));
+      } else {
+        showOutput("Only PDF files are allowed.");
+      }
+    });
+
+    function submitInput() {
+      const text = document.getElementById("text_input").value;
+
+      fetch("/submit-text", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text })
+      })
+        .then(response => response.text())
+        .then(data => showOutput("Text processed:\n" + data))
+        .catch(err => showOutput("Error: " + err));
+    }
+
+    function showOutput(text) {
+      document.getElementById("output").innerHTML = "<pre>" + text + "</pre>";
+    }
+  </script>
+</body>
+</html>

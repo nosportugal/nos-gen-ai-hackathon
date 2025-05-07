@@ -9,6 +9,7 @@ For a complete description of the problem statement and the detailed evaluation 
 The document to be anonymized is located at [`raw_data/document_to_anonymize.pdf`](raw_data/document_to_anonymize.pdf).
 
 ## 1. Prerequisites
+
 Before participating in the hackathon, please ensure that you meet the following prerequisites. Having the needed accounts and accesses will help streamline your development process and facilitate the use of necessary tools and APIs.
 
 ### 1.1. GitHub Account
@@ -30,6 +31,7 @@ d. A window will open where you’ll create an API key under a new project.
 e. **Important:** Save the generated API key in a safe place — you'll need it later!
 
 ## 2. Setup
+
 In this section, we'll walk you through the essential setup steps needed to get started with your project. Follow these instructions carefully!
 
 ### 2.1. Git tutorial
@@ -48,8 +50,25 @@ If you're looking for **detailed steps**, including how to obtain an API key and
 
 Converting PDF documents to text can be essential for leveraging existing content in your project. There are methods and tools available for this conversion, which you can explore in detail in the [PDF to Text Guide](tutorials/pdf__to__txt.ipynb).
 
-
 ## 4. Submission Guidelines
 
 In this section, we will outline the expectations for project submission. Understanding these guidelines is crucial to ensure your work is evaluated correctly. There are specific methods and criteria for submission, which you should follow closely to enhance your chances of success. Make sure to read through the following points carefully.
 For more detailed information on the submission process and what is expected, please refer to the [Submission Process Guide](submission/README.md).
+
+## 🔑 API Key Management
+
+To ensure the security of your API key, please follow these guidelines:
+
+- Do not hardcode your API key in your code.
+
+- When you run the notebook for the first time, you will be prompted to enter your API key via an input box.
+
+- The key will be securely saved in a file named API_key.iml (note the capital letters).
+
+## Requirements
+
+- pip install -r requirements.txt to install the required packages.
+
+## Notes:
+
+- The folder page_drag_and_drop is a drag-and-drop interface for uploading files. It is not fully operational yet, but it is a work in progress.
