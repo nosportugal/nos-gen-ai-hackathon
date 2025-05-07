@@ -1,10 +1,17 @@
 import requests
 import yaml
 import os
+API_KEY_FILE = os.path.abspath("nos-gen-ai-hackathon/API_key.yaml")
+if (os.path.exists("nos-gen-ai-hackathon/API_key.yaml") == False):
+    with open(API_KEY_FILE, 'w') as file:
+        key = input("You don't have a key set yet. Please enter your Google API key:\n")
+        file.write(f"GOOGLE_API_KEY: {key}")
+        
 # Replace this with your actual API key
 with open(os.path.abspath("nos-gen-ai-hackathon/API_key.yaml"), 'r') as file:
     keys = yaml.safe_load(file)
-API_KEY = keys["GOOGLE_API_KEY"]
+    
+API_KEY = keys["GOOGLE_API_KEY"] 
 API_URL = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={API_KEY}"
 
 def generate_content(prompt_text: str, temperature: float) -> dict:
