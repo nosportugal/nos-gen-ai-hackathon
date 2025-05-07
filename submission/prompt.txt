@@ -1,0 +1,1 @@
+vais receber um texto com informações sobre pacientes de um hospital e vais censorar com '*' as informações sensíveis de cada
