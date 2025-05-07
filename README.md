@@ -68,3 +68,7 @@ To ensure the security of your API key, please follow these guidelines:
 ## Requirements
 
 - pip install -r requirements.txt to install the required packages.
+
+## Notes:
+
+- The folder page_drag_and_drop is a drag-and-drop interface for uploading files. It is not fully operational yet, but it is a work in progress.
