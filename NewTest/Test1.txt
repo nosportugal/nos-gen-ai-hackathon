@@ -1,0 +1,89 @@
+Relatório de Admissão - Centro Médico Lisboa
+
+Data: 22 de abril de 2025
+Referência: ADM-2025-04-22-102
+
+Informações do Paciente:
+
+    Nome: Ricardo Manuel Figueira Lopes
+
+    Data de Nascimento: 09/11/1965
+
+    Sexo: Masculino
+
+    NIF: 209847563
+
+    Cartão de Cidadão: 34567891-XYW1
+
+    Morada: Avenida do Mar, nº 45, 3º Dto, Cascais, Lisboa
+
+    Telefone: +351 917 654 321
+
+    Email: ricardo.lopes@exemplo.com
+
+    Número da Segurança Social: 55667788990
+
+Histórico Médico:
+
+O paciente Ricardo Lopes, homem caucasiano de 59 anos, deu entrada com queixas de falta de ar e dor no peito ao esforço leve. Possui histórico de asma desde a infância e foi diagnosticado com insuficiência cardíaca congestiva há 2 anos. Apresenta obesidade (IMC 32) e dislipidemia.
+
+Histórico familiar inclui AVC (pai, aos 68 anos) e Alzheimer (mãe, diagnosticada aos 74 anos). Exames genéticos realizados em 2023 não identificaram mutações relevantes para doenças neurodegenerativas.
+
+Informações Sociais e Comportamentais:
+
+    Estado civil: Casado
+
+    Filhos: 3 (Marco, 25 anos; Helena, 21 anos; Beatriz, 18 anos)
+
+    Religião: Agnóstico
+
+    Ocupação: Engenheiro civil reformado
+
+    Hábitos: Fumador ocasional, consome vinho tinto diariamente (1 copo)
+
+    Histórico de uso de substâncias: Nenhum
+
+Informações Financeiras:
+
+    Seguro de saúde: VitalCare Avançado, apólice nº 876543210
+
+    Número do cartão de crédito: 5500 9988 7766 5544 (validade 04/26, CVV 456)
+
+    Rendimento anual declarado: €48.000
+
+Dados Biométricos:
+
+    Impressão digital registrada no sistema: ID-BIO-34567
+
+    Reconhecimento facial: FACE-ID-90123
+
+    Altura: 1,75m
+
+    Peso: 98kg
+
+    Tipo sanguíneo: A+
+
+    Pressão arterial na admissão: 160/100 mmHg
+
+Notas da Consulta:
+
+Paciente apresentou dispneia aos mínimos esforços e edema nos membros inferiores. Queixas frequentes de fadiga. Observado aumento da circunferência abdominal.
+
+Exames solicitados: ecocardiograma, BNP, raio-X torácico, função renal, eletrocardiograma.
+Prescrição: Furosemida 40mg, Carvedilol 6,25mg, Atorvastatina 20mg.
+
+Contatos de Emergência:
+
+    Nome: Teresa Lopes (esposa)
+    Telefone: +351916789432
+    Email: teresa.lopes@exemplo.com
+
+    Nome: Miguel Figueira (cunhado)
+    Telefone: +351934567321
+
+Assinatura Digital:
+Dr. Ana Rodrigues
+CRM: 23456-PT
+Especialidade: Cardiologia
+Email: ana.rodrigues@centromedicalisboa.pt
+Telefone: +351213456788
