@@ -53,3 +53,35 @@ Converting PDF documents to text can be essential for leveraging existing conten
 
 In this section, we will outline the expectations for project submission. Understanding these guidelines is crucial to ensure your work is evaluated correctly. There are specific methods and criteria for submission, which you should follow closely to enhance your chances of success. Make sure to read through the following points carefully.
 For more detailed information on the submission process and what is expected, please refer to the [Submission Process Guide](submission/README.md).
+
+
+
+#  Projeto de Anonimização de Dados Hospitalares
+
+Neste projeto temos como objetivo desenvolver um sistema para **anonimizar dados pessoais de pacientes** em registros hospitalares, garantindo conformidade com as normas de privacidade, como o **RGPD (Regulamento Geral sobre a Proteção de Dados)**.
+
+---
+
+##  Como Funciona
+
+1. O utilizador faz o **upload de um arquivo PDF** que contém os dados do paciente, como:
+   - Condições de saúde
+   - Dados financeiros
+   - Informações pessoais
+
+2. O arquivo PDF é **convertido para um ficheiro `.txt`**.
+
+3. O agente **Gemini** é responsável por **anonimizar os dados do arquivo `.txt`**.
+
+4. O texto anonimizado é convertido novamente em **PDF**, mantendo a estrutura do documento original, mas com os dados sensíveis já removidos ou ofuscados.
+
+5. O novo PDF é salvo e disponibilizado para o utilizador.
+
+---
+
+## Descrição da Aplicação
+
+Esta aplicação Flask permite que os utilizadores:
+- Carreguem um **arquivo PDF**
+- Extraiam o **texto do PDF**
+- **Limpem** o texto removendo caracteres especiais e normalizando os espaços em branco
