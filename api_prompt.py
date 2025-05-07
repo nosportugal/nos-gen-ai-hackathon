@@ -4,19 +4,24 @@ import os
 from text_utils import extract_text_from_pdf, remove_all_special_characters
 
 API_KEY_FILE = os.path.abspath("nos-gen-ai-hackathon/API_key.yaml")
-if (os.path.exists("nos-gen-ai-hackathon/API_key.yaml") == False):
-    with open(API_KEY_FILE, 'w') as file:
-        key = input("You don't have a key set yet. Please enter your Google API key:\n")
-        file.write(f"GOOGLE_API_KEY: {key}")
-        
-# Replace this with your actual API key
-with open(os.path.abspath("nos-gen-ai-hackathon/API_key.yaml"), 'r') as file:
-    keys = yaml.safe_load(file)
-    
-API_KEY = keys["GOOGLE_API_KEY"] 
-API_URL = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={API_KEY}"
-
+API_URL = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key="
 FILE = "/home/rods/Documents/Nos_gen_ai/nos-gen-ai-hackathon/raw_data/document_to_anonymize.pdf"
+
+
+def load_api_key(file_path: str) -> dict:
+    if (os.path.exists("nos-gen-ai-hackathon/API_key.yaml") == False):
+        with open(API_KEY_FILE, 'w') as file:
+            key = input("You don't have a key set yet. Please enter your Google API key:\n")
+            file.write(f"GOOGLE_API_KEY: {key}")
+        
+    # Replace this with your actual API key
+    with open(os.path.abspath("nos-gen-ai-hackathon/API_key.yaml"), 'r') as file:
+        return yaml.safe_load(file)
+
+keys = load_api_key(API_KEY_FILE)
+
+API_KEY = keys["GOOGLE_API_KEY"] 
+
 
 def read_pdf(file_path: str) -> str:
     text = extract_text_from_pdf(file_path)
@@ -47,7 +52,7 @@ def generate_content(prompt_text: str, temperature: float) -> dict:
         }
     }
 
-    response = requests.post(API_URL, headers=headers, json=body)
+    response = requests.post(API_URL + API_KEY, headers=headers, json=body)
 
     return response.json()
 
