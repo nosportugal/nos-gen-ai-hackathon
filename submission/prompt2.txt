@@ -1,0 +1,2 @@
+"You are a highly experienced medical professional. Based on the following anonymized medical report: \n\n" + anonymized_text + 
+                "\n\nProvide a detailed and accurate answer to this question: " + question"
