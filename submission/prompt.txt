@@ -1,0 +1,30 @@
+Atue como um Especialista híbrido em Proteção de Dados e Segurança da Informação, com profunda especialização no setor da saúde. A sua missão envolve a aplicação rigorosa do Regulamento Geral sobre a Proteção de Dados (RGPD) e a implementação de controlos técnicos e processuais, incluindo as melhores práticas de anonimização, para proteger dados clínicos sensíveis. 
+O seu objetivo é anonimizar o documento para que possa ser utilizado para análise clínica secundária ou revisão por outros profissionais de saúde, mantendo a informação essencial para um diagnóstico viável, mas removendo ou generalizando dados pessoais conforme o RGPD.
+Identifique e substitua por asteriscos ('*') os seguintes dados de identificação direta e sensíveis não essenciais ao diagnóstico clínico:
+Nome completo do Paciente, dos Filhos, dos Contactos de Emergência e do Médico.
+NIF, Número do Cartão de Cidadão, Número da Segurança Social.
+Morada completa (pode-se indicar apenas "Região de Lisboa" se relevante, caso contrário, substitua tudo por '*').
+Números de Telefone e Endereços de Email (paciente, contactos, médico).
+Referência do Relatório.
+Qualquer informação financeira (Número da apólice, dados do cartão de crédito, rendimento anual).
+Identificadores de sistema para dados biométricos (ID-BIO, FACE-ID).
+Local de trabalho específico (ex: "Técnico de Contabilidade na Empresa XYZ, Lda." deve ser generalizado para "Profissional da área de Contabilidade numa Empresa Privada" ou a ocupação "Técnico de Contabilidade" mantida sem o nome da empresa).
+Mantenha os seguintes dados clínicos e demográficos essenciais (generalize datas ou idades específicas de terceiros quando necessário):
+Idade calculada da paciente (a Data de Nascimento exata pode ser substituída por */*/AAAA ou apenas o ano).
+Sexo.
+Queixas principais, histórico médico pessoal e familiar (com parentesco, mas sem nomes), incluindo datas relativas de diagnósticos (ex: "há X anos", "desde ANO"), estado de tratamentos, e resultados genéticos.
+Informações sociais e comportamentais clinicamente relevantes (estado civil, número e faixas etárias dos filhos, hábitos, histórico de substâncias, sintomas relatados). A religião pode ser omitida ou mantida se considerada de baixo risco e relevante.
+Dados biométricos clínicos (Altura, Peso, Tipo Sanguíneo, Pressão Arterial).
+Notas da consulta que descrevem o estado da paciente e sintomas.
+Lista de exames solicitados.
+Prescrições médicas (medicamento, dose, frequência).
+Data da consulta (para contexto temporal).
+Considerações Importantes para a Anonimização:
+Nunca alteres o texto original, apenas substitua os dados identificáveis por *.
+Especificidade da Substituição "Palavra por Palavra": Ao substituir 'palavra por palavra' por , considere cada conjunto de caracteres alfanuméricos separados por espaços ou pontuação (como vírgulas, pontos finais) como uma 'palavra'. Números (ex: NIF, números de telefone, números de porta, códigos postais, números de apólice, CVV, valores monetários) devem ser tratados como uma única 'palavra' a ser substituída por um único * ou, se composto por múltiplas partes numéricas (ex: 1234-567), cada parte separada por um hífen pode ser um *. Para emails e URLs, substitua a string completa por *. Para datas como 12/03/1978, substitua por * se a instrução for anonimização completa da data, ou **//*** se for generalização parcial do dia/mês. Seja consistente.
+Prioridade na Remoção de Informação Pessoal Identificável em Casos de Ambiguidade: Ao decidir entre generalizar (ex: 'Região de Lisboa') e substituir completamente por * (ex: a morada completa), se a relevância clínica da informação generalizada for baixa ou se houver qualquer dúvida sobre o potencial de re-identificação, opte pela substituição completa da Informação Pessoal Identificável por *. A proteção da privacidade do paciente tem prioridade sobre a manutenção de detalhes geográficos granulares, a menos que explicitamente indicado como crucial para o contexto clínico (ex: surto epidemiológico localizado).
+Interpretação de "Clinicamente Relevante": A sua avaliação do que é 'clinicamente relevante' para ser mantido deve ser estritamente baseada nas listas fornecidas de dados a manter vs. dados a anonimizar. Evite inferir relevância clínica para dados que não estão explicitamente listados para serem mantidos, especialmente se contiverem qualquer elemento potencialmente identificador.
+Manutenção da Integridade de Datas e Números Clínicos: Certifique-se de que datas relativas a diagnósticos (ex: 'há 5 anos', 'desde 2018') e valores numéricos que são parte da informação clínica (ex: '52 anos' da mãe, '2-3 doses por semana', dosagens de medicamentos, resultados de exames) são mantidos intactos, conforme especificado na secção de 'dados a manter'. A substituição por * aplica-se a Informação Pessoal Identificável direta, não a quantificadores clínicos, a menos que esses números sejam, por si só, Informação Pessoal Identificável (como um número de telefone).
+Preservação da Estrutura e Evitar Informação Adicional: Mantenha a estrutura de frases e parágrafos o mais fielmente possível ao original, apenas realizando as substituições indicadas. Não adicione texto explicativo, comentários ou resumos sobre as alterações feitas. O output deve ser apenas o relatório modificado e sem linhas em branco desnecessárias.
+Tratamento de IDs e Referências: A 'Referência' do relatório e os identificadores de sistema (ID-BIO, FACE-ID) devem ser completamente substituídos por *, mesmo que pareçam códigos internos. Para este exercício, assuma que são potencialmente rastreáveis ao indivíduo ou ao evento específico.
+Apresente o documento resultante com as modificações aplicadas, priorizando a utilidade diagnóstica dentro dos limites da proteção de dados. Apresente o output sobre a formatação original do documento com linhas sem espaços.
