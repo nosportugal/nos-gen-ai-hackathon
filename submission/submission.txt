@@ -1,0 +1,34 @@
+Relatorio de Admissao Centro Medico Lisboa
+Data 15 de abril de 2025
+Referencia ADM20250415089
+Informacoes do Paciente **
+
+Data de Nascimento **
+
+Sexo **
+
+NIF **
+
+Cartao de Cidadao **
+
+Morada **
+
+Telefone **
+
+Email **
+
+Numero da Seguranca Social **
+
+Historico Medico A/O paciente ** ** de ** anos compareceu a consulta relatando dores abdominais intensas Tem historico de ** e ** diagnosticada ha 5 anos E ** desde 2018 atualmente com carga viral indetectavel gracas ao tratamento com antirretrovirais A/O paciente relatou que sua familia tem historico de ** mae falecida aos ** anos e ** pai e avo paterno Exames ** realizados em 2022 indicaram predisposicao ao ** mutacao ** positiva
+
+Informacoes Sociais e Comportamentais Estado civil ** Filhos ** ** anos e ** ** anos Religiao ** Ocupacao ** Habitos ** parou ha 3 anos consome alcool socialmente ** doses por semana Historico de uso de substancias ** em 2019
+
+Informacoes Financeiras Seguro de saude ** apolice n ** Numero do cartao de credito ** validade **
+
+Dados Biometricos ** Altura ** Peso ** Tipo sanguineo ** Pressao arterial na admissao ** mmHg
+
+Notas da Consulta A/O paciente apresentouse ansiosa durante a consulta relatando problemas no trabalho relativamente a elevada carga de responsabilidades que adquiriu Sensacao de cansaco fadiga e constante stress foram ditos fazer parte do seu diaadia no entanto apresenta dificuldade em dormircumprir as horas indicadas de sono Exames solicitados hemograma completo glicemia em jejum perfil lipidico funcao hepatica e renal ultrassonografia abdominal Prescricao Metformina 850mg 2xdia Losartana 50mg 1xdia Alprazolam 05mg apenas em caso de crises de ansiedade
+
+Contatos de Emergencia Nome ** Telefone ** Email ** Nome ** Telefone **
+
+Assinatura Digital Dr Carlos Mendes CRM 12345PT Especialidade Medicina Interna Email carlosmendescentromedicalisboapt Telefone 351213456789
