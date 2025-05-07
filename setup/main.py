@@ -7,7 +7,7 @@ import requests
 from readpdf import readpdf
 
 #Alter this in case you want to change the prompt
-txt_path = "/content/prompt.txt"
+txt_path = "./setup/prompt.txt"
 
 with open(txt_path, "r") as f:
   file_content = f.read()
