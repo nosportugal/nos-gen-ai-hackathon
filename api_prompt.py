@@ -139,7 +139,7 @@ Final Output Instructions:
 
     Ensure no real-world personal data remains in the document.\n\n"""
 file = fd.askopenfilename(title="Select a file", filetypes=[("PDF files", "*.pdf"), ("Text files", "*.txt")])
-file_prompt = read_file(FILE)
+file_prompt = read_file(file)
 
 output = generate_content(initial_prompt + file_prompt, 0.0)
 # Get only the response text
