@@ -1,0 +1,89 @@
+Relatório de Admissão - Centro Médico Lisboa
+
+Data: 30 de abril de 2025
+Referência: ADM-2025-04-30-117
+
+Informações do Paciente:
+
+    Nome: Inês Bárbara Matos Ferreira
+
+    Data de Nascimento: 22/06/1990
+
+    Sexo: Feminino
+
+    NIF: 108977432
+
+    Cartão de Cidadão: 56789123-KLM9
+
+    Morada: Rua do Carmo, nº 87, 2º Esq, Coimbra
+
+    Telefone: +351 913112233
+
+    Email: ines.ferreira@dominio.pt
+
+    Número da Segurança Social: 99887766554
+
+Histórico Médico:
+
+A paciente Inês Ferreira, mulher caucasiana de 34 anos, procurou atendimento por sintomas persistentes de enxaqueca acompanhados de náuseas e sensibilidade à luz. Sem histórico clínico relevante além de rinite alérgica. Não apresenta doenças crónicas.
+
+Histórico familiar de esclerose múltipla (irmã diagnosticada aos 28 anos) e transtorno bipolar (tia materna).
+
+Informações Sociais e Comportamentais:
+
+    Estado civil: Solteira
+
+    Filhos: Nenhum
+
+    Religião: Sem filiação religiosa
+
+    Ocupação: Designer gráfica freelancer
+
+    Hábitos: Ex-fumante, café em excesso (4 a 5 doses/dia), não consome álcool
+
+    Histórico de uso de substâncias: Uso esporádico de cannabis durante a adolescência
+
+Informações Financeiras:
+
+    Seguro de saúde: Essencial Saúde Flex, apólice nº 1122334455
+
+    Número do cartão de crédito: 6011 4455 6677 8899 (validade 02/28, CVV 789)
+
+    Rendimento anual declarado: €31.000
+
+Dados Biométricos:
+
+    Impressão digital registrada no sistema: ID-BIO-99887
+
+    Reconhecimento facial: FACE-ID-65432
+
+    Altura: 1,60m
+
+    Peso: 58kg
+
+    Tipo sanguíneo: B-
+
+    Pressão arterial na admissão: 120/80 mmHg
+
+Notas da Consulta:
+
+Paciente relata episódios de cefaleia intensa nos últimos 2 meses, principalmente em situações de stress ou privação de sono. Exames neurológicos prévios normais.
+
+Exames solicitados: ressonância magnética, hemograma, função hepática, vitamina D, exame oftalmológico.
+Prescrição: Sumatriptano 50mg em crises, Suplementação de Magnésio e Riboflavina.
+
+Contatos de Emergência:
+
+    Nome: Catarina Matos (mãe)
+    Telefone: +351962334455
+    Email: catarina.matos@exemplo.pt
+
+    Nome: Eduardo Ferreira (irmão)
+    Telefone: +351938877665
+
+Assinatura Digital:
+Dr. Pedro Silva
+CRM: 34567-PT
+Especialidade: Neurologia
+Email: pedro.silva@centromedicalisboa.pt
+Telefone: +351213456777

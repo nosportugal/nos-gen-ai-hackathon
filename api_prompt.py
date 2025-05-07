@@ -14,7 +14,7 @@ with open(os.path.abspath("nos-gen-ai-hackathon/API_key.yaml"), 'r') as file:
     keys = yaml.safe_load(file)
     
 API_KEY = keys["GOOGLE_API_KEY"] 
-API_URL = f"https://generativYou are a helpful assistant. Please summarize the following text:\nelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={API_KEY}"
+API_URL = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={API_KEY}"
 
 FILE = "/home/rodrigo/Documents/NOSHackathon/nos-gen-ai-hackathon/raw_data/document_to_anonymize.pdf"
 
