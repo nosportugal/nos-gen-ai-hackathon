@@ -1,0 +1,40 @@
+h1 {
+  text-align: center;
+  padding-top: 2em;
+  padding-bottom: 2em;
+  font-size: 1.5em;
+  font-weight: 700;
+}
+
+body {
+  background-color: rgb(42, 154, 42);
+  color: white;
+  font-family: Arial, Helvetica, sans-serif
+}
+
+.mainBox {
+  height: 15em;
+  width: 47em;
+  background-color: white;
+  margin: auto;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.btn {
+  color: black;
+  background-color: rgb(63, 142, 184);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn h2 {
+  padding: 1em;
+  font-size: 1.2em;
+}

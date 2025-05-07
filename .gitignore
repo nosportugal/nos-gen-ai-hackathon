@@ -133,7 +133,7 @@ venv.bak/
 # IDE Specific Files
 # ----------------------------------------
 # Uncomment to ignore PyCharm project files
-#.idea/ 
+#.idea/
 
 # Spyder project settings
 .spyderproject
@@ -179,3 +179,6 @@ __pypackages__/
 # Pipfile.lock
 # poetry.lock
 # pdm.lock
+
+
+*/node_modules/*
