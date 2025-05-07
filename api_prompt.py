@@ -2,10 +2,10 @@ import requests
 import yaml
 import os
 from text_utils import extract_text_from_pdf, remove_all_special_characters
-
+from tkinter import filedialog as fd
 API_KEY_FILE = os.path.abspath("nos-gen-ai-hackathon/API_key.yaml")
 API_URL = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key="
-FILE = "/home/rods/Documents/Nos_gen_ai/nos-gen-ai-hackathon/raw_data/document_to_anonymize.pdf"
+
 
 
 def load_api_key(file_path: str) -> dict:
@@ -74,7 +74,8 @@ def read_file(file_path: str) -> str:
 
 # Example usage
 initial_prompt = "You are a helpful assistant. Please summarize the following text:\n"
-file_prompt = read_file(FILE)
+file = fd.askopenfilename(title="Select a file", filetypes=[("PDF files", "*.pdf"), ("Text files", "*.txt")])
+file_prompt = read_file(file)
 output = generate_content(initial_prompt + file_prompt, 0.0)
 # Get only the response text
 response_text = output['candidates'][0]['content']['parts'][0]['text']
