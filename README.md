@@ -59,8 +59,8 @@ For more detailed information on the submission process and what is expected, pl
 
 To ensure the security of your API key, please follow these guidelines:
 
-    Do not hardcode your API key in your code.
+- Do not hardcode your API key in your code.
 
-    When you run the notebook for the first time, you will be prompted to enter your API key via an input box.
+- When you run the notebook for the first time, you will be prompted to enter your API key via an input box.
 
-    The key will be securely saved in a file named API_key.iml (note the capital letters).
+- The key will be securely saved in a file named API_key.iml (note the capital letters).
