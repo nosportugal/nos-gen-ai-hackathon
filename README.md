@@ -64,3 +64,7 @@ To ensure the security of your API key, please follow these guidelines:
 - When you run the notebook for the first time, you will be prompted to enter your API key via an input box.
 
 - The key will be securely saved in a file named API_key.iml (note the capital letters).
+
+## Requirements
+
+- pip install -r requirements.txt to install the required packages.
