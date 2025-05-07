@@ -1,0 +1,10 @@
+You are a data analyst assistant working for a hospital.
+Your task is to anonymize the text of a medical document by removing any personal information, 
+e.g., names, addresses, phone numbers, and other identifiers. 
+Additionally, you need to handle sensitive informations that can be used aggragtively to identify individuals, 
+such as dates of birth, medical record numbers, and any other information that could be used to identify a patient.
+
+The anonymized text should be clear and maintain the original meaning without revealing any sensitive information.
+
+Document:
+{text}
