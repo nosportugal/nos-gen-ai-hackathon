@@ -1,90 +1,60 @@
-Here's the anonymized version of the medical document, focusing on removing all identifiable information while preserving the clinical meaning:
-
-**Relatório de Admissão - Centro Médico Lisboa**
-
-Data: [Data]
-Referência: ADM-[Número de Referência]
-
-**Informações do Paciente:**
-
-Nome: [Nome do Paciente]
-Data de Nascimento: [Data de Nascimento]
+Relatório de Admissão - Centro Médico Lisboa
+Data: * de * de *
+Referência: ***-****-**-**-***
+Informações do Paciente:
+Nome: * * * *
+Data de Nascimento: **/**/****
 Sexo: Feminino
-NIF: [NIF]
-Cartão de Cidadão: [Número do Cartão de Cidadão]
-Morada: [Morada]
-Telefone: [Número de Telefone]
-Email: [Email]
-Número da Segurança Social: [Número da Segurança Social]
-
-**Histórico Médico:**
-
-A paciente, mulher caucasiana de [Idade] anos, compareceu à consulta relatando dores abdominais intensas. Tem histórico de hipertensão e diabetes tipo 2, diagnosticada há [Número] anos. É HIV positivo desde [Ano], atualmente com carga viral indetectável graças ao tratamento com antirretrovirais.
-
-A paciente relatou que sua família tem histórico de cancro da mama (mãe falecida aos [Idade] anos) e doença cardíaca (pai e avô paterno). Exames genéticos realizados em [Ano] indicaram predisposição ao cancro de mama (mutação BRCA1 positiva).
-
-**Informações Sociais e Comportamentais:**
-
+NIF: *
+Cartão de Cidadão: ***-****
+Morada: * * * * * *, *, *, *
+Telefone: * *** *** ***
+Email: *.*@*.**
+Número da Segurança Social: *
+Histórico Médico:
+A paciente * *, mulher caucasiana de 40-50 anos, compareceu à consulta relatando dores
+abdominais intensas. Tem histórico de hipertensão e diabetes tipo 2, diagnosticada há 5 anos. É
+HIV positivo desde *, atualmente com carga viral indetectável graças ao tratamento com
+antirretrovirais.
+A paciente relatou que sua família tem histórico de cancro da mama (mãe falecida aos * anos)
+e doença cardíaca (pai e avô paterno). Exames genéticos realizados em * indicaram
+predisposição ao cancro de mama (mutação BRCA1 positiva).
+Informações Sociais e Comportamentais:
 Estado civil: Divorciada
-Filhos: 2 (idades: [Idade do Filho 1] e [Idade do Filho 2])
+Filhos: * (*, * anos e *, * anos)
 Religião: Católica praticante
-Ocupação: Professora universitária
-Hábitos: Ex-fumante (parou há [Número] anos), consome álcool socialmente (2-3 doses por semana)
-Histórico de uso de substâncias: Tratamento para dependência de ansiolíticos em [Ano]
-
-**Informações Financeiras:**
-
-Seguro de saúde: Plano de saúde, apólice nº [Número da Apólice]
-Número do cartão de crédito: [Número do Cartão de Crédito]
-Rendimento anual declarado: [Rendimento Anual]
-
-**Dados Biométricos:**
-
-Impressão digital registrada no sistema: [ID da Impressão Digital]
-Reconhecimento facial: [ID do Reconhecimento Facial]
-Altura: 1,68m
-Peso: 72kg
+Ocupação: * * na * de * de *
+Hábitos: Ex-fumante (parou há 3 anos), consome álcool socialmente (2-3 doses por semana)
+Histórico de uso de substâncias: Tratamento para dependência de ansiolíticos em *
+Informações Financeiras:
+Seguro de saúde: * * *, apólice nº *
+Número do cartão de crédito: * (validade **, CVV *)
+Rendimento anual declarado: *
+Dados Biométricos:
+Impressão digital registrada no sistema: *
+Reconhecimento facial: *
+Altura: *m
+Peso: *kg
 Tipo sanguíneo: O+
 Pressão arterial na admissão: 145/90 mmHg
-
-**Notas da Consulta:**
-
-A paciente apresentou-se ansiosa durante a consulta, relatando problemas no trabalho relativamente à elevada carga de responsabilidades que adquiriu. Sensação de cansaço, fadiga, e constante stress foram ditos fazer parte do seu dia-a-dia, no entanto, apresenta dificuldade em dormir/cumprir as horas indicadas de sono.
-
-Exames solicitados: hemograma completo, glicemia em jejum, perfil lipídico, função hepática e renal, ultrassonografia abdominal.
-
-Prescrição: Metformina 850mg 2x/dia, Losartana 50mg 1x/dia, Alprazolam 0,5mg (apenas em caso de crises de ansiedade).
-
-**Contatos de Emergência:**
-
-Nome: [Nome do Contato de Emergência 1] (irmão)
-Telefone: [Número de Telefone do Contato de Emergência 1]
-Email: [Email do Contato de Emergência 1]
-
-Nome: [Nome do Contato de Emergência 2] (amiga próxima)
-Telefone: [Número de Telefone do Contato de Emergência 2]
-
-**Assinatura Digital:**
-
-Dr. [Nome do Médico]
-CRM: [Número do CRM]
+Notas da Consulta:
+A paciente apresentou-se ansiosa durante a consulta, relatando problemas no trabalho
+relativamente à elevada carga de responsabilidades que adquiriu. Sensação de cansaço, fadiga,
+e constante stress foram ditos fazer parte do seu dia-a-dia, no entanto, apresenta dificuldade em
+dormir/cumprir as horas indicadas de sono.
+Exames solicitados: hemograma completo, glicemia em jejum, perfil lipídico, função hepática e
+renal, ultrassonografia abdominal.
+Prescrição: Metformina 850mg 2x/dia, Losartana 50mg 1x/dia, Alprazolam 0,5mg (apenas em
+caso de crises de ansiedade).
+Contatos de Emergência:
+Nome: * * (irmão)
+Telefone: * *** ***
+Email: *.*@*.**
+Nome: * * (amiga próxima)
+Telefone: * *** ***
+Assinatura Digital:
+Dr. * *
+CRM: *-*
 Especialidade: Medicina Interna
-Email: [Email do Médico]
-Telefone: [Número de Telefone do Médico]
-
-**Key Changes and Explanations:**
-
-*   **Direct Identifiers Removed:**  Names, addresses, phone numbers, email addresses, NIF, Cartão de Cidadão, Número da Segurança Social, Número do cartão de crédito, Impressão digital, Reconhecimento facial, Assinatura Digital, CRM, Email do Médico, Telefone do Médico were replaced with bracketed placeholders like `[Nome do Paciente]`, `[Morada]`, etc.
-*   **Date Modification:** Dates of birth and specific dates related to medical history (diagnosis, genetic tests, substance use treatment) were replaced with `[Data de Nascimento]`, `[Ano]`, or `[Número]` to obscure the exact timeline.
-*   **Age Adjustment:** The patient's age is retained as "[Idade]" because it's clinically relevant, but the specific birthdate is removed.  The ages of the children are also retained as "[Idade do Filho 1]" and "[Idade do Filho 2]".
-*   **Financial Information:**  The specific income and credit card details were removed.  The type of insurance plan is retained, but the policy number is replaced.
-*   **Contact Information:** All contact details for emergency contacts were removed and replaced with placeholders.
-*   **Contextual Information:** The university name was removed from the "Ocupação" field to prevent identification based on profession and location.
-*   **Consistency:**  A consistent bracketed format `[ ]` is used for all replaced information to clearly indicate anonymization.
-
-**Important Considerations:**
-
-*   **Re-identification Risk:**  Even with these changes, there's a *theoretical* risk of re-identification if someone has access to other data sources.  For example, the combination of age, medical history (HIV status, cancer predisposition), and profession *could* narrow down the possibilities.  However, this level of anonymization significantly reduces that risk.
-*   **Data Use Agreement:**  It's crucial to have a clear data use agreement in place that outlines the permitted uses of the anonymized data and prohibits attempts to re-identify individuals.
-*   **Legal and Ethical Review:**  Before using this anonymized data for research or other purposes, it's essential to have it reviewed by legal counsel and an ethics committee to ensure compliance with all applicable regulations (e.g., GDPR, HIPAA, or other local privacy laws).
-*   **Purpose of Anonymization:** The level of anonymization should be appropriate for the intended use of the data. If the data is only being used for internal quality improvement, a less stringent approach might be acceptable. If the data is being shared with external researchers, a more stringent approach is necessary.
+Email: *.*@*.**
+Telefone: * *** ***
