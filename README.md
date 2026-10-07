@@ -2,18 +2,16 @@
 
 Welcome to the NOS challenge repository for **JunctionX Lisbon 2026** (10–11 October 2026, IST — Campus Taguspark, Porto Salvo, Lisbon). In this repository you will find the problem statement, code snippets and examples to help you get started, plus the submission folder that is scored automatically when you open a pull request.
 
-**The challenge:** build an LLM-based system that finds and masks sensitive data in a document, preserves its meaning and formatting, and produces an explanatory report.
+**The challenge:**  build an LLM-based system that finds and masks sensitive data in a document, preserves its meaning and formatting.
 
 **Quick facts**
 
-- Teams of 1–5 participants.
-- Hacking runs from 10 Oct 12:00 to 11 Oct 13:00 (Europe/Lisbon).
 - Submission = a pull request to `main` (see [section 4](#4-submission-guidelines)).
-- Questions: ask the NOS mentors on site, or the organisers at lisbon@hackjunction.com.
+- Questions: ask the NOS mentors on site, or on the organization's Discord.
 
 ## 0. Problem Statement and Evaluation Criteria
 
-For a complete description of the problem statement and the detailed evaluation criteria, refer to this [document](tutorials/problem_and_eval.md). *(Note: it is currently written in Portuguese; the English challenge brief is distributed by NOS at the event.)*
+For a complete description of the problem statement and the detailed evaluation criteria, refer to this [document](tutorials/problem_and_eval_en.md).*
 
 The document to be anonymized is located at [`raw_data/document_to_anonymize.pdf`](raw_data/document_to_anonymize.pdf).
 
@@ -66,7 +64,7 @@ Converting PDF documents to text can be essential for leveraging existing conten
 
 ## 4. Submission Guidelines
 
-Opening a pull request against `main` triggers the automatic evaluation workflows (see `.github/workflows/`), so you get a score as soon as you submit. The final submission must be in before the end of hacking (11 Oct, 13:00 Europe/Lisbon).
+Opening a pull request against `main` triggers the automatic evaluation workflows (see `.github/workflows/`), so you get a score as soon as you submit. The final submission must be in before the end of the challenge.
 
 In this section, we will outline the expectations for project submission. Understanding these guidelines is crucial to ensure your work is evaluated correctly. There are specific methods and criteria for submission, which you should follow closely to enhance your chances of success. Make sure to read through the following points carefully.
 For more detailed information on the submission process and what is expected, please refer to the [Submission Process Guide](submission/README.md).
