@@ -32,14 +32,14 @@ sensitive data with asterisks and return the document with its original
 formatting. The output is scored automatically when you open a pull request
 against `main`.
 
-Questions can be asked to the NOS mentors on site, or on the organisation's
+Questions can be asked to the NOS mentors on site, or on the organization's
 Discord.
 
 == The core of the challenge
 
-+ *Detect.* Use prompt engineering to make the LLM recognise patterns and
++ *Detect.* Use prompt engineering to make the LLM recognize patterns and
   reason about the context around sensitive data, beyond its format.
-+ *Mask.* Replace each anonymised word with a single `*`. A two-word name
++ *Mask.* Replace each anonymized word with a single `*`. A two-word name
   becomes two asterisks:
 
   ```text
@@ -87,7 +87,7 @@ Save the generated API key in a safe place — you will need it later.
 #table(
   columns: (auto, 1fr),
   table.header[Path][What it holds],
-  [`raw_data/`], [The document to anonymise.],
+  [`raw_data/`], [The document to anonymize.],
   [`submission/`], [`submission.txt`, `prompt.txt` and your code.],
   [`tutorials/`], [Problem statement, Gemini tutorial, Git tutorial, PDF-to-text notebook.],
   [`.github/workflows/`], [The automatic evaluation workflows.],
@@ -149,12 +149,12 @@ end of the challenge.
   [*Technical implementation*], [*40%*],
   [#h(10pt) Precision — detection hit rate], [10%],
   [#h(10pt) Prompt — prompt and response quality], [10%],
-  [#h(10pt) Anonymisation quality — context preserved after removal], [5%],
-  [#h(10pt) Explicability — clarity and technical rigour of the solution], [5%],
-  [#h(10pt) Efficiency — optimised use of prompts and engineering techniques], [5%],
+  [#h(10pt) Anonymization quality — context preserved after removal], [5%],
+  [#h(10pt) Explicability — clarity and technical rigor of the solution], [5%],
+  [#h(10pt) Efficiency — optimized use of prompts and engineering techniques], [5%],
   [#h(10pt) GitHub — code quality: structure, branches, merges, commits], [5%],
   [*Collaboration* — shared commit history and integration between members], [*30%*],
-  [*Documentation* — clarity, organisation and technical detail (README, usage, setup)], [*10%*],
+  [*Documentation* — clarity, organization and technical detail (README, usage, setup)], [*10%*],
   [*Pitch creativity* — originality, impact and communication], [*20%*],
 )
 
@@ -179,14 +179,14 @@ Three GitHub Actions workflows run on your pull request:
   referenced.
 - Every project must include clear documentation: README, usage and setup
   instructions.
-- The commit history is analysed to evaluate good collaborative practices.
+- The commit history is analyzed to evaluate good collaborative practices.
 - The final pitch lasts at most 2 minutes per team.
 - Failure to comply with the rules may mean immediate disqualification.
 
 == Open-source intellectual property
 
-- *Open-source licence:* the project's source code must be released under an
-  open-source licence.
+- *Open-source license:* the project's source code must be released under an
+  open-source license.
 - *Public repository:* the code must be in a public repository (e.g. GitHub).
 - *Repurpose:* the parties may reuse the work for other non-commercial
   purposes.
