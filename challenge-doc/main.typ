@@ -193,6 +193,4 @@ Three GitHub Actions workflows run on your pull request:
 
 == Prizes
 
-*1st:* Google certified course + summer internship at NOS. \
-*2nd:* Google certified course. \
-*3rd:* High-quality headphones.
+The winning team receives tickets for NOS Alive 2027, one for each team member.

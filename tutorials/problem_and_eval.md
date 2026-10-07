@@ -77,6 +77,4 @@ A avaliação do projeto será baseada nos seguintes critérios:
 
 ## 4. Premiação
 
-* **1º Lugar:** Curso certificado da Google + estágio de verão na NOS.
-* **2º Lugar:** Curso certificado da Google.
-* **3º Lugar:** Auriculares de alta qualidade.
+A equipa vencedora recebe bilhetes para o NOS Alive 2027, um para cada membro.
