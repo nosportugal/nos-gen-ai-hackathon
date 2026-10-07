@@ -95,6 +95,8 @@ Save the generated API key in a safe place — you will need it later.
 
 == Getting the repository
 
+Repository: #link("https://github.com/nosportugal/nos-gen-ai-hackathon")[github.com/nosportugal/nos-gen-ai-hackathon]
+
 + *Fork* the repository to your GitHub account. One fork per team: one member
   owns it and adds the others as collaborators.
 + *Clone* your fork and create a working branch, e.g. `team-<name>`.
