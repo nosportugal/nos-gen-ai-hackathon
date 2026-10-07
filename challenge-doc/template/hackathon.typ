@@ -189,7 +189,11 @@
   )
   v(16pt)
 
-  text(font: brand-font, size: 36pt, weight: "bold", hyphenate: false)[#title]
+  {
+    // Render the asterisk in the mono font: Carlito's is too small and sits high.
+    show regex("\\*"): set text(font: mono-font, weight: "bold")
+    text(font: brand-font, size: 24pt, weight: "bold", hyphenate: false)[#title]
+  }
   if subtitle != none {
     v(10pt)
     text(size: 14pt, fill: muted)[#subtitle]

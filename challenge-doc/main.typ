@@ -1,8 +1,7 @@
 #import "template/hackathon.typ": *
 
 #show: hackathon-doc.with(
-  title: "REDACTED",
-  subtitle: "Hide the person. Keep the document.",
+  title: "The *-Files: Call for Anonymizing Prompts",
   tagline: [
     Build an LLM-based system that finds and masks sensitive data in a
     document, preserving its meaning and formatting.
