@@ -41,9 +41,11 @@ In this section, we'll walk you through the essential setup steps needed to get 
 
 ### 2.0. Get the repository
 
-1. **Fork** this repository to your GitHub account (one fork per team; one team member owns it and adds the others as collaborators).
+1. **Fork** this repository to your GitHub account. Each team has one fork: one member owns it and adds the others as collaborators.
+   The fork is your team's workspace. We assess collaboration and code quality from its commit history, branches and merges, so every member should commit to it from their own account. Keep the fork public and preserve its history (no squashing or force-pushing over it).
 2. Clone your fork and create a working branch (e.g. `team-<name>`). Never work directly on `main`.
 3. Work inside `submission/` as described in the [Submission Process Guide](submission/README.md).
+4. When ready, open a pull request from your branch to `main` of the **original** repository (`nosportugal/nos-gen-ai-hackathon`). The pull request triggers the automatic score.
 
 ### 2.1. Git tutorial
 

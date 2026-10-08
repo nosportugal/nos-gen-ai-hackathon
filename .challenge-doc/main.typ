@@ -97,11 +97,18 @@ Save the generated API key in a safe place — you will need it later.
 
 Repository: #link("https://github.com/nosportugal/nos-gen-ai-hackathon")[github.com/nosportugal/nos-gen-ai-hackathon]
 
-+ *Fork* the repository to your GitHub account. One fork per team: one member
-  owns it and adds the others as collaborators.
++ *Fork* the repository to your GitHub account. Each team has one fork: one
+  member owns it and adds the others as collaborators.
 + *Clone* your fork and create a working branch, e.g. `team-<name>`.
 + Never work directly on `main`.
 + Work inside `submission/`.
+
+#callout(title: "Your fork is your team's workspace", tone: "support")[
+  We will assess collaboration and code quality from the commit history, branches
+  and merges of your fork. Every member should commit from their own account.
+  Keep the fork public and preserve its history: avoid squashing or
+  force-pushing over it.
+]
 
 = Submission
 
@@ -132,7 +139,7 @@ Edit the two provided files and add your code:
   `git add submission/submission.txt submission/prompt.txt submission/<your-code>`.
 + Commit: `git commit -m "Final submission -Team Name-"`.
 + Push: `git push origin <your-branch>`.
-+ Open a *pull request* from your branch into `main` on GitHub.
++ Open a *pull request* from your branch to `main` of the *original* repository (`nosportugal/nos-gen-ai-hackathon`).
 + Register your submission on the JunctionX platform, using the link of your
   pull request as the repository link.
 
@@ -159,6 +166,9 @@ end of the challenge.
   [*Documentation* — clarity, organization and technical detail (README, usage, setup)], [*10%*],
   [*Pitch creativity* — originality, impact and communication], [*20%*],
 )
+
+The Collaboration and GitHub rows are judged from your fork's history. The
+other rows are judged from your pull request.
 
 == Automatic evaluation
 
