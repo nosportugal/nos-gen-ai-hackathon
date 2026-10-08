@@ -1,0 +1,25 @@
+TODO — JunctionX Lisbon 2026 repo update (follow-ups to the README pass)
+
+Content
+- [ ] Translate tutorials/problem_and_eval.md to English (or add problem_and_eval.en.md) and relink from README section 0.
+- [ ] Align problem/eval text and weights with the challenge doc (../nos-hackathon-junctionx/content/05-evaluation.typ).
+- [ ] Confirm raw_data/document_to_anonymize.pdf is the doc to use (same for all teams? new one?).
+- [ ] Translate/verify submission/README.md has no stale wording; fix step numbering (1,2,3,4 -> "5" -> "6") and "submission-final -> main" vs "my-feature-branch" inconsistency.
+- [ ] Update tutorials/gemini_tutorial.md: title and model (gemini-2.0-flash is outdated; pick current model).
+- [ ] Rename tutorials/pdf__to__txt.ipynb (double underscores) and fix README link.
+- [ ] Check git_tutorial.md fork URL still correct for this repo/org.
+
+Logistics (need organiser/NOS input)
+- [ ] Gemini API keys: self-generated vs provided by NOS; rate limits/quotas.
+- [ ] Confirm submission cutoff time and README "end of hacking" wording (11 Oct 13:00).
+- [ ] Add schedule section: NOS briefing slot + room, judging time.
+- [ ] Add support section: mentor names, chat channel, on-site location.
+- [ ] Add prizes (EUR 25k+ pool, Golden Tickets to Junction 2026 Finland) if NOS wants them in the repo.
+- [ ] Resolve 36 h vs 24 h vs 25 h wording (also in ../nos-hackathon-junctionx).
+- [ ] Decide whether README should link the challenge PDF/doc.
+
+Infra
+- [ ] Verify .github workflows (evaluation.yml, prompt_eval.yml, lint.yml): secrets EVALUATION_SCRIPT_B64 / TARGET_FILE_B64 set, work on forks' PRs (secrets are not exposed to fork PRs by default — may need pull_request_target or alternative).
+- [ ] Reset submission/submission.txt and prompt.txt to clean placeholders.
+- [ ] Review LICENSE and any remaining hackathon-edition references (SCAILE etc.).
+- [ ] Add Python/Jupyter tooling note (requirements.txt?) to prerequisites.

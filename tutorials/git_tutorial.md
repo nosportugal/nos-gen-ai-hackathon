@@ -138,4 +138,5 @@ Once your branch is pushed:
 
 1. Go to your fork on GitHub.
 2. Click **"Compare & pull request"**.
-3. Review your changes and submit the PR.
+3. Set the base repository to the **original** repo (`nosportugal/nos-gen-ai-hackathon`) and the base branch to `main`. The head is your fork and your working branch.
+4. Review your changes and submit the PR.

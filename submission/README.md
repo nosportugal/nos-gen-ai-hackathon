@@ -90,7 +90,10 @@ git push origin  my-feature-branch
 
 **6. Open a Pull Request**
 
-Go to GitHub and open a Pull Request from your branch **submission-final → main.**
+Go to GitHub and open a Pull Request from your fork's branch **submission-final** to **`main` of the original repository** (`nosportugal/nos-gen-ai-hackathon`).
 
 _Once you’ve submitted the prompt, the generated output, and the development code or notebook, our team will evaluate your submission according to predefined criteria._
 
+**7. Register your submission in the JunctionX platform**
+
+Follow JunctionX's instruction on submitting your solution. When asked for a repository link, copy the link for the Pull Request you submitted.
