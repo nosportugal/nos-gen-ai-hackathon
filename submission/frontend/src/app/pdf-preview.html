@@ -1,0 +1,23 @@
+<canvas
+  #canvas
+  [hidden]="state() !== 'ready'"
+  role="img"
+  [attr.aria-label]="language.text().firstPagePreview"
+></canvas>
+@if (state() !== 'ready') {
+  <div class="preview-fallback" role="status">
+    <svg
+      width="25"
+      height="30"
+      [attr.viewBox]="'0 0 ' + icon.icon[0] + ' ' + icon.icon[1]"
+      fill="currentColor"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path [attr.d]="icon.icon[4]" />
+    </svg>
+    <span>{{
+      state() === 'loading' ? language.text().previewLoading : language.text().previewUnavailable
+    }}</span>
+  </div>
+}

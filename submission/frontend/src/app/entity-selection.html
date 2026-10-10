@@ -1,0 +1,74 @@
+<section class="panel entities-panel" aria-labelledby="entities-title">
+  <div class="panel-heading">
+    <h2 id="entities-title">{{ language.text().entities }}</h2>
+    <span class="small muted" aria-live="polite">
+      {{ documents.selectedCount() }} / {{ allIds().length }} {{ language.text().selectedItems }}
+    </span>
+  </div>
+  <div class="entity-scroll" role="region" aria-labelledby="entities-title" tabindex="0">
+    @if (allIds().length) {
+      <label class="select-all">
+        <input
+          #all
+          type="checkbox"
+          [checked]="documents.selectionState(allIds()) === 'all'"
+          [indeterminate]="documents.selectionState(allIds()) === 'some'"
+          [disabled]="documents.processing()"
+          (change)="documents.selectAll(all.checked)"
+        />
+        {{ language.text().selectAll }}
+      </label>
+      @for (group of groups(); track group.type) {
+        <fieldset class="category-group" [style.--category-color]="group.details.color">
+          <legend>
+            <label class="category-heading">
+              <input
+                #category
+                type="checkbox"
+                [checked]="documents.selectionState(group.ids) === 'all'"
+                [indeterminate]="documents.selectionState(group.ids) === 'some'"
+                [disabled]="documents.processing()"
+                (change)="documents.setEntities(group.ids, category.checked)"
+              />
+              <span class="category-icon" aria-hidden="true">
+                <svg
+                  [attr.viewBox]="
+                    '0 0 ' + group.details.icon.icon[0] + ' ' + group.details.icon.icon[1]
+                  "
+                  fill="currentColor"
+                  focusable="false"
+                >
+                  <path [attr.d]="group.details.icon.icon[4]" />
+                </svg>
+              </span>
+              <span>{{ language.text()[group.details.labelKey] }}</span>
+              <span class="category-count muted" aria-hidden="true">{{ group.items.length }}</span>
+            </label>
+          </legend>
+          @for (entity of group.items; track entity.id) {
+            <label class="entity-option">
+              <input
+                #occurrence
+                type="checkbox"
+                [attr.data-entity-id]="entity.id"
+                [checked]="documents.isSelected(entity.id)"
+                [disabled]="documents.processing()"
+                (change)="documents.setEntities([entity.id], occurrence.checked)"
+              />
+              <span>
+                <strong>{{
+                  documents.analysis()!.originalText.slice(entity.start, entity.end)
+                }}</strong>
+                @if (entity.reason) {
+                  <small>{{ entity.reason }}</small>
+                }
+              </span>
+            </label>
+          }
+        </fieldset>
+      }
+    } @else {
+      <p class="empty-entities muted small">{{ language.text().noEntities }}</p>
+    }
+  </div>
+</section>

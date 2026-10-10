@@ -1,0 +1,85 @@
+@if (documents.result(); as result) {
+  <div class="workspace-page">
+    <section class="page-heading">
+      <h1 id="results-title" tabindex="-1">{{ language.text().resultsTitle }}</h1>
+      <p>{{ language.text().resultsDescription }}</p>
+    </section>
+    <app-document-progress />
+    <div
+      class="document-workspace comparison"
+      role="region"
+      aria-labelledby="results-title"
+      tabindex="0"
+    >
+      <section class="panel preview-panel">
+        <div class="panel-heading">
+          <h2 id="original-title">{{ language.text().original }}</h2>
+          <span class="sample-label">{{ language.text().originalTag }}</span>
+        </div>
+        <div class="paper-scroll" role="region" aria-labelledby="original-title" tabindex="0">
+          <div class="paper">
+            @if (result.source === 'example') {
+              <span class="paper-brand">{{ language.text().sampleDocument }}</span>
+            }
+            <h3>{{ documents.file()?.name }}</h3>
+            <div class="document-text">
+              @for (segment of documents.originalSegments(); track $index) {
+                @if (segment.sensitive && documents.isSelected(segment.entityId!)) {
+                  <mark
+                    class="category-highlight is-selected"
+                    [style.--category-color]="categoryDetails(segment.type!).color"
+                    >{{ segment.text }}</mark
+                  >
+                } @else {
+                  <span>{{ segment.text }}</span>
+                }
+              }
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="panel preview-panel protected-panel">
+        <div class="panel-heading">
+          <h2 id="anonymized-title">{{ language.text().anonymized }}</h2>
+          <span class="sample-label protected-label">{{ language.text().anonymizedTag }}</span>
+        </div>
+        <div class="paper-scroll" role="region" aria-labelledby="anonymized-title" tabindex="0">
+          <div class="paper">
+            @if (result.source === 'example') {
+              <span class="paper-brand">{{ language.text().sampleDocument }}</span>
+            }
+            <h3>{{ result.download.name }}</h3>
+            <div class="document-text">{{ result.anonymizedText }}</div>
+          </div>
+        </div>
+      </section>
+    </div>
+    <div class="page-actions">
+      <button type="button" class="btn btn-outline-secondary" (click)="backToReview()">
+        <svg
+          width="12"
+          height="12"
+          [attr.viewBox]="'0 0 ' + backIcon.icon[0] + ' ' + backIcon.icon[1]"
+          fill="currentColor"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <path [attr.d]="backIcon.icon[4]" />
+        </svg>
+        {{ language.text().backToReview }}</button
+      ><button type="button" class="btn btn-primary" (click)="download()">
+        {{ language.text().download }}
+        <svg
+          width="12"
+          height="12"
+          [attr.viewBox]="'0 0 ' + downloadIcon.icon[0] + ' ' + downloadIcon.icon[1]"
+          fill="currentColor"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <path [attr.d]="downloadIcon.icon[4]" />
+        </svg>
+      </button>
+    </div>
+  </div>
+}
