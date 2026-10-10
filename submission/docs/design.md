@@ -103,9 +103,14 @@ submission/
 
 Dependencies are listed in the root `requirements.txt`. The API key is read
 from the `API_KEY` env var; a local `.env` (gitignored) is loaded with
-`python-dotenv`. `MODEL` selects the pipeline model (default
-`gemini-3.8-flash`) and `VALIDATION_MODEL` the judge model; without it, the
-meaning score is skipped.
+`python-dotenv`. Models are chosen per role, all read through
+`anonymizer/config.py` (which loads `.env` on every lookup):
+
+| Variable | Role | When unset |
+|---|---|---|
+| `MAIN_MODEL` | pipeline agents, single-shot run, scoring | `DEFAULT_MODEL` (`gemini-3.8-flash`) |
+| `DATA_GEN_MODEL` | synthetic data generator | `MAIN_MODEL` |
+| `VALIDATION_MODEL` | meaning-preservation judge | score skipped |
 
 ## 6. Contracts
 

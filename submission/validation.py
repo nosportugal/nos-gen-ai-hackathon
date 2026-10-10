@@ -1,6 +1,6 @@
-import os
 import re
 
+from submission.anonymizer import config
 from submission.anonymizer.llm import GeminiClient, LLMClient
 from submission.anonymizer.schemas import EntailmentScore
 
@@ -41,7 +41,7 @@ Anonymized document:
 
     def _get_client(self) -> LLMClient:
         if self._client is None:
-            validation_model = os.getenv("VALIDATION_MODEL")
+            validation_model = config.validation_model()
             if not validation_model:
                 raise RuntimeError(
                     "VALIDATION_MODEL environment variable is not set"

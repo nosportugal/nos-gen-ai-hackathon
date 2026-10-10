@@ -1,4 +1,6 @@
+import os
 import unittest
+from unittest.mock import patch
 
 from submission import data_generator
 from submission.anonymizer import config
@@ -68,10 +70,17 @@ class TestBuildPrompt(unittest.TestCase):
 
 
 class TestDefaults(unittest.TestCase):
-    def test_model_follows_pipeline_default(self):
+    def test_model_comes_from_data_gen_setting(self):
         args = data_generator.parse_args(["--count", "1"])
-        self.assertEqual(data_generator.resolve_model(args),
-                         config.pipeline_model())
+        with (
+            patch.dict(os.environ, {"DATA_GEN_MODEL": "gen"}, clear=True),
+            patch("submission.anonymizer.config.load_dotenv"),
+        ):
+            self.assertEqual(data_generator.resolve_model(args), "gen")
+
+    def test_model_flag_overrides_setting(self):
+        args = data_generator.parse_args(["--count", "1", "--model", "m"])
+        self.assertEqual(data_generator.resolve_model(args), "m")
 
     def test_outdir_defaults_to_synth_data(self):
         args = data_generator.parse_args(["--count", "1"])

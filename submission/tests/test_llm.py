@@ -120,17 +120,44 @@ class TestGeminiClient(unittest.TestCase):
 
 
 class TestConfig(unittest.TestCase):
+    def setUp(self):
+        # Never read the developer's real .env from a test.
+        dotenv = patch("submission.anonymizer.config.load_dotenv")
+        self.load_dotenv = dotenv.start()
+        self.addCleanup(dotenv.stop)
+
+    def env(self, **values):
+        return patch.dict(os.environ, values, clear=True)
+
     def test_missing_api_key_raises(self):
-        with (
-            patch.dict(os.environ, {}, clear=True),
-            patch("submission.anonymizer.config.load_dotenv"),
-        ):
+        with self.env():
             with self.assertRaises(RuntimeError):
                 config.api_key()
 
-    def test_pipeline_model_default(self):
-        with patch.dict(os.environ, {}, clear=True):
-            self.assertEqual(config.pipeline_model(), "gemini-3.8-flash")
+    def test_main_model_default(self):
+        with self.env():
+            self.assertEqual(config.main_model(), config.DEFAULT_MODEL)
+
+    def test_main_model_reads_env(self):
+        with self.env(MAIN_MODEL="models/gemini-2.5-flash"):
+            self.assertEqual(config.main_model(), "models/gemini-2.5-flash")
+
+    def test_model_lookup_loads_dotenv_first(self):
+        with self.env():
+            config.main_model()
+        self.load_dotenv.assert_called_with(config.REPO_DIR / ".env")
+
+    def test_data_gen_model_falls_back_to_main(self):
+        with self.env(MAIN_MODEL="main"):
+            self.assertEqual(config.data_gen_model(), "main")
+        with self.env(MAIN_MODEL="main", DATA_GEN_MODEL="gen"):
+            self.assertEqual(config.data_gen_model(), "gen")
+
+    def test_validation_model_is_optional(self):
+        with self.env():
+            self.assertIsNone(config.validation_model())
+        with self.env(VALIDATION_MODEL="judge"):
+            self.assertEqual(config.validation_model(), "judge")
 
 
 if __name__ == "__main__":

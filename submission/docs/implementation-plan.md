@@ -29,9 +29,10 @@ deterministic masker turns each sensitive word into `*`. The hand-written
   `from submission.anonymizer.masking import apply_findings`. This matches
   the teammate's `test_validation.py`. Commands run from the repo root.
 - The API key comes from env var `API_KEY`. A local `.env` is loaded with
-  `python-dotenv` (never read or print it). The pipeline model comes from
-  env `MODEL` (default `gemini-3.8-flash`), the judge model from env
-  `VALIDATION_MODEL`.
+  `python-dotenv` (never read or print it). Models come from env
+  `MAIN_MODEL` (default `DEFAULT_MODEL`, `gemini-3.8-flash`),
+  `DATA_GEN_MODEL` (falls back to the main model) and `VALIDATION_MODEL`
+  (optional), always read through `config.py`.
 - All LLM calls run at temperature `0.0` with JSON output
   (`response_mime_type="application/json"`), except single-shot text mode.
 - `prompt.txt` marker line: `### DOCUMENTO ###`.
@@ -133,8 +134,10 @@ class TestSchemas(unittest.TestCase):
 - Produces:
   - `config.py`: `api_key() -> str` (calls `load_dotenv()`, reads
     `API_KEY`, raises `RuntimeError("API_KEY environment variable is not
-    set")` if it's missing); `pipeline_model() -> str` (env `MODEL`,
-    default `"gemini-3.8-flash"`); constants `SUBMISSION_DIR`,
+    set")` if it's missing); `main_model() -> str` (env `MAIN_MODEL`,
+    default `DEFAULT_MODEL`), `data_gen_model() -> str`,
+    `validation_model() -> str | None`, each loading `.env` first;
+    constants `SUBMISSION_DIR`,
     `PROMPT_PATH`, `PDF_PATH` (`raw_data/document_to_anonymize.pdf`),
     `SUBMISSION_PATH`, `OUTPUTS_DIR`, `TEMPERATURE = 0.0`,
     `RETRY_CODES = {429, 500, 503}`, `MAX_RETRIES = 3`.

@@ -487,8 +487,8 @@ def parse_args(argv: Optional[List[str]] = None) -> argparse.Namespace:
         "--model",
         type=str,
         default=None,
-        help="Gemini model name. Default: the pipeline's model "
-             "(env MODEL).",
+        help="Gemini model name. Default: env DATA_GEN_MODEL, "
+             "then MAIN_MODEL.",
     )
 
     parser.add_argument(
@@ -517,7 +517,7 @@ def parse_args(argv: Optional[List[str]] = None) -> argparse.Namespace:
 
 
 def resolve_model(args: argparse.Namespace) -> str:
-    return args.model or config.pipeline_model()
+    return args.model or config.data_gen_model()
 
 
 def get_api_key() -> str:

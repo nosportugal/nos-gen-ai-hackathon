@@ -91,7 +91,7 @@ def main(argv: list[str] | None = None,
 
     try:
         if client is None:
-            client = GeminiClient(model=config.pipeline_model())
+            client = GeminiClient(model=config.main_model())
         result = evaluate(dataset, load_base(), client)
     except Exception as error:
         print(f"error: {error}", file=sys.stderr)

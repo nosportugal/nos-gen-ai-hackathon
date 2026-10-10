@@ -11,6 +11,7 @@ class TestValidation(unittest.TestCase):
     def test_default_client_uses_validation_model(self):
         with (
             patch.dict(os.environ, {"VALIDATION_MODEL": "models/test-model"}),
+            patch("submission.anonymizer.config.load_dotenv"),
             patch("submission.validation.GeminiClient") as client_cls,
         ):
             client_cls.return_value.generate_json.return_value.score = 90
@@ -21,7 +22,10 @@ class TestValidation(unittest.TestCase):
         client_cls.assert_called_once_with(model="models/test-model")
 
     def test_missing_validation_model_raises(self):
-        with patch.dict(os.environ, {}, clear=True):
+        with (
+            patch.dict(os.environ, {}, clear=True),
+            patch("submission.anonymizer.config.load_dotenv"),
+        ):
             with self.assertRaises(RuntimeError):
                 DocumentValidator().entailment("Original", "Anonymized")
 

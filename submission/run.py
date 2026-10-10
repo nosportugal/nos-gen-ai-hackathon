@@ -5,7 +5,6 @@ Run from the repo root:
     python -m submission.run --single-shot   # prompt.txt alone, like CI
 """
 import argparse
-import os
 import sys
 
 from submission.anonymizer import config
@@ -28,7 +27,7 @@ def main(argv: list[str] | None = None,
 
     try:
         if client is None:
-            client = GeminiClient(model=config.pipeline_model())
+            client = GeminiClient(model=config.main_model())
 
         if args.single_shot:
             _single_shot(client)
@@ -57,7 +56,7 @@ def _pipeline(client: LLMClient, validate: bool) -> None:
     write_utf8(config.SUBMISSION_PATH, result.masked)
 
     entailment = None
-    if validate and os.getenv("VALIDATION_MODEL"):
+    if validate and config.validation_model():
         try:
             entailment = DocumentValidator().entailment(text, result.masked)
         except Exception as error:
