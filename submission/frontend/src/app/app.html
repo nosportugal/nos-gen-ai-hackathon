@@ -1,0 +1,64 @@
+<a class="skip-link" href="#main-content">{{ language.text().skip }}</a>
+<header class="site-header">
+  <nav class="navbar container" [attr.aria-label]="language.text().navigation">
+    <a class="brand" routerLink="/" aria-label="DataVeil">
+      <span>Data<span class="brand-accent">Veil</span></span>
+    </a>
+    <div class="header-preferences">
+      <div class="theme-control">
+        <button
+          type="button"
+          class="theme-toggle"
+          [class.is-dark]="theme.preference() === 'dark'"
+          [attr.aria-label]="language.text().appearance"
+          [attr.aria-pressed]="theme.preference() === 'dark'"
+          (click)="toggleTheme()"
+        >
+          <span class="theme-toggle-icon sun-icon" aria-hidden="true">
+            <svg
+              width="14"
+              height="14"
+              [attr.viewBox]="'0 0 ' + themeIcons.light.icon[0] + ' ' + themeIcons.light.icon[1]"
+              fill="currentColor"
+              focusable="false"
+            >
+              <path [attr.d]="themeIcons.light.icon[4]" />
+            </svg>
+          </span>
+          <span class="theme-toggle-icon moon-icon" aria-hidden="true">
+            <svg
+              width="14"
+              height="14"
+              [attr.viewBox]="'0 0 ' + themeIcons.dark.icon[0] + ' ' + themeIcons.dark.icon[1]"
+              fill="currentColor"
+              focusable="false"
+            >
+              <path [attr.d]="themeIcons.dark.icon[4]" />
+            </svg>
+          </span>
+          <span class="theme-toggle-thumb" aria-hidden="true"></span>
+        </button>
+      </div>
+      <label class="visually-hidden" for="language-select">{{ language.text().language }}</label>
+      <select
+        #languageSelect
+        id="language-select"
+        class="form-select language-select"
+        [value]="language.preference()"
+        (change)="setLanguage(languageSelect.value)"
+      >
+        <option value="en">{{ language.text().english }}</option>
+        <option value="pt-PT">{{ language.text().portuguese }}</option>
+      </select>
+    </div>
+  </nav>
+</header>
+<main id="main-content" class="container" tabindex="-1">
+  <router-outlet />
+</main>
+<footer class="site-footer">
+  <div class="footer-content container">
+    <p>© 2026 DataVeil · {{ language.text().authors }}</p>
+    <p>{{ apiEnabled ? language.text().apiFooterNote : language.text().footerNote }}</p>
+  </div>
+</footer>

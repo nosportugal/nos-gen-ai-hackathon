@@ -1,0 +1,102 @@
+:host,
+.entities-panel {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+}
+.entities-panel {
+  flex: 1;
+  padding: 0;
+  overflow: hidden;
+}
+.entity-scroll {
+  min-height: 0;
+  overflow: auto;
+  padding: 12px;
+}
+input {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+  accent-color: var(--category-color, var(--accent));
+  cursor: pointer;
+}
+label {
+  cursor: pointer;
+}
+.select-all,
+.category-heading,
+.entity-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+}
+.select-all {
+  padding: 0 0 10px;
+  font-size: 0.78rem;
+  font-weight: 500;
+}
+.category-group {
+  min-width: 0;
+  border: 0;
+  border-top: 1px solid var(--line);
+  margin: 0;
+  padding-bottom: 16px;
+}
+legend {
+  float: none;
+  width: 100%;
+  margin: 0;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+.category-icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 5px;
+  color: var(--category-color);
+  background: color-mix(in srgb, var(--category-color) 12%, transparent);
+}
+.category-icon svg {
+  width: 13px;
+  height: 13px;
+}
+.category-count {
+  margin-left: auto;
+  font-weight: 400;
+}
+.entity-option {
+  align-items: flex-start;
+  padding: 6px 0 0 23px;
+  font-size: 0.76rem;
+  line-height: 1.4;
+}
+.entity-option input {
+  margin-top: 2px;
+}
+.entity-option > span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.entity-option strong {
+  font-weight: 500;
+}
+.entity-option small {
+  display: block;
+  color: var(--muted);
+  font-size: 0.68rem;
+  margin-top: 3px;
+}
+.empty-entities {
+  margin: 0;
+}
+@media (max-width: 575px) {
+  .entity-scroll {
+    overflow: visible;
+  }
+}

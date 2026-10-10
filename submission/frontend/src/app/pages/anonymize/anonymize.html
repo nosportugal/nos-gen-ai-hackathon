@@ -1,0 +1,250 @@
+@if (!documents.analysis()) {
+  <div class="selection-page">
+    <section class="home-intro" aria-labelledby="intro-title">
+      <h1 id="intro-title" tabindex="-1">{{ language.text().heroTitle }}</h1>
+      <p>{{ language.text().heroDescription }}</p>
+    </section>
+    <app-document-progress />
+    <section
+      id="submit-document"
+      class="upload-section"
+      tabindex="-1"
+      aria-labelledby="upload-title"
+    >
+      <div class="panel upload-panel" [attr.aria-busy]="documents.processing()">
+        <div class="upload-heading">
+          <h2 id="upload-title">{{ language.text().uploadTitle }}</h2>
+        </div>
+        <div
+          class="upload-body"
+          [class.has-file]="!!documents.file()"
+          role="region"
+          aria-labelledby="upload-title"
+          tabindex="0"
+        >
+          <div
+            class="drop-zone"
+            [class.dragging]="dragging()"
+            (dragover)="dragOver($event)"
+            (dragleave)="dragging.set(false)"
+            (drop)="drop($event)"
+          >
+            <div class="upload-icon">
+              <svg
+                width="32"
+                height="36"
+                [attr.viewBox]="'0 0 ' + uploadIcon.icon[0] + ' ' + uploadIcon.icon[1]"
+                fill="currentColor"
+                aria-hidden="true"
+                focusable="false"
+              >
+                <path [attr.d]="uploadIcon.icon[4]" />
+              </svg>
+            </div>
+            <h3>{{ language.text().dropTitle }}</h3>
+            <input
+              #fileInput
+              type="file"
+              accept=".pdf,application/pdf"
+              class="visually-hidden"
+              tabindex="-1"
+              (change)="choose($event)"
+              [disabled]="documents.processing()"
+              [attr.aria-label]="language.text().chooseFile"
+            />
+            <button
+              type="button"
+              class="btn btn-secondary"
+              [disabled]="documents.processing()"
+              (click)="fileInput.click()"
+            >
+              {{ language.text().chooseFile }}
+            </button>
+            @if (!documents.file()) {
+              <p class="file-hint">{{ language.text().fileHint }}</p>
+            }
+          </div>
+          @if (documents.file(); as file) {
+            <div class="selected-file">
+              <div class="file-toolbar">
+                <span class="format-label muted">{{ fileFormat() }}</span>
+                <button
+                  class="btn remove-file"
+                  type="button"
+                  [attr.aria-label]="language.text().remove"
+                  [attr.title]="language.text().remove"
+                  (click)="remove()"
+                >
+                  <svg
+                    width="14"
+                    height="14"
+                    [attr.viewBox]="'0 0 ' + removeIcon.icon[0] + ' ' + removeIcon.icon[1]"
+                    fill="currentColor"
+                    aria-hidden="true"
+                    focusable="false"
+                  >
+                    <path [attr.d]="removeIcon.icon[4]" />
+                  </svg>
+                </button>
+              </div>
+              <div class="file-details" tabindex="0">
+                <app-pdf-preview [file]="file" />
+                <div>
+                  <strong>{{ file.name }}</strong>
+                  <span class="small muted">{{ file.size }} {{ language.text().bytes }}</span>
+                </div>
+              </div>
+            </div>
+          }
+          @if (error(); as issue) {
+            <p class="error-message" role="alert">{{ language.text()[issue] }}</p>
+          }
+          @if (documents.error()) {
+            <p class="error-message" role="alert">{{ language.text().processingError }}</p>
+          }
+        </div>
+        <div class="upload-actions">
+          <button
+            type="button"
+            class="btn btn-primary"
+            [disabled]="!documents.file() || documents.processing()"
+            (click)="startAnalysis()"
+          >
+            @if (documents.processing()) {
+              <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+              {{ language.text().processing }}
+            } @else {
+              {{ language.text().startAnalysis }}
+              <svg
+                width="12"
+                height="12"
+                [attr.viewBox]="'0 0 ' + nextIcon.icon[0] + ' ' + nextIcon.icon[1]"
+                fill="currentColor"
+                aria-hidden="true"
+                focusable="false"
+              >
+                <path [attr.d]="nextIcon.icon[4]" />
+              </svg>
+            }
+          </button>
+        </div>
+      </div>
+      <span class="visually-hidden" role="status">{{
+        documents.processing() ? language.text().processing : ''
+      }}</span>
+    </section>
+  </div>
+} @else if (documents.result()) {
+  <app-results (restart)="remove()" (back)="backToReview()" />
+} @else if (documents.analysis(); as analysis) {
+  <div class="workspace-page">
+    <section class="page-heading">
+      <h1 id="analysis-title" tabindex="-1">{{ language.text().analysisTitle }}</h1>
+      <p>{{ language.text().selectionInstructions }}</p>
+    </section>
+    <app-document-progress />
+    @if (documents.processing() && documents.stage() === 'anonymization') {
+      <div class="anonymization-modal-backdrop" role="presentation">
+        <div
+          class="anonymization-modal"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="anonymization-modal-title"
+          aria-describedby="anonymization-modal-message"
+        >
+          <span class="anonymization-status-icon" aria-hidden="true">
+            <svg
+              width="22"
+              height="22"
+              [attr.viewBox]="'0 0 ' + anonymizationIcon.icon[0] + ' ' + anonymizationIcon.icon[1]"
+              fill="currentColor"
+              focusable="false"
+            >
+              <path [attr.d]="anonymizationIcon.icon[4]" />
+            </svg>
+          </span>
+          <strong id="anonymization-modal-title">{{
+            language.text().anonymizationWaitingTitle
+          }}</strong>
+          <p id="anonymization-modal-message">{{ language.text().anonymizationWaitingMessage }}</p>
+          <span class="spinner-border" aria-hidden="true"></span>
+        </div>
+      </div>
+    }
+    @if (documents.error()) {
+      <p class="error-message" role="alert">{{ language.text().anonymizationError }}</p>
+    }
+    <div
+      class="document-workspace analysis-grid"
+      role="region"
+      aria-labelledby="analysis-title"
+      tabindex="0"
+    >
+      <section class="panel preview-panel">
+        <div class="panel-heading">
+          <h2 id="preview-title">{{ language.text().documentPreview }}</h2>
+        </div>
+        <div class="paper-scroll" role="region" aria-labelledby="preview-title" tabindex="0">
+          <div class="paper">
+            @if (analysis.source === 'example') {
+              <span class="paper-brand">{{ language.text().sampleDocument }}</span>
+            }
+            <h3>{{ documents.file()?.name }}</h3>
+            <div class="document-text">
+              @for (segment of documents.originalSegments(); track $index) {
+                @if (segment.sensitive) {
+                  <mark
+                    class="category-highlight"
+                    [class.is-selected]="documents.isSelected(segment.entityId!)"
+                    [style.--category-color]="categoryDetails(segment.type!).color"
+                    >{{ segment.text }}</mark
+                  >
+                } @else {
+                  <span>{{ segment.text }}</span>
+                }
+              }
+            </div>
+          </div>
+        </div>
+      </section>
+      <app-entity-selection />
+    </div>
+    <div class="page-actions">
+      <button type="button" class="btn btn-outline-secondary" (click)="backToDocument()">
+        <svg
+          width="12"
+          height="12"
+          [attr.viewBox]="'0 0 ' + backIcon.icon[0] + ' ' + backIcon.icon[1]"
+          fill="currentColor"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <path [attr.d]="backIcon.icon[4]" />
+        </svg>
+        {{ language.text().back }}</button
+      ><button
+        type="button"
+        class="btn btn-primary"
+        [disabled]="documents.processing()"
+        (click)="anonymizeSelected()"
+      >
+        @if (documents.processing()) {
+          <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+          {{ language.text().anonymizing }}
+        } @else {
+          {{ language.text().anonymizeSelected }}
+          <svg
+            width="12"
+            height="12"
+            [attr.viewBox]="'0 0 ' + nextIcon.icon[0] + ' ' + nextIcon.icon[1]"
+            fill="currentColor"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <path [attr.d]="nextIcon.icon[4]" />
+          </svg>
+        }
+      </button>
+    </div>
+  </div>
+}
