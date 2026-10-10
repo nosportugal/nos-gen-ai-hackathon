@@ -2,14 +2,16 @@ import os
 import unittest
 from unittest.mock import Mock, patch
 
+import httpx
+
 from submission.anonymizer import config
 from submission.anonymizer.llm import GeminiClient
 from submission.anonymizer.schemas import EntailmentScore
 
 
 class Err(Exception):
-    def __init__(self, code):
-        super().__init__(f"HTTP {code}")
+    def __init__(self, code, message=""):
+        super().__init__(f"HTTP {code} {message}".strip())
         self.code = code
 
 
@@ -76,6 +78,36 @@ class TestGeminiClient(unittest.TestCase):
 
         self.assertIn("429", str(ctx.exception))
         self.assertEqual(self.generate.call_count, config.MAX_RETRIES + 1)
+
+    def test_retries_dropped_connection(self):
+        reset = ConnectionResetError(10054, "connection forcibly closed")
+        self.generate.side_effect = [reset, ok_response()]
+
+        result = self.make().generate_json("p", EntailmentScore)
+
+        self.assertEqual(result.score, 87)
+        self.sleep.assert_called_once_with(1)
+
+    def test_retries_http_transport_error(self):
+        self.generate.side_effect = [
+            httpx.RemoteProtocolError("server disconnected"), ok_response()
+        ]
+
+        result = self.make().generate_json("p", EntailmentScore)
+
+        self.assertEqual(result.score, 87)
+
+    def test_daily_quota_fails_fast(self):
+        self.generate.side_effect = Err(
+            429, "quotaId: GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+        )
+
+        with self.assertRaises(RuntimeError) as ctx:
+            self.make().generate_json("p", EntailmentScore)
+
+        self.assertIn("daily quota", str(ctx.exception))
+        self.assertEqual(self.generate.call_count, 1)
+        self.sleep.assert_not_called()
 
     def test_non_retryable_error_raises_immediately(self):
         self.generate.side_effect = Err(400)

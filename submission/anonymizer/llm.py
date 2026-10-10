@@ -1,6 +1,7 @@
 import time
 from typing import Protocol, TypeVar
 
+import httpx
 from google import genai
 from google.genai import types
 from pydantic import BaseModel
@@ -51,7 +52,14 @@ class GeminiClient:
                     config=generation_config,
                 )
             except Exception as error:
-                if getattr(error, "code", None) not in config.RETRY_CODES:
+                if _is_daily_quota(error):
+                    # Retrying within seconds can't help: the quota only
+                    # resets the next day.
+                    raise RuntimeError(
+                        f"Gemini daily quota exhausted: {error}"
+                    ) from error
+
+                if not _is_retryable(error):
                     raise
 
                 if attempt == config.MAX_RETRIES:
@@ -60,3 +68,17 @@ class GeminiClient:
                     ) from error
 
                 self._sleep(2 ** attempt)
+
+
+def _is_retryable(error: Exception) -> bool:
+    # Dropped connections (e.g. Windows' WinError 10054) carry no HTTP
+    # code, so they are recognised by type rather than by status.
+    if isinstance(error, (ConnectionError, TimeoutError,
+                          httpx.TransportError)):
+        return True
+    return getattr(error, "code", None) in config.RETRY_CODES
+
+
+def _is_daily_quota(error: Exception) -> bool:
+    return (getattr(error, "code", None) == 429
+            and "PerDay" in str(error))
