@@ -1,0 +1,182 @@
+import os
+import unittest
+from unittest.mock import Mock, patch
+
+import httpx
+
+from submission.anonymizer import config
+from submission.anonymizer.llm import GeminiClient
+from submission.anonymizer.schemas import EntailmentScore
+
+
+class Err(Exception):
+    def __init__(self, code, message=""):
+        super().__init__(f"HTTP {code} {message}".strip())
+        self.code = code
+
+
+def ok_response(text='{"score": 87}'):
+    return Mock(text=text)
+
+
+class TestGeminiClient(unittest.TestCase):
+    def setUp(self):
+        env = patch.dict(os.environ, {"API_KEY": "test-key"})
+        env.start()
+        self.addCleanup(env.stop)
+
+        client_cls = patch("submission.anonymizer.llm.genai.Client")
+        self.client_cls = client_cls.start()
+        self.addCleanup(client_cls.stop)
+        self.generate = self.client_cls.return_value.models.generate_content
+        self.sleep = Mock()
+
+    def make(self):
+        return GeminiClient("gemini-x", sleep=self.sleep)
+
+    def test_generate_json_sends_schema_and_parses(self):
+        self.generate.return_value = ok_response()
+
+        result = self.make().generate_json("p", EntailmentScore)
+
+        self.assertEqual(result.score, 87)
+        self.client_cls.assert_called_once_with(api_key="test-key")
+        kwargs = self.generate.call_args.kwargs
+        self.assertEqual(kwargs["model"], "gemini-x")
+        self.assertEqual(kwargs["contents"], "p")
+        self.assertEqual(kwargs["config"].temperature, 0.0)
+        self.assertEqual(
+            kwargs["config"].response_mime_type, "application/json"
+        )
+        self.assertIs(kwargs["config"].response_schema, EntailmentScore)
+
+    def test_generate_text_returns_plain_text(self):
+        self.generate.return_value = ok_response("Nome: * *")
+
+        result = self.make().generate_text("p")
+
+        self.assertEqual(result, "Nome: * *")
+        config_arg = self.generate.call_args.kwargs["config"]
+        self.assertIsNone(config_arg.response_mime_type)
+
+    def test_retries_on_429_then_succeeds(self):
+        self.generate.side_effect = [Err(429), Err(503), ok_response()]
+
+        result = self.make().generate_json("p", EntailmentScore)
+
+        self.assertEqual(result.score, 87)
+        self.assertEqual(self.generate.call_count, 3)
+        self.assertEqual(
+            [c.args[0] for c in self.sleep.call_args_list], [1, 2]
+        )
+
+    def test_gives_up_after_max_retries(self):
+        self.generate.side_effect = Err(429)
+
+        with self.assertRaises(RuntimeError) as ctx:
+            self.make().generate_json("p", EntailmentScore)
+
+        self.assertIn("429", str(ctx.exception))
+        self.assertEqual(self.generate.call_count, config.MAX_RETRIES + 1)
+
+    def test_retries_dropped_connection(self):
+        reset = ConnectionResetError(10054, "connection forcibly closed")
+        self.generate.side_effect = [reset, ok_response()]
+
+        result = self.make().generate_json("p", EntailmentScore)
+
+        self.assertEqual(result.score, 87)
+        self.sleep.assert_called_once_with(1)
+
+    def test_retries_http_transport_error(self):
+        self.generate.side_effect = [
+            httpx.RemoteProtocolError("server disconnected"), ok_response()
+        ]
+
+        result = self.make().generate_json("p", EntailmentScore)
+
+        self.assertEqual(result.score, 87)
+
+    def test_429_waits_server_retry_delay(self):
+        self.generate.side_effect = [
+            Err(429, "PerMinute ... {'retryDelay': '32s'}"), ok_response()
+        ]
+
+        self.make().generate_json("p", EntailmentScore)
+
+        self.sleep.assert_called_once_with(32.0)
+
+    def test_server_retry_delay_is_capped(self):
+        self.generate.side_effect = [
+            Err(429, "{'retryDelay': '600s'}"), ok_response()
+        ]
+
+        self.make().generate_json("p", EntailmentScore)
+
+        self.sleep.assert_called_once_with(config.MAX_RETRY_DELAY)
+
+    def test_daily_quota_fails_fast(self):
+        self.generate.side_effect = Err(
+            429, "quotaId: GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+        )
+
+        with self.assertRaises(RuntimeError) as ctx:
+            self.make().generate_json("p", EntailmentScore)
+
+        self.assertIn("daily quota", str(ctx.exception))
+        self.assertEqual(self.generate.call_count, 1)
+        self.sleep.assert_not_called()
+
+    def test_non_retryable_error_raises_immediately(self):
+        self.generate.side_effect = Err(400)
+
+        with self.assertRaises(Err):
+            self.make().generate_json("p", EntailmentScore)
+
+        self.assertEqual(self.generate.call_count, 1)
+        self.sleep.assert_not_called()
+
+
+class TestConfig(unittest.TestCase):
+    def setUp(self):
+        # Never read the developer's real .env from a test.
+        dotenv = patch("submission.anonymizer.config.load_dotenv")
+        self.load_dotenv = dotenv.start()
+        self.addCleanup(dotenv.stop)
+
+    def env(self, **values):
+        return patch.dict(os.environ, values, clear=True)
+
+    def test_missing_api_key_raises(self):
+        with self.env():
+            with self.assertRaises(RuntimeError):
+                config.api_key()
+
+    def test_main_model_default(self):
+        with self.env():
+            self.assertEqual(config.main_model(), config.DEFAULT_MODEL)
+
+    def test_main_model_reads_env(self):
+        with self.env(MAIN_MODEL="models/gemini-2.5-flash"):
+            self.assertEqual(config.main_model(), "models/gemini-2.5-flash")
+
+    def test_model_lookup_loads_dotenv_first(self):
+        with self.env():
+            config.main_model()
+        self.load_dotenv.assert_called_with(config.REPO_DIR / ".env")
+
+    def test_data_gen_model_falls_back_to_main(self):
+        with self.env(MAIN_MODEL="main"):
+            self.assertEqual(config.data_gen_model(), "main")
+        with self.env(MAIN_MODEL="main", DATA_GEN_MODEL="gen"):
+            self.assertEqual(config.data_gen_model(), "gen")
+
+    def test_validation_model_is_optional(self):
+        with self.env():
+            self.assertIsNone(config.validation_model())
+        with self.env(VALIDATION_MODEL="judge"):
+            self.assertEqual(config.validation_model(), "judge")
+
+
+if __name__ == "__main__":
+    unittest.main()
