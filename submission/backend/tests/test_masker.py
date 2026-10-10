@@ -1,6 +1,6 @@
 import unicodedata
 
-from anonymizer.masker import MaskedWord, mask, mask_with_positions
+from anonymizer.masker import mask, mask_with_positions, runs
 from anonymizer.spans import Category, Span
 
 
@@ -269,11 +269,56 @@ def test_positions_point_at_each_star():
     spans = [span(1, "Ana Correia"), span(2, "47", Category.AGE)]
     result = mask_with_positions(text, spans)
     assert result.text == "Nome: * *\nIdade: * anos"
-    assert result.words == [
-        MaskedWord(1, 6, Category.NAME),
-        MaskedWord(1, 8, Category.NAME),
-        MaskedWord(2, 7, Category.AGE),
+    assert [(w.line, w.column, w.category) for w in result.words] == [
+        (1, 6, Category.NAME),
+        (1, 8, Category.NAME),
+        (2, 7, Category.AGE),
     ]
+
+
+def test_masked_words_know_their_original_word():
+    text = "Filhos: 2 (João, 15 anos e Ana, 12 anos)"
+    spans = [span(1, "João"), span(1, "15", Category.AGE)]
+    joao, age = mask_with_positions(text, spans).words
+    assert (joao.index, joao.word) == (2, "(João,")
+    assert text[joao.start:joao.end] == "(João,"
+    assert (age.index, age.word, text[age.start:age.end]) == (3, "15", "15")
+    # The same word index PyMuPDF gives to the words of this line.
+    assert text.split()[joao.index] == "(João,"
+
+
+def test_runs_group_consecutive_masked_words():
+    text = "A paciente Maria Santos, mulher caucasiana de 47 anos"
+    spans = [
+        span(1, "Maria Santos"),
+        span(1, "caucasiana", Category.SPECIAL),
+        span(1, "47", Category.AGE),
+    ]
+    grouped = runs(mask_with_positions(text, spans).words)
+    assert [(r.first, r.last) for r in grouped] == [(2, 3), (5, 5), (7, 7)]
+    assert grouped[0].categories == [Category.NAME, Category.NAME]
+    assert [w.word for w in grouped[0].words] == ["Maria", "Santos,"]
+
+
+def test_runs_never_cross_lines():
+    text = "Nome: Ana\nCorreia Silva"
+    spans = [span(1, "Ana"), span(2, "Correia Silva")]
+    grouped = runs(mask_with_positions(text, spans).words)
+    assert [(r.line, r.first, r.last) for r in grouped] == [
+        (1, 1, 1), (2, 0, 1),
+    ]
+
+
+def test_runs_split_on_an_unmasked_word():
+    text = "Filhos: 2 (João, 15 anos e Ana, 12 anos)"
+    spans = [
+        span(1, "2", Category.PRIVATE_LIFE),
+        span(1, "João"), span(1, "15", Category.AGE),
+        span(1, "Ana"), span(1, "12", Category.AGE),
+    ]
+    grouped = runs(mask_with_positions(text, spans).words)
+    assert [(r.first, r.last) for r in grouped] == [(1, 3), (6, 7)]
+    assert runs([]) == []
 
 
 def test_positions_match_the_masked_text():

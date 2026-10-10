@@ -28,11 +28,42 @@ _WORD_CHAR = r"[\ẁ-ͯ]"
 
 @dataclass(frozen=True)
 class MaskedWord:
-    """Where one "*" sits in the masked text (line is 1-based)."""
+    """One "*" and the word it replaced (line is 1-based).
+
+    column: where the "*" sits in the masked line.
+    index: position of the word in the line, counting words separated by
+        whitespace from 0; the same numbering PyMuPDF gives to the words
+        of a PDF line, so it links a "*" to a box in the PDF.
+    start, end: the word in the original line, as line[start:end],
+        including any punctuation around it ("(João,").
+    word: that original text.
+    """
 
     line: int
     column: int
     category: Category
+    index: int
+    start: int
+    end: int
+    word: str
+
+
+@dataclass(frozen=True)
+class Run:
+    """Masked words that follow each other on one line.
+
+    Drawing one box from the first word to the last keeps consecutive
+    "*" together instead of leaving a gap the width of each word.
+    """
+
+    line: int
+    first: int
+    last: int
+    words: List[MaskedWord]
+
+    @property
+    def categories(self) -> List[Category]:
+        return [w.category for w in self.words]
 
 
 @dataclass(frozen=True)
@@ -76,6 +107,24 @@ def mask_with_positions(text: str, spans: Sequence[Span],
             lines[index], index + 1, hits[index], keep_punctuation, words,
         )
     return MaskResult("\n".join(lines), words, unmatched)
+
+
+def runs(words: Sequence[MaskedWord]) -> List[Run]:
+    """Group masked words with consecutive indexes on the same line.
+
+    "A paciente * *, mulher * de * anos" gives three runs: the two words
+    of the name, then one run for each lone "*". Runs never cross lines.
+    """
+    result: List[Run] = []
+    for word in sorted(words, key=lambda w: (w.line, w.index)):
+        last = result[-1] if result else None
+        if last and last.line == word.line and last.last + 1 == word.index:
+            result[-1] = Run(
+                last.line, last.first, word.index, last.words + [word],
+            )
+        else:
+            result.append(Run(word.line, word.index, word.index, [word]))
+    return result
 
 
 def _find(lines: List[str], span: Span) -> List[Tuple[int, int, int]]:
@@ -156,18 +205,25 @@ def _mask_line(line: str, number: int,
     out = []
     length = 0
     done = 0
-    for match in _WORD.finditer(line):
-        start, end = match.span()
-        touching = [cat for lo, hi, cat in hits if lo < end and hi > start]
+    for index, match in enumerate(_WORD.finditer(line)):
+        word_start, word_end = match.span()
+        touching = [
+            cat for lo, hi, cat in hits
+            if lo < word_end and hi > word_start
+        ]
         if not touching:
             continue
+        start, end = word_start, word_end
         if keep_punctuation:
             start, end = _trim(line, start, end)
         if start == end:
             continue
         gap = line[done:start]
         out += [gap, MASK]
-        words.append(MaskedWord(number, length + len(gap), touching[0]))
+        words.append(MaskedWord(
+            number, length + len(gap), touching[0],
+            index, word_start, word_end, match.group(),
+        ))
         length += len(gap) + len(MASK)
         done = end
     out.append(line[done:])
