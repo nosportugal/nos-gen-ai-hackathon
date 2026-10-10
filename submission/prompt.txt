@@ -1,0 +1,7 @@
+Anonymize the following document. Replace all personal data
+(names, emails, phones, addresses, IDs) with placeholders
+like [NAME], [EMAIL], [PHONE], [ADDRESS], [ID].
+
+Return only the anonymized text.
+
+DONT CHANGE THE MEANING NOR THE FORMAT.
