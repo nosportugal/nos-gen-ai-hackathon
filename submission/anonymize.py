@@ -2,6 +2,7 @@ import os
 from pathlib import Path
 
 import requests
+from dotenv import load_dotenv
 
 from checks import imprimir
 from checks import verificar
@@ -10,9 +11,8 @@ from code import extrair_texto
 pasta = Path(__file__).resolve().parent
 caminho_prompt = pasta / "prompt.txt"
 caminho_saida = pasta / "submission.txt"
-caminho_env = pasta.parent / ".env"
 
-MODELO = "gemini-2.0-flash"
+MODELO = "gemini-3.8-flash"
 URL = (
     "https://generativelanguage.googleapis.com/v1beta/models/"
     + MODELO
@@ -20,23 +20,8 @@ URL = (
 )
 
 
-def ler_env(caminho):
-    if not caminho.is_file():
-        return
-    texto = caminho.read_text(encoding="utf-8")
-    for linha in texto.splitlines():
-        linha = linha.strip()
-        if not linha or linha.startswith("#") or "=" not in linha:
-            continue
-        nome, valor = linha.split("=", 1)
-        nome = nome.strip()
-        valor = valor.strip().strip('"').strip("'")
-        if nome and nome not in os.environ:
-            os.environ[nome] = valor
-
-
 def chave_api():
-    ler_env(caminho_env)
+    load_dotenv(pasta.parent / ".env")
     for nome in ("GEMINI_API_KEY", "GOOGLE_API_KEY", "API_KEY"):
         valor = os.environ.get(nome, "").strip()
         if valor:
@@ -60,18 +45,36 @@ def gerar_texto(prompt_text, api_key):
             }
         ],
         "generationConfig": {
-            "temperature": 0.0
-        }
+            "thinkingConfig": {
+                "thinkingLevel": "low"
+            }
+        },
     }
-    response = requests.post(URL, headers=headers, json=body, timeout=120)
+    try:
+        response = requests.post(
+            URL, headers=headers, json=body, timeout=300
+        )
+    except requests.Timeout:
+        raise SystemExit(
+            "A API Gemini não respondeu a tempo. Volta a correr o comando."
+        )
     if not response.ok:
         estado = str(response.status_code)
         raise SystemExit("A API Gemini devolveu o estado " + estado + ".")
     dados = response.json()
     try:
-        return dados["candidates"][0]["content"]["parts"][0]["text"]
+        partes = dados["candidates"][0]["content"]["parts"]
     except (KeyError, IndexError):
         raise SystemExit("A API Gemini não devolveu texto.")
+    textos = []
+    for parte in partes:
+        if parte.get("thought"):
+            continue
+        if "text" in parte:
+            textos.append(parte["text"])
+    if not textos:
+        raise SystemExit("A API Gemini não devolveu texto.")
+    return textos[-1]
 
 
 def prompt_completo(instrucoes, documento):
