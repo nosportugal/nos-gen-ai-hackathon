@@ -2,7 +2,8 @@
 """Reconstruct PDFs with compact groups of masked words."""
 
 import re
-from typing import List, Sequence, Tuple
+from dataclasses import dataclass
+from typing import List, Optional, Sequence, Tuple
 
 import pymupdf
 
@@ -11,22 +12,123 @@ from anonymizer.masker import mask_with_positions, runs
 from anonymizer.spans import Span
 
 OCR_PADDING = 1.5  # points around OCR word boxes
+# Base-14 Courier Bold: its "*" sits at mid height and reads at small
+# sizes; Helvetica's is thin and floats near the cap height.
+MASK_FONT = "cobo"
 
 
-def _insert_mask(page: pymupdf.Page, rect: pymupdf.Rect,
-                 replacement: str) -> None:
-    """Fit a centered mask without the redaction API's 4pt limit."""
-    font = pymupdf.Font("helv")
-    width = font.text_length(replacement, fontsize=1)
-    height = font.ascender - font.descender
-    if rect.is_empty or rect.is_infinite or width <= 0:
+@dataclass(frozen=True)
+class _Glyph:
+    """One character of a PDF word, with the style of its span."""
+
+    char: str
+    origin: pymupdf.Point
+    bbox: pymupdf.Rect
+    size: float
+    color: int
+
+
+@dataclass(frozen=True)
+class _Word:
+    """A word of page.get_text("words") and its characters.
+
+    glyphs is None when the characters of the word could not be told
+    apart; such a word can be kept, but not masked.
+    """
+
+    text: str
+    box: pymupdf.Rect
+    glyphs: Optional[Tuple[_Glyph, ...]]
+
+
+@dataclass(frozen=True)
+class _Mask:
+    """The asterisks that replace one run, drawn after the redactions."""
+
+    page: int
+    origin: pymupdf.Point
+    size: float
+    color: int
+    length: float  # room from origin to the run's end
+    text: str
+
+
+def _is_delimiter(char: str) -> bool:
+    """What PyMuPDF's word extraction splits words on."""
+    code = ord(char)
+    return code <= 32 or code == 160 or 0x202A <= code <= 0x202E
+
+
+def _line_words(line: dict) -> List[List[_Glyph]]:
+    """The characters of each word of a rawdict line, in order."""
+    words: List[List[_Glyph]] = []
+    current: List[_Glyph] = []
+    for span in line["spans"]:
+        for char in span["chars"]:
+            if _is_delimiter(char["c"]):
+                if current:
+                    words.append(current)
+                current = []
+                continue
+            if not current and char["c"] == "\u200d":
+                continue  # a zero width joiner cannot start a word
+            current.append(_Glyph(
+                char["c"], pymupdf.Point(char["origin"]),
+                pymupdf.Rect(char["bbox"]), span["size"], span["color"],
+            ))
+    if current:
+        words.append(current)
+    return words
+
+
+def _page_words(page: pymupdf.Page,
+                textpage: Optional[pymupdf.TextPage]) -> List[_Word]:
+    """Words in reading order, each with its characters.
+
+    textpage: the OCR of a scanned page, or None for the page's own text.
+    Words and characters are read from one text page, so the numbers of
+    page.get_text("words") point into page.get_text("rawdict").
+    """
+    if textpage is None:
+        textpage = page.get_textpage(flags=pymupdf.TEXTFLAGS_WORDS)
+    lines = {}
+    for block in page.get_text("rawdict", textpage=textpage)["blocks"]:
+        if block["type"] != 0:
+            continue
+        for line_index, line in enumerate(block["lines"]):
+            for word_index, glyphs in enumerate(_line_words(line)):
+                lines[(block["number"], line_index, word_index)] = tuple(
+                    glyphs
+                )
+
+    words = []
+    for word in page.get_text("words", sort=False, textpage=textpage):
+        glyphs = lines.get(tuple(word[5:8]))
+        if glyphs is None or "".join(g.char for g in glyphs) != word[4]:
+            glyphs = None
+        words.append(_Word(word[4], pymupdf.Rect(word[:4]), glyphs))
+    return words
+
+
+def _run_length(glyphs: Sequence[_Glyph], origin: pymupdf.Point) -> float:
+    """How far the run reaches to the right of `origin`."""
+    return max(glyph.bbox.x1 for glyph in glyphs) - origin.x
+
+
+def _insert_mask(page: pymupdf.Page, mask: _Mask) -> None:
+    """Draw the asterisks where the value started, on its baseline.
+
+    Same size and colour as the value, smaller only when the asterisks
+    would not fit in the value's width.
+    """
+    font = pymupdf.Font(MASK_FONT)
+    width = font.text_length(mask.text, fontsize=1)
+    if mask.length <= 0 or width <= 0 or mask.size <= 0:
         raise ValueError("Invalid mask rectangle; manual review required.")
-    fontsize = min(13, rect.width / width, rect.height / height) * 0.95
-    x = rect.x0 + (rect.width - width * fontsize) / 2
-    y = (rect.y0 + rect.y1 +
-         (font.ascender + font.descender) * fontsize) / 2
+    fontsize = min(mask.size, mask.length / width)
     page.insert_text(
-        (x, y), replacement, fontname="helv", fontsize=fontsize,
+        mask.origin, mask.text, fontname=MASK_FONT, fontsize=fontsize,
+        color=pymupdf.sRGB_to_pdf(mask.color),
     )
 
 
@@ -109,7 +211,7 @@ def reconstruct_pdf_with_report(
             ocr = page_textpage(page)
             if ocr is not None:
                 ocr_pages.add(page_index)
-            pdf_words = page.get_text("words", sort=False, textpage=ocr)
+            pdf_words = _page_words(page, ocr)
             word_cursor = 0
             page_word_locations[page_index] = []
             rotated_lines[page_index] = [
@@ -162,12 +264,11 @@ def reconstruct_pdf_with_report(
                     pdf_word = pdf_words[word_cursor]
                     word_cursor += 1
 
-                    if pdf_word[4] != original:
+                    if pdf_word.text != original:
                         raise ValueError("PDF text position mismatch.")
 
                     key = (line_number, index)
-                    box = pymupdf.Rect(pdf_word[:4])
-                    page_word_locations[page_index].append((key, box))
+                    page_word_locations[page_index].append((key, pdf_word))
 
                     if key in masked_words:
                         if masked_words[key].word != original:
@@ -175,7 +276,7 @@ def reconstruct_pdf_with_report(
 
                         word_locations[key] = (
                             page_index,
-                            box,
+                            pdf_word,
                         )
 
                     elif original != masked:
@@ -208,12 +309,19 @@ def reconstruct_pdf_with_report(
                 raise ValueError("Masked run crosses PDF pages.")
 
             page_index = positions[0][0]
+            words = [word for _, word in positions]
+            if any(word.glyphs is None for word in words):
+                raise ValueError(
+                    "Masked text has no clear position on page "
+                    f"{page_index + 1}; manual review required."
+                )
+            glyphs = [glyph for word in words for glyph in word.glyphs]
 
             # One rectangle covers the entire sensitive run.
-            rect = pymupdf.Rect(positions[0][1])
+            rect = pymupdf.Rect(words[0].box)
 
-            for _, box in positions[1:]:
-                rect |= box
+            for word in words[1:]:
+                rect |= word.box
 
             # OCR boxes hug the glyphs; pad them so no sliver of a
             # letter is left in the scanned image.
@@ -226,8 +334,8 @@ def reconstruct_pdf_with_report(
             # MuPDF removes every character whose box overlaps this area.
             # Reject ambiguous geometry before returning a damaged document.
             if any(
-                key not in masked_words and rect.intersects(box)
-                for key, box in page_word_locations[page_index]
+                key not in masked_words and rect.intersects(word.box)
+                for key, word in page_word_locations[page_index]
             ):
                 raise ValueError(
                     "Redaction overlaps unmarked text on page "
@@ -265,7 +373,14 @@ def reconstruct_pdf_with_report(
             )
 
             changed_pages.add(page_index)
-            masks.append((page_index, rect, replacement))
+            origin = glyphs[0].origin
+            masks.append(_Mask(
+                page_index, origin, glyphs[0].size,
+                # OCR text has no colour of its own: the scan is erased
+                # to white, so draw black.
+                0 if page_index in ocr_pages else glyphs[0].color,
+                _run_length(glyphs, origin), replacement,
+            ))
 
         # Step 3: Apply redactions to the affected pages.
         for page_index in changed_pages:
@@ -275,8 +390,8 @@ def reconstruct_pdf_with_report(
                 images=pymupdf.PDF_REDACT_IMAGE_PIXELS, graphics=0,
             )
 
-        for page_index, rect, replacement in masks:
-            _insert_mask(document[page_index], rect, replacement)
+        for mask in masks:
+            _insert_mask(document[mask.page], mask)
 
         # Step 4: Clear metadata and export the PDF.
         return _save_pdf(document), result.unmatched

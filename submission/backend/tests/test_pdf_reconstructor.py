@@ -197,6 +197,70 @@ def test_close_lines_require_review_instead_of_removing_public_text():
         assert document[0].get_text() == "Ana Correia\nPUBLIC DEPARTMENT\n"
 
 
+def _stars(page):
+    """Every "*" drawn on the page, with its span and line."""
+    return [
+        (char, span, line)
+        for block in page.get_text("rawdict")["blocks"]
+        for line in block.get("lines", [])
+        for span in line["spans"]
+        for char in span["chars"]
+        if char["c"] == "*"
+    ]
+
+
+def _words(page):
+    return {word[4]: pymupdf.Rect(word[:4])
+            for word in page.get_text("words")}
+
+
+def test_mask_starts_where_the_value_started():
+    """Asterisks on the value's baseline, from its first letter, at its
+    size and in its colour: not small dots centred in a blank gap."""
+    colour = (0.8, 0.1, 0.1)
+    with pymupdf.open() as document:
+        page = document.new_page()
+        page.insert_text(
+            (72, 100), "Nome: Ana Correia", fontsize=12, color=colour,
+        )
+        value = page.search_for("Ana Correia")[0]
+        pdf_data = document.tobytes()
+
+    result = reconstruct_pdf(
+        pdf_data, [Span(1, "Ana Correia", Category.NAME)]
+    )
+
+    with pymupdf.open(stream=result, filetype="pdf") as document:
+        stars = _stars(document[0])
+    assert len(stars) == 2
+    first, span, _ = stars[0]
+    assert abs(first["origin"][0] - value.x0) <= 2
+    assert first["origin"][1] == pytest.approx(100, abs=0.5)
+    assert span["size"] >= 0.8 * 12
+    assert pymupdf.sRGB_to_pdf(span["color"]) == pytest.approx(
+        colour, abs=0.01,
+    )
+
+
+def test_mask_shrinks_only_when_it_would_not_fit():
+    """Short words leave less room than "* * *" needs at full size."""
+    with pymupdf.open() as document:
+        page = document.new_page()
+        page.insert_text((72, 100), "Codigo: A B C fim", fontsize=10)
+        value = page.search_for("A B C")[0]
+        pdf_data = document.tobytes()
+
+    result = reconstruct_pdf(pdf_data, [Span(1, "A B C", Category.ID)])
+
+    with pymupdf.open(stream=result, filetype="pdf") as document:
+        page = document[0]
+        stars = _stars(page)
+        assert "fim" in _words(page)
+    assert len(stars) == 3
+    assert stars[0][1]["size"] < 10
+    assert max(char["bbox"][2] for char, _, _ in stars) <= value.x1 + 0.5
+
+
 def test_rotated_sensitive_text_requires_review():
     """Avoid replacing vertical text with an unsafe horizontal mask."""
     with pymupdf.open() as document:
@@ -328,8 +392,8 @@ def test_redaction_is_transparent_over_coloured_cells():
     with pymupdf.open(stream=result, filetype="pdf") as document:
         page = document[0]
         assert "Ana" not in page.get_text()
-        # Inside the redacted area, left of the centred asterisks.
-        pixel = page.get_pixmap().pixel(int(area.x0) + 1, int(area.y1) - 2)
+        # Inside the redacted area, right of the asterisks.
+        pixel = page.get_pixmap().pixel(int(area.x1) - 2, int(area.y1) - 2)
         assert pixel == (191, 216, 255)
 
 
