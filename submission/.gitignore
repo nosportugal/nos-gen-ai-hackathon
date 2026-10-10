@@ -1,0 +1,10 @@
+# Frontend (Angular)
+node_modules/
+.angular/
+
+# Local caches
+.cache/
+.pytest_cache/
+
+# macOS
+.DS_Store
