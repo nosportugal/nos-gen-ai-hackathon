@@ -1,3 +1,5 @@
+import pytest
+
 from anonymizer import detector, gemini_client
 from anonymizer.detector import Detection, DetectedSpan
 from anonymizer.spans import Category, Span
@@ -22,7 +24,7 @@ def test_prompt_has_one_placeholder_and_gets_the_document():
     assert "L002| Contacto: Ana Correia, 912 345 678" in prompt
 
 
-def test_detect_fixes_lines_drops_unknown_and_duplicates(monkeypatch):
+def test_detect_fixes_lines_and_drops_duplicates(monkeypatch):
     answer = Detection(spans=[
         found(1, "Ana Correia"),
         found(1, "Ana Correia"),                       # duplicate
@@ -37,6 +39,7 @@ def test_detect_fixes_lines_drops_unknown_and_duplicates(monkeypatch):
     assert detector.detect(TEXT) == [
         Span(1, "Ana Correia", Category.NAME, "r"),
         Span(2, "912 345 678", Category.CONTACT, "r"),
+        Span(2, "Rui Tavares", Category.NAME, "r"),    # kept for mask()
     ]
 
 
@@ -45,6 +48,43 @@ def test_locate_matches_whole_words_only():
     assert detector._locate([found(1, "Ana")], lines) == [
         Span(2, "Ana", Category.NAME, "r"),
     ]
+
+
+# Values the PDF wraps onto the next line, and numbers glued to a unit.
+WRAPPED = [
+    "O cliente refere dores ",
+    "lombares fortes desde ontem. Mede ",
+    "Altura: 1,68m ",
+    "Peso: 72kg ",
+]
+
+
+@pytest.mark.parametrize("llm_line, llm_text", [
+    (1, "dores lombares fortes"),        # complete value, start line
+    (2, "dores lombares fortes"),        # complete value, end line
+    (1, "dores \n lombares fortes"),     # LLM echoes the line break
+])
+def test_locate_splits_value_across_line_break(llm_line, llm_text):
+    spans = detector._locate(
+        [found(llm_line, llm_text, Category.HEALTH)], WRAPPED,
+    )
+    assert spans == [
+        Span(1, "dores", Category.HEALTH, "r"),
+        Span(2, "lombares fortes", Category.HEALTH, "r"),
+    ]
+
+
+@pytest.mark.parametrize("line, text", [(3, "1,68"), (4, "72")])
+def test_locate_keeps_number_glued_to_unit(line, text):
+    spans = detector._locate([found(line, text, Category.HEALTH)], WRAPPED)
+    assert spans == [Span(line, text, Category.HEALTH, "r")]
+
+
+@pytest.mark.parametrize("llm_line, kept_line", [(2, 2), (99, 4)])
+def test_locate_keeps_unfound_span_on_llm_line(llm_line, kept_line):
+    """Nothing is dropped silently: mask() reports it as unmatched."""
+    spans = detector._locate([found(llm_line, "Rui Tavares")], WRAPPED)
+    assert spans == [Span(kept_line, "Rui Tavares", Category.NAME, "r")]
 
 
 def test_generate_json_uses_cache(monkeypatch, tmp_path):

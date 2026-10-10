@@ -2,7 +2,7 @@
 
 import re
 from pathlib import Path
-from typing import List
+from typing import Dict, List, Tuple
 
 from pydantic import BaseModel
 
@@ -38,30 +38,72 @@ def build_prompt(text: str) -> str:
     return template.replace(PLACEHOLDER, number_lines(text))
 
 
-def _locate(found: List[DetectedSpan], lines: List[str]) -> List[Span]:
-    """Keep spans whose text really is in the document.
+Piece = Tuple[int, str]
 
-    If the LLM got the line number wrong, use the nearest line that
-    contains the text as whole words; drop spans that appear nowhere.
+
+def _pieces(text: str, lines: List[str], hint: int) -> List[Piece]:
+    """Where `text` is in the document, as (line, exact text) per line.
+
+    Uses the first kind of match found, nearest to the LLM's `hint`:
+    1. whole words inside one line;
+    2. whole words split by a line break (#4): one piece per line;
+    3. part of a word, e.g. "72" in "72kg" (mask() masks the whole word).
+    Any whitespace between the words of `text` is accepted. Text found
+    nowhere stays on the hinted line, so mask() reports it as unmatched
+    instead of it being lost silently.
     """
+    body = r"\s+".join(re.escape(word) for word in text.split())
+    whole = re.compile(r"(?<!\w)" + body + r"(?!\w)")
+
+    def nearest(found: Dict[int, List[Piece]]) -> List[Piece]:
+        return found[min(found, key=lambda i: abs(i - hint))]
+
+    same_line = {}
+    for i, line in enumerate(lines, 1):
+        match = whole.search(line)
+        if match:
+            same_line[i] = [(i, match.group())]
+    if same_line:
+        return nearest(same_line)
+
+    split = {}
+    for i in range(1, len(lines)):
+        joined = lines[i - 1] + "\n" + lines[i]
+        match = whole.search(joined)
+        if match:
+            cut = len(lines[i - 1])
+            split[i] = [
+                (i, joined[match.start():cut].strip()),
+                (i + 1, joined[cut + 1:match.end()].strip()),
+            ]
+    if split:
+        return nearest(split)
+
+    part = re.compile(body)
+    glued = {}
+    for i, line in enumerate(lines, 1):
+        match = part.search(line)
+        if match:
+            glued[i] = [(i, match.group())]
+    if glued:
+        return nearest(glued)
+
+    return [(min(max(hint, 1), len(lines)), text)]
+
+
+def _locate(found: List[DetectedSpan], lines: List[str]) -> List[Span]:
+    """Turn the LLM's answer into spans that each sit on one line."""
     spans = []
     seen = set()
     for item in found:
-        text = item.text.strip()
-        if not text:
+        if not item.text.strip():
             continue
-        word = re.compile(r"(?<!\w)" + re.escape(text) + r"(?!\w)")
-        candidates = [
-            i for i, line in enumerate(lines, 1) if word.search(line)
-        ]
-        if not candidates:
-            continue
-        line = min(candidates, key=lambda i: abs(i - item.line))
-        key = (line, text, item.category)
-        if key in seen:
-            continue
-        seen.add(key)
-        spans.append(Span(line, text, item.category, item.reason))
+        for line, text in _pieces(item.text, lines, item.line):
+            key = (line, text, item.category)
+            if key in seen:
+                continue
+            seen.add(key)
+            spans.append(Span(line, text, item.category, item.reason))
     return spans
 
 
