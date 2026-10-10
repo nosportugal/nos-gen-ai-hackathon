@@ -1,11 +1,12 @@
 """Deterministic masking. Owner: feature/anonymization.
 
-The detector points at spans (line + exact text). This module finds each
-span in its line, works out which words it touches and turns each of those
-words into a single "*". Lines, spacing and every other word stay byte for
-byte the same. How a "*" is finally shown (as is, blurred, a random
-value...) is up to the client, which can locate every "*" through
-mask_with_positions().
+Input: the spans of the LLM output, {"spans": [{"line", "text",
+"category", "reason"}]}, as Span objects. Only that output is used, never
+the prompt, so the prompt can change freely. Each span is found in its
+line, every word it touches becomes a single "*", and lines, spacing and
+every other word stay byte for byte the same. How a "*" is finally shown
+(as is, blurred, a random value...) is up to the client, which can locate
+every "*" through mask_with_positions().
 """
 
 import re
@@ -80,9 +81,14 @@ def mask_with_positions(text: str, spans: Sequence[Span],
 def _find(lines: List[str], span: Span) -> List[Tuple[int, int, int]]:
     """(line index, start, end) of every occurrence of the span.
 
-    Looks in the span's own line first; if the text is not there, it may
-    run over a line break, so the line is also tried joined with the next
-    one and with the previous one.
+    Tries, in order:
+    1. whole words in the span's own line;
+    2. whole words running over a line break (that line joined with the
+       next one or with the previous one);
+    3. part of a word in its own line, since a span may point at "72"
+       inside "72kg": first at the start of a word, then anywhere. The
+       whole word that contains it is masked. Needs two characters at
+       least, so a stray letter never masks half a line.
     """
     text = " ".join(span.text.split()).strip(EDGE_PUNCTUATION + " ")
     words = text.split()
@@ -90,30 +96,44 @@ def _find(lines: List[str], span: Span) -> List[Tuple[int, int, int]]:
     if not words or not 0 <= index < len(lines):
         return []
     pattern = _pattern(words)
-    found = [(index,) + m.span(1) for m in pattern.finditer(lines[index])]
+    found = _in_line(lines, index, pattern)
     if found:
         return found
     for first in (index, index - 1):
         if 0 <= first < len(lines) - 1:
             found += _across_break(lines, first, pattern)
+    if found or len(text) < 2:
+        return found
+    for word_start in (True, False):
+        found = _in_line(lines, index, _pattern(words, word_start, False))
+        if found:
+            break
     return found
 
 
-def _pattern(words: Sequence[str]) -> re.Pattern:
-    """Every occurrence of the words in order, as whole words.
+def _pattern(words: Sequence[str], word_start: bool = True,
+             word_end: bool = True) -> re.Pattern:
+    """Every occurrence of the words in order.
 
-    Any whitespace may separate the words, so a name still matches when
-    the PDF put two spaces or a line break between them; "2" never
-    matches inside "12". The pattern is a lookahead, so overlapping
+    With word_start/word_end the text must start/end on a word boundary,
+    so "2" never matches inside "12". Any whitespace may separate the
+    words, so a name still matches when the PDF put two spaces or a line
+    break between them. The pattern is a lookahead, so overlapping
     occurrences ("912 912" in "912 912 912") are all found: read each
     one with match.span(1).
     """
     body = r"\s+".join(re.escape(word) for word in words)
-    if re.match(_WORD_CHAR, words[0]):
+    if word_start and re.match(_WORD_CHAR, words[0]):
         body = "(?<!" + _WORD_CHAR + ")" + body
-    if re.search(_WORD_CHAR + "$", words[-1]):
+    if word_end and re.search(_WORD_CHAR + "$", words[-1]):
         body += "(?!" + _WORD_CHAR + ")"
     return re.compile("(?=(" + body + "))")
+
+
+def _in_line(lines: List[str], index: int,
+             pattern: re.Pattern) -> List[Tuple[int, int, int]]:
+    """Every occurrence of the pattern in one line."""
+    return [(index,) + m.span(1) for m in pattern.finditer(lines[index])]
 
 
 def _across_break(lines: List[str], first: int,

@@ -99,11 +99,52 @@ def test_values_with_inner_symbols_are_one_word_each():
 
 def test_punctuation_can_be_masked_too():
     text = "Filhos: 2 (João, 15 anos e Ana, 12 anos)"
-    spans = [span(1, "João"), span(1, "Ana")]
-    assert mask(text, spans) == "Filhos: 2 (*, 15 anos e *, 12 anos)"
+    spans = [
+        span(1, "João"),
+        span(1, "15", Category.AGE),
+        span(1, "Ana"),
+        span(1, "12", Category.AGE),
+    ]
+    assert mask(text, spans) == "Filhos: 2 (*, * anos e *, * anos)"
     assert mask(text, spans, keep_punctuation=False) == (
-        "Filhos: 2 * 15 anos e * 12 anos)"
+        "Filhos: 2 * * anos e * * anos)"
     )
+
+
+def test_ages_of_everyone_are_masked():
+    text = "\n".join([
+        "A paciente Maria Santos, mulher caucasiana de 47 anos,",
+        "histórico de cancro da mama (mãe falecida aos 52 anos)",
+        "Filhos: 2 (João, 15 anos e Ana, 12 anos)",
+        "Tem diabetes tipo 2, diagnosticada há 5 anos.",
+    ])
+    ages = [
+        span(1, "47", Category.AGE),
+        span(2, "52", Category.AGE),
+        span(3, "15", Category.AGE),
+        span(3, "12", Category.AGE),
+    ]
+    assert mask(text, ages).split("\n") == [
+        "A paciente Maria Santos, mulher caucasiana de * anos,",
+        "histórico de cancro da mama (mãe falecida aos * anos)",
+        "Filhos: 2 (João, * anos e Ana, * anos)",
+        "Tem diabetes tipo 2, diagnosticada há 5 anos.",
+    ]
+
+
+def test_characters_between_numbers_stay_in_one_word():
+    text = (
+        "Hábitos: consome álcool socialmente (2-3 doses por semana)\n"
+        "Pressão arterial na admissão: 145/90 mmHg"
+    )
+    spans = [
+        span(1, "2-3", Category.PRIVATE_LIFE),
+        span(2, "145/90", Category.HEALTH),
+    ]
+    assert mask(text, spans).split("\n") == [
+        "Hábitos: consome álcool socialmente (* doses por semana)",
+        "Pressão arterial na admissão: * mmHg",
+    ]
 
 
 def test_span_text_with_surrounding_punctuation():
@@ -121,10 +162,8 @@ def test_mixed_punctuation_around_span_text():
 
 
 def test_whole_words_only():
-    text = "Filhos: 2 (João, 15 anos e Ana, 12 anos)"
-    assert mask(text, [span(1, "2", Category.PRIVATE_LIFE)]) == (
-        "Filhos: * (João, 15 anos e Ana, 12 anos)"
-    )
+    text = "Quarto 2, cama 12"
+    assert mask(text, [span(1, "2", Category.ID)]) == "Quarto *, cama 12"
 
 
 def test_every_occurrence_in_the_line():
@@ -136,13 +175,54 @@ def test_overlapping_occurrences_are_all_masked():
     assert mask("Telefone: 912 912 912", spans) == "Telefone: * * *"
 
 
-def test_decomposed_accents_keep_whole_words():
-    text = unicodedata.normalize("NFD", "Nome: Andréa José Silva")
-    andre = span(1, unicodedata.normalize("NFD", "André"))
-    jose = span(1, "Jose")
-    result = mask_with_positions(text, [andre, jose])
-    assert result.text == text
-    assert result.unmatched == [andre, jose]
+def test_decomposed_accents_belong_to_their_word():
+    def nfd(text):
+        return unicodedata.normalize("NFD", text)
+
+    assert mask(nfd("Nome: Andréa e André"), [span(1, nfd("André"))]) == (
+        nfd("Nome: Andréa e *")
+    )
+    assert mask(nfd("Nome: José e Jose"), [span(1, "Jose")]) == (
+        nfd("Nome: José e *")
+    )
+
+
+def test_part_of_a_word_masks_the_whole_word():
+    text = "\n".join([
+        "Altura: 1,68m",
+        "Peso: 72kg",
+        "Prescrição: Metformina 850mg 2x/dia, Losartana 50mg 1x/dia",
+    ])
+    spans = [
+        span(1, "1,68", Category.HEALTH),
+        span(2, "72", Category.HEALTH),
+        span(3, "Losartana 50", Category.HEALTH),
+    ]
+    assert mask(text, spans).split("\n") == [
+        "Altura: *",
+        "Peso: *",
+        "Prescrição: Metformina 850mg 2x/dia, * * 1x/dia",
+    ]
+
+
+def test_part_of_a_word_prefers_the_start_of_a_word():
+    text = "Metformina 850mg, Losartana 50mg"
+    assert mask(text, [span(1, "50", Category.HEALTH)]) == (
+        "Metformina 850mg, Losartana *"
+    )
+
+
+def test_text_inside_a_word_masks_that_word():
+    assert mask("Código ABC123XYZ", [span(1, "123", Category.ID)]) == (
+        "Código *"
+    )
+
+
+def test_a_single_letter_is_never_looked_for_inside_words():
+    stray = span(1, "a")
+    result = mask_with_positions("Mariana e Anabela", [stray])
+    assert result.text == "Mariana e Anabela"
+    assert result.unmatched == [stray]
 
 
 def test_overlapping_spans_mask_each_word_once():
