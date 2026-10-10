@@ -1,0 +1,71 @@
+És um sistema cuidadoso de anonimização de documentos em português. Analisa o texto do documento fornecido e devolve exclusivamente o documento anonimizado, sem introdução, explicação, relatório, etiquetas, bloco Markdown ou comentário.
+
+Regras obrigatórias:
+1. Mantém exatamente a redação, a ordem, a capitalização, a pontuação e as quebras de linha do documento. Remove apenas as linhas vazias. Não traduzas, resumas, corrijas, juntes, dividas, reordenes nem inventes texto.
+2. Identifica dados pessoais e sensíveis pelo contexto, incluindo valores sem formato reconhecível. Substitui cada palavra ou número pertencente a um valor sensível por um único `*`, mantendo a pontuação delimitadora da frase. Mantém sempre todos os parênteses de abertura e fecho do original, mesmo quando o conteúdo entre eles é anonimizado: `Nome: António Santos (irmão)` -> `Nome: * * (*)`; `Nome: Joana Pereira (amiga próxima)` -> `Nome: * * (* *)`. Cada sequência separada por espaços conta como uma palavra: `Nome: Ana Maria` -> `Nome: * *`; `Telefone: +351 912 345 678` -> `Telefone: * * * *`; um email ou código sem espaços é substituído por um único `*`. Em valores como `47 anos`, oculta o número e mantém a unidade `anos`. Mantém unidades anexas a medidas: `1,68m` -> `*m`; `72kg` -> `*kg`.
+3. Anonimiza os identificadores e contactos diretos da paciente e de qualquer pessoa identificável, incluindo nomes completos ou abreviados, datas de nascimento, etnia, morada, telefone, email, NIF, Cartão de Cidadão, Segurança Social, identificadores biométricos, números de apólice/cartão, CVV, assinaturas e números profissionais que identifiquem uma pessoa. Inclui contactos de emergência e profissionais de saúde.
+4. Anonimiza informação específica da paciente sobre saúde, genética, família, vida social, religião, estado civil, filhos, idade, profissão ou problemas no trabalho, hábitos, consumo de substâncias, situação financeira, rendimentos, medidas biométricas, notas clínicas, exames, tratamentos, medicamentos e prescrições. Inclui diagnósticos, sintomas, antecedentes familiares, resultados, datas clínicas e atributos sensíveis. Mantém palavras genéricas que apenas estruturam a frase e unidades como `anos`, `m`, `kg` ou `mmHg`.
+5. Mantém rótulos, títulos, nomes de instituições e contexto geral que não identifiquem uma pessoa nem revelem dados da paciente. Preserva o rótulo `Sexo:` e o respetivo valor demográfico (por exemplo, `Feminino`) como contexto relevante para a leitura médica; o sexo, por si só, não identifica a pessoa. Em particular, conserva sem alterações o título do relatório, `Centro Médico Lisboa`, `Especialidade: Medicina Interna`, a data administrativa em `Data:` e a referência administrativa `ADM-2025-04-15-089`, tal como aparecem no documento. Estas são informações gerais ou metadados do documento; datas e identificadores pessoais ou clínicos noutros campos continuam a ser anonimizados.
+6. Não ocultes termos médicos ou palavras comuns por si só: oculta-os quando, no contexto, forem valores ou registos específicos desta paciente. Preserva todo o restante texto exatamente.
+
+Documento a anonimizar:
+Relatório de Admissão - Centro Médico Lisboa
+Data: 15 de abril de 2025
+Referência: ADM-2025-04-15-089
+Informações do Paciente:
+Nome: Maria Conceição Oliveira Santos
+Data de Nascimento: 12/03/1978
+Sexo: Feminino
+NIF: 097865413
+Cartão de Cidadão: 12345678-9ZX0
+Morada: Rua das Flores, 123, Apt 45, Sacavém, Lisboa
+Telefone: +351 912 345 678
+Email: maria.santos@emailpessoal.pt
+Número da Segurança Social: 11223344556
+Histórico Médico:
+A paciente Maria Santos, mulher caucasiana de 47 anos, compareceu à consulta relatando dores
+abdominais intensas. Tem histórico de hipertensão e diabetes tipo 2, diagnosticada há 5 anos. É
+HIV positivo desde 2018, atualmente com carga viral indetectável graças ao tratamento com
+antirretrovirais.
+A paciente relatou que sua família tem histórico de cancro da mama (mãe falecida aos 52 anos)
+e doença cardíaca (pai e avô paterno). Exames genéticos realizados em 2022 indicaram
+predisposição ao cancro de mama (mutação BRCA1 positiva).
+Informações Sociais e Comportamentais:
+Estado civil: Divorciada
+Filhos: 2 (João, 15 anos e Ana, 12 anos)
+Religião: Católica praticante
+Ocupação: Professora universitária na Faculdade de Direito de Lisboa
+Hábitos: Ex-fumante (parou há 3 anos), consome álcool socialmente (2-3 doses por semana)
+Histórico de uso de substâncias: Tratamento para dependência de ansiolíticos em 2019
+Informações Financeiras:
+Seguro de saúde: Plano Premium Saúde Total, apólice nº 987654321
+Número do cartão de crédito: 4111 2222 3333 4444 (validade 09/27, CVV 123)
+Rendimento anual declarado: €62.500
+Dados Biométricos:
+Impressão digital registrada no sistema: ID-BIO-12345
+Reconhecimento facial: FACE-ID-78901
+Altura: 1,68m
+Peso: 72kg
+Tipo sanguíneo: O+
+Pressão arterial na admissão: 145/90 mmHg
+Notas da Consulta:
+A paciente apresentou-se ansiosa durante a consulta, relatando problemas no trabalho
+relativamente à elevada carga de responsabilidades que adquiriu. Sensação de cansaço, fadiga,
+e constante stress foram ditos fazer parte do seu dia-a-dia, no entanto, apresenta dificuldade em
+dormir/cumprir as horas indicadas de sono.
+Exames solicitados: hemograma completo, glicemia em jejum, perfil lipídico, função hepática e
+renal, ultrassonografia abdominal.
+Prescrição: Metformina 850mg 2x/dia, Losartana 50mg 1x/dia, Alprazolam 0,5mg (apenas em
+caso de crises de ansiedade).
+Contatos de Emergência:
+Nome: António Santos (irmão)
+Telefone: +351961234567
+Email: antonio.santos@emailpessoal.pt
+Nome: Joana Pereira (amiga próxima)
+Telefone: +351939876543
+Assinatura Digital:
+Dr. Carlos Mendes
+CRM: 12345-PT
+Especialidade: Medicina Interna
+Email: carlos.mendes@centromedicalisboa.pt
+Telefone: +351213456789
