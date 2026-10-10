@@ -1,10 +1,7 @@
-
-from pathlib import Path
-
 import pymupdf
 import pytest
 
-from anonymizer.extract import extract_text
+from anonymizer.extract import extract_text, extract_text_from_bytes
 
 
 def test_extract_text_from_pdf(tmp_path):
@@ -39,10 +36,12 @@ def test_extract_multiple_pages(tmp_path):
     assert result.splitlines() == ["Pagina 1", "Pagina 2"]
 
 
-def test_missing_pdf():
+def test_missing_pdf(tmp_path):
     """Verify that a missing file raises an error."""
+    pdf_path = tmp_path / "missing.pdf"
+
     with pytest.raises(FileNotFoundError):
-        extract_text(Path("missing.pdf"))
+        extract_text(pdf_path)
 
 
 def test_empty_pdf(tmp_path):
@@ -55,3 +54,29 @@ def test_empty_pdf(tmp_path):
 
     with pytest.raises(ValueError):
         extract_text(pdf_path)
+
+
+def test_extract_text_with_string_path(tmp_path):
+    """Verify that the function accepts a string path."""
+    pdf_path = tmp_path / "test_string.pdf"
+
+    with pymupdf.open() as document:
+        page = document.new_page()
+        page.insert_text((72, 72), "Nome: Maria Santos")
+        document.save(str(pdf_path))
+
+    result = extract_text(str(pdf_path))
+
+    assert "Nome: Maria Santos" in result
+
+
+def test_extract_text_from_bytes():
+    """Verify that PDF bytes can be processed directly."""
+    with pymupdf.open() as document:
+        page = document.new_page()
+        page.insert_text((72, 72), "Nome: Ana Correia")
+        pdf_bytes = document.tobytes()
+
+    result = extract_text_from_bytes(pdf_bytes)
+
+    assert "Nome: Ana Correia" in result

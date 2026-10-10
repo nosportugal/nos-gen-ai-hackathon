@@ -1,27 +1,18 @@
 """PDF text extraction using PyMuPDF."""
-
 from pathlib import Path
-
 import pymupdf
 
 
-def extract_text(pdf_path: Path) -> str:
-    """Extract PDF text while removing empty lines."""
-
-    if not pdf_path.is_file():
-        raise FileNotFoundError(
-            f"PDF not found: {pdf_path}"
-        )
+def _extract_document(document: pymupdf.Document) -> str:
 
     lines = []
 
-    with pymupdf.open(str(pdf_path)) as document:
-        for page in document:
-            page_text = page.get_text("text", sort=False)
+    for page in document:
+        page_text = page.get_text("text", sort=False)
 
-            for line in page_text.splitlines():
-                if line.strip():
-                    lines.append(line)
+        for line in page_text.split("\n"):
+            if line.strip():
+                lines.append(line)
 
     if not lines:
         raise ValueError(
@@ -29,3 +20,27 @@ def extract_text(pdf_path: Path) -> str:
         )
 
     return "\n".join(lines)
+
+
+def extract_text(pdf_path: Path | str) -> str:
+    """Extract text from a PDF using its file path."""
+
+    pdf_path = Path(pdf_path)
+
+    if not pdf_path.is_file():
+        raise FileNotFoundError(
+            f"PDF not found: {pdf_path}"
+        )
+
+    with pymupdf.open(str(pdf_path)) as document:
+        return _extract_document(document)
+
+
+def extract_text_from_bytes(data: bytes) -> str:
+    """Extract text directly from PDF bytes without saving a file."""
+
+    with pymupdf.open(
+        stream=data,
+        filetype="pdf"
+    ) as document:
+        return _extract_document(document)
