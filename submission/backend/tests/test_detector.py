@@ -33,7 +33,8 @@ def test_detect_fixes_lines_and_drops_duplicates(monkeypatch):
         found(1, "  "),                                # empty
     ])
     monkeypatch.setattr(
-        gemini_client, "generate_json", lambda prompt, schema: answer,
+        gemini_client, "generate_json_raw",
+        lambda prompt, schema: (answer, answer.model_dump_json()),
     )
 
     assert detector.detect(TEXT) == [
