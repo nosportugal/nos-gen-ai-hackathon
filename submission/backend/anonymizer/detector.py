@@ -47,7 +47,8 @@ def _pieces(text: str, lines: List[str], hint: int) -> List[Piece]:
     Uses the first kind of match found, nearest to the LLM's `hint`:
     1. whole words inside one line;
     2. whole words split by a line break (#4): one piece per line;
-    3. part of a word, e.g. "72" in "72kg" (mask() masks the whole word).
+    3. part of a word, e.g. "72" in "72kg" (mask() masks the whole word):
+       at least two characters, start of a word before anywhere (#9).
     Any whitespace between the words of `text` is accepted. Text found
     nowhere stays on the hinted line, so mask() reports it as unmatched
     instead of it being lost silently.
@@ -79,14 +80,18 @@ def _pieces(text: str, lines: List[str], hint: int) -> List[Piece]:
     if split:
         return nearest(split)
 
-    part = re.compile(body)
-    glued = {}
-    for i, line in enumerate(lines, 1):
-        match = part.search(line)
-        if match:
-            glued[i] = [(i, match.group())]
-    if glued:
-        return nearest(glued)
+    # Part of a word (#9): same order as the masker. At least two
+    # characters, first at the start of a word ("50" in "50mg", not in
+    # "1500mg"), then anywhere ("123" in "ABC123XYZ").
+    if len(text) >= 2:
+        for part in (re.compile(r"(?<!\w)" + body), re.compile(body)):
+            glued = {}
+            for i, line in enumerate(lines, 1):
+                match = part.search(line)
+                if match:
+                    glued[i] = [(i, match.group())]
+            if glued:
+                return nearest(glued)
 
     return [(min(max(hint, 1), len(lines)), text)]
 
