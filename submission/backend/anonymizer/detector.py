@@ -1,8 +1,110 @@
 """LLM detection of sensitive data. Owner: feature/gemini-detection."""
 
-from typing import List
+import re
+from pathlib import Path
+from typing import Dict, List, Tuple
 
-from anonymizer.spans import Span
+from pydantic import BaseModel
+
+from anonymizer import gemini_client
+from anonymizer.spans import Category, Span
+
+PROMPT_PATH = Path(__file__).resolve().parents[2] / "prompt.txt"
+PLACEHOLDER = "{{DOCUMENT}}"
+
+
+class DetectedSpan(BaseModel):
+    line: int
+    text: str
+    category: Category
+    reason: str
+
+
+class Detection(BaseModel):
+    spans: List[DetectedSpan]
+
+
+def number_lines(text: str) -> str:
+    """Prefix each line with "L001| " so the LLM can point at lines."""
+    return "\n".join(
+        f"L{i:03d}| {line}"
+        for i, line in enumerate(text.split("\n"), start=1)
+    )
+
+
+def build_prompt(text: str) -> str:
+    """prompt.txt with the numbered document in place of the placeholder."""
+    template = PROMPT_PATH.read_text(encoding="utf-8")
+    return template.replace(PLACEHOLDER, number_lines(text))
+
+
+Piece = Tuple[int, str]
+
+
+def _pieces(text: str, lines: List[str], hint: int) -> List[Piece]:
+    """Where `text` is in the document, as (line, exact text) per line.
+
+    Uses the first kind of match found, nearest to the LLM's `hint`:
+    1. whole words inside one line;
+    2. whole words split by a line break (#4): one piece per line;
+    3. part of a word, e.g. "72" in "72kg" (mask() masks the whole word).
+    Any whitespace between the words of `text` is accepted. Text found
+    nowhere stays on the hinted line, so mask() reports it as unmatched
+    instead of it being lost silently.
+    """
+    body = r"\s+".join(re.escape(word) for word in text.split())
+    whole = re.compile(r"(?<!\w)" + body + r"(?!\w)")
+
+    def nearest(found: Dict[int, List[Piece]]) -> List[Piece]:
+        return found[min(found, key=lambda i: abs(i - hint))]
+
+    same_line = {}
+    for i, line in enumerate(lines, 1):
+        match = whole.search(line)
+        if match:
+            same_line[i] = [(i, match.group())]
+    if same_line:
+        return nearest(same_line)
+
+    split = {}
+    for i in range(1, len(lines)):
+        joined = lines[i - 1] + "\n" + lines[i]
+        match = whole.search(joined)
+        if match:
+            cut = len(lines[i - 1])
+            split[i] = [
+                (i, joined[match.start():cut].strip()),
+                (i + 1, joined[cut + 1:match.end()].strip()),
+            ]
+    if split:
+        return nearest(split)
+
+    part = re.compile(body)
+    glued = {}
+    for i, line in enumerate(lines, 1):
+        match = part.search(line)
+        if match:
+            glued[i] = [(i, match.group())]
+    if glued:
+        return nearest(glued)
+
+    return [(min(max(hint, 1), len(lines)), text)]
+
+
+def _locate(found: List[DetectedSpan], lines: List[str]) -> List[Span]:
+    """Turn the LLM's answer into spans that each sit on one line."""
+    spans = []
+    seen = set()
+    for item in found:
+        if not item.text.strip():
+            continue
+        for line, text in _pieces(item.text, lines, item.line):
+            key = (line, text, item.category)
+            if key in seen:
+                continue
+            seen.add(key)
+            spans.append(Span(line, text, item.category, item.reason))
+    return spans
 
 
 def detect(text: str) -> List[Span]:
@@ -11,4 +113,5 @@ def detect(text: str) -> List[Span]:
     The LLM only points at spans; it never rewrites the document, so the
     formatting cannot drift. Each span must match its line exactly.
     """
-    raise NotImplementedError("detect: feature/gemini-detection")
+    detection = gemini_client.generate_json(build_prompt(text), Detection)
+    return _locate(detection.spans, text.split("\n"))
