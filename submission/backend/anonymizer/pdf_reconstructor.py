@@ -238,9 +238,12 @@ def reconstruct_pdf_with_report(
             )
 
             # Remove text first; insert masks after all redactions are applied.
+            # fill=False keeps the area transparent, so cell colours and
+            # table lines underneath stay; apply_redactions() still deletes
+            # the text. (fill=None would mean white in PyMuPDF.)
             document[page_index].add_redact_annot(
                 rect,
-                fill=(0.85, 0.85, 0.85),
+                fill=False,
                 cross_out=False,
             )
 

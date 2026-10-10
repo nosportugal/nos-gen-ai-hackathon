@@ -303,3 +303,24 @@ def test_complex_layout_preserves_public_words_and_table_lines():
             assert public_words[page_index] <= actual_words
         actual_paths = [path["items"] for path in document[0].get_drawings()]
         assert all(path in actual_paths for path in table_paths)
+
+
+def test_redaction_is_transparent_over_coloured_cells():
+    """The text is removed but the cell colour underneath stays."""
+    with pymupdf.open() as document:
+        page = document.new_page()
+        page.draw_rect((60, 50, 300, 90), color=None, fill=(0.75, 0.85, 1))
+        page.insert_text((72, 75), "Nome: Ana Correia")
+        area = page.search_for("Ana Correia")[0]
+        pdf_data = document.tobytes()
+
+    result = reconstruct_pdf(
+        pdf_data, [Span(1, "Ana Correia", Category.NAME)]
+    )
+
+    with pymupdf.open(stream=result, filetype="pdf") as document:
+        page = document[0]
+        assert "Ana" not in page.get_text()
+        # Inside the redacted area, left of the centred asterisks.
+        pixel = page.get_pixmap().pixel(int(area.x0) + 1, int(area.y1) - 2)
+        assert pixel == (191, 216, 255)
