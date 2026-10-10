@@ -17,13 +17,14 @@
   {
     "id": "contact_location",
     "name": "Contacto e localização",
-    "description": "Moradas, localidades de residência, telefones, emails e o local de trabalho de uma pessoa.",
+    "description": "Moradas, localidades de residência, telefones, emails, a profissão e o local de trabalho de uma pessoa.",
     "examples": [
       "Avenida da Liberdade, 45, 2.º Esq.",
       "Odivelas",
       "+351 934 567 890",
       "pedro.almeida@correio.pt",
-      "Escola Secundária de Setúbal"
+      "Escola Secundária de Setúbal",
+      "Engenheiro civil"
     ],
     "do_not_mask": [
       "O nome da instituição no título do relatório",
@@ -68,10 +69,12 @@
   {
     "id": "sensitive_social",
     "name": "Dados sociais sensíveis",
-    "description": "Religião, origem étnica, orientação sexual, estado civil, consumo de substâncias e dependências.",
+    "description": "Religião, origem étnica, nacionalidade, filiação política, orientação sexual, estado civil, consumo de substâncias e dependências.",
     "examples": [
       "Muçulmano",
       "mulher afrodescendente",
+      "nacionalidade brasileira",
+      "militante do Partido X",
       "Viúvo",
       "consumo de cannabis",
       "dependência de opioides"

@@ -215,10 +215,10 @@ differently; check this against the first CI evaluation result.
 | id | Covers |
 |---|---|
 | `identity` | names of people (patient, relatives, friends, doctor), age |
-| `contact_location` | address, phone, email, workplace |
+| `contact_location` | address, phone, email, profession, workplace |
 | `gov_financial_ids` | NIF, Cartão de Cidadão, social security no., card number, expiry, CVV, insurance policy no., income, professional licence no. |
 | `health` | diagnoses, HIV status, genetics, family medical history, medication, biometrics and biometric IDs |
-| `sensitive_social` | religion, ethnicity, marital status, substance use |
+| `sensitive_social` | religion, ethnicity, nationality, political affiliation, sexual orientation, marital status, substance use |
 
 Each entry has `id`, `name`, `description`, `examples` and `do_not_mask`. The
 exact boundaries (e.g. sex, blood type, the hospital's name) are a team
