@@ -17,7 +17,7 @@ def fake_steps(monkeypatch):
     )
     monkeypatch.setattr(
         detector, "detect",
-        lambda text: calls.append(("detect", text)) or [SPAN],
+        lambda text, save_run=None: calls.append(("detect", text)) or [SPAN],
     )
     monkeypatch.setattr(
         masker, "mask",

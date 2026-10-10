@@ -1,8 +1,11 @@
 """LLM detection of sensitive data. Owner: feature/gemini-detection."""
 
+import hashlib
+import json
 import re
+from datetime import datetime, timezone
 from pathlib import Path
-from typing import Dict, List, Tuple
+from typing import Dict, List, Optional, Tuple
 
 from pydantic import BaseModel
 
@@ -11,6 +14,8 @@ from anonymizer.spans import Category, Span
 
 PROMPT_PATH = Path(__file__).resolve().parents[2] / "prompt.txt"
 PLACEHOLDER = "{{DOCUMENT}}"
+RUN_SPANS = "spans.json"
+RUN_INFO = "run.json"
 
 
 class DetectedSpan(BaseModel):
@@ -107,11 +112,43 @@ def _locate(found: List[DetectedSpan], lines: List[str]) -> List[Span]:
     return spans
 
 
-def detect(text: str) -> List[Span]:
+def detect(text: str, save_run: Optional[Path] = None) -> List[Span]:
     """Ask Gemini which parts of the text are sensitive.
 
     The LLM only points at spans; it never rewrites the document, so the
-    formatting cannot drift. Each span must match its line exactly.
+    formatting cannot drift. With `save_run`, the model's answer and the
+    run details are written to that folder (see save_run()), so the run
+    can be shown and replayed without the API.
     """
-    detection = gemini_client.generate_json(build_prompt(text), Detection)
+    prompt = build_prompt(text)
+    detection, raw = gemini_client.generate_json_raw(prompt, Detection)
+    if save_run is not None:
+        _save_run(save_run, raw, prompt, text)
     return _locate(detection.spans, text.split("\n"))
+
+
+def detect_from_run(text: str, run_dir: Path) -> List[Span]:
+    """Reuse the answer saved by detect(save_run=...) instead of the API."""
+    raw = (run_dir / RUN_SPANS).read_text(encoding="utf-8")
+    return _locate(Detection.model_validate_json(raw).spans, text.split("\n"))
+
+
+def _save_run(run_dir: Path, raw: str, prompt: str, text: str) -> None:
+    """spans.json = the answer as returned; run.json = what produced it."""
+    run_dir.mkdir(parents=True, exist_ok=True)
+    (run_dir / RUN_SPANS).write_text(raw, encoding="utf-8")
+    info = {
+        "model": gemini_client.get_model(),
+        "prompt_file": PROMPT_PATH.name,
+        "prompt_sha256": _sha256(prompt),
+        "document_sha256": _sha256(text),
+        "document_lines": text.count("\n") + 1,
+        "created_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+    }
+    (run_dir / RUN_INFO).write_text(
+        json.dumps(info, indent=2) + "\n", encoding="utf-8",
+    )
+
+
+def _sha256(value: str) -> str:
+    return hashlib.sha256(value.encode("utf-8")).hexdigest()

@@ -8,7 +8,7 @@ import hashlib
 import os
 import time
 from pathlib import Path
-from typing import Optional, Type, TypeVar
+from typing import Optional, Tuple, Type, TypeVar
 
 from dotenv import load_dotenv
 from google import genai
@@ -61,16 +61,22 @@ def _call(model: str, prompt: str, schema: Type[BaseModel]) -> str:
 
 def generate_json(prompt: str, schema: Type[T]) -> T:
     """Return the model's answer parsed into `schema`, using the cache."""
+    return generate_json_raw(prompt, schema)[0]
+
+
+def generate_json_raw(prompt: str, schema: Type[T]) -> Tuple[T, str]:
+    """Like generate_json(), plus the JSON text exactly as returned."""
     model = get_model()
     key = hashlib.sha256(
         "\n".join([model, schema.__name__, prompt]).encode("utf-8")
     ).hexdigest()
     cached = CACHE_DIR / f"{key}.json"
     if cached.exists():
-        return schema.model_validate_json(cached.read_text("utf-8"))
+        raw = cached.read_text("utf-8")
+        return schema.model_validate_json(raw), raw
 
     raw = _call(model, prompt, schema)
     result = schema.model_validate_json(raw)
     CACHE_DIR.mkdir(parents=True, exist_ok=True)
     cached.write_text(raw, encoding="utf-8")
-    return result
+    return result, raw
