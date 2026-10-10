@@ -59,6 +59,17 @@ def entities(text: str, spans: Sequence[Span]) -> List[Entity]:
     return result
 
 
+def selected_spans(found: Iterable[Entity],
+                   selected_ids: Iterable[str]) -> List[Span]:
+    """The spans behind the selected entities, each once, in order."""
+    wanted = set(selected_ids)
+    spans: List[Span] = []
+    for entity in found:
+        if entity.id in wanted and entity.span not in spans:
+            spans.append(entity.span)
+    return spans
+
+
 def mask_selected(text: str, found: Iterable[Entity],
                   selected_ids: Iterable[str]) -> str:
     """mask() with only the selected entities.
@@ -66,12 +77,7 @@ def mask_selected(text: str, found: Iterable[Entity],
     Masking is span based, so identical values on the same line are
     masked together even if only one of them is selected.
     """
-    wanted = set(selected_ids)
-    spans = []
-    for entity in found:
-        if entity.id in wanted and entity.span not in spans:
-            spans.append(entity.span)
-    return masker.mask(text, spans)
+    return masker.mask(text, selected_spans(found, selected_ids))
 
 
 def _line_starts(lines: Sequence[str]) -> List[int]:
