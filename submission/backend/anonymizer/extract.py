@@ -1,12 +1,46 @@
-"""PDF to text. Owner: feature/pdf-processing."""
-
+"""PDF text extraction using PyMuPDF."""
 from pathlib import Path
+import pymupdf
 
 
-def extract_text(pdf_path: Path) -> str:
-    """Return the document text with PyMuPDF.
+def _extract_document(document: pymupdf.Document) -> str:
 
-    Lines are separated by "\\n" and empty lines are removed; everything
-    else stays as extracted, because the output must keep the formatting.
-    """
-    raise NotImplementedError("extract_text: feature/pdf-processing")
+    lines = []
+
+    for page in document:
+        page_text = page.get_text("text", sort=False)
+
+        for line in page_text.split("\n"):
+            if line.strip():
+                lines.append(line)
+
+    if not lines:
+        raise ValueError(
+            "PDF contains no extractable text."
+        )
+
+    return "\n".join(lines)
+
+
+def extract_text(pdf_path: Path | str) -> str:
+    """Extract text from a PDF using its file path."""
+
+    pdf_path = Path(pdf_path)
+
+    if not pdf_path.is_file():
+        raise FileNotFoundError(
+            f"PDF not found: {pdf_path}"
+        )
+
+    with pymupdf.open(str(pdf_path)) as document:
+        return _extract_document(document)
+
+
+def extract_text_from_bytes(data: bytes) -> str:
+    """Extract text directly from PDF bytes without saving a file."""
+
+    with pymupdf.open(
+        stream=data,
+        filetype="pdf"
+    ) as document:
+        return _extract_document(document)
