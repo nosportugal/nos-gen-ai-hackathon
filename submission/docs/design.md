@@ -103,7 +103,9 @@ submission/
 
 Dependencies are listed in the root `requirements.txt`. The API key is read
 from the `API_KEY` env var; a local `.env` (gitignored) is loaded with
-`python-dotenv`.
+`python-dotenv`. `MODEL` selects the pipeline model (default
+`gemini-2.5-flash`) and `VALIDATION_MODEL` the judge model; without it, the
+meaning score is skipped.
 
 ## 6. Contracts
 
@@ -117,6 +119,7 @@ class Finding(BaseModel):
     text: str        # copied verbatim from the document
     category: str    # an id from categories.json
     reason: str      # one short sentence, shown in the report
+    context: str = ""  # the line the finding sits on, copied verbatim
 
 class DetectorResult(BaseModel):
     findings: list[Finding]
@@ -138,11 +141,14 @@ class EntailmentScore(BaseModel):
 class LLMClient(Protocol):
     def generate_json(self, prompt: str,
                       schema: type[T]) -> T: ...
+    def generate_text(self, prompt: str) -> str: ...
 ```
 
-`GeminiClient(model, temperature=0.0)` implements it with `google-genai`.
-Tests use `FakeLLMClient` (in `tests/`), which returns queued responses and
-records the prompts it receives.
+`GeminiClient(model, temperature=0.0)` implements it with `google-genai`,
+retrying HTTP 429/500/503 with backoff (1 s, 2 s, 4 s). Tests use
+`FakeLLMClient` (in `tests/`). It answers through a
+`responder(prompt, schema)` function, routing on prompt content rather than
+call order (agents run in parallel), and records the prompts it receives.
 
 ### 6.3 Agents
 
@@ -155,8 +161,11 @@ review(masked_text, base, client) -> list[Finding]
 ### 6.4 Pipeline and validation
 
 ```python
+apply_findings(text, findings) -> MaskResult
+    # .masked: str, .unmatched: list[Finding] (not found verbatim)
+
 run_pipeline(text, base, client) -> PipelineResult
-    # .masked: str, .findings: list[Finding], .rejected: list[str]
+    # .masked, .findings, .rejected: list[str], .unmatched
 
 DocumentValidator(client=None)
     .entailment(original, anonymised) -> int    # 0-100
@@ -178,8 +187,13 @@ Category ids must exist in `categories.json`.
 ## 7. Masking rule
 
 - A **word** is a token separated by whitespace.
-- A token is masked when any part of it overlaps a finding's text. Every
-  occurrence of a finding's text in the document is masked.
+- A token is masked when any part of it overlaps a finding's text. The
+  text only matches as whole words (`Ana` never matches inside
+  `Anamnese`).
+- When a finding has a `context` (its line), only occurrences inside that
+  line are masked. Masking every occurrence would also hide the `Lisboa`
+  in the title `Centro Médico Lisboa`, which must stay visible. A finding
+  with no `context` is masked everywhere.
 - Punctuation at the start or end of the token (`, . ; : ( ) ! ?`) is kept,
   and the rest of the token becomes a single `*`.
 - Punctuation inside the token (`@ . - / +`) belongs to the word.
@@ -259,8 +273,9 @@ best by F1 on held-out synthetic docs -> human review -> prompt.txt
 
 ```
 pip install -r requirements.txt
-python submission/run.py                 # pipeline -> submission.txt
-python submission/run.py --single-shot   # prompt.txt alone, like CI
+python -m submission.run                 # pipeline -> submission.txt
+python -m submission.run --single-shot   # prompt.txt alone, like CI
+python -m submission.run --no-validate   # skip the entailment score
 python -m unittest discover -s submission -t .
 flake8 .
 ```
