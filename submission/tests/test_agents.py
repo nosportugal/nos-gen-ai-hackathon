@@ -14,6 +14,14 @@ HEALTH = Category(
     examples=["asma crónica"],
     do_not_mask=["Nomes de secções"],
 )
+IDENTITY = Category(
+    id="identity",
+    name="Identidade",
+    description="Nomes de pessoas.",
+    examples=["Pedro Almeida"],
+    do_not_mask=["Papéis sem nome"],
+)
+CATEGORIES = [IDENTITY, HEALTH]
 DOCUMENT = "Nome: Maria Santos\nDiagnóstico: hipertensão"
 
 
@@ -25,45 +33,59 @@ def finding_json(text, category, context=""):
 
 
 class TestDetector(unittest.TestCase):
-    def test_detect_forces_category_id(self):
-        reply = f'{{"findings": [{finding_json("hipertensão", "wrong")}]}}'
-        client = FakeLLMClient(lambda prompt, schema: reply)
-
-        findings = detect(DOCUMENT, HEALTH, "BASE", client)
-
-        self.assertEqual([f.text for f in findings], ["hipertensão"])
-        self.assertEqual(findings[0].category, "health")
-
-    def test_detect_prompt_contains_category_and_document(self):
+    def test_detect_is_one_call_for_all_categories(self):
         client = FakeLLMClient(lambda prompt, schema: '{"findings": []}')
 
-        detect(DOCUMENT, HEALTH, "BASE", client)
+        detect(DOCUMENT, CATEGORIES, "BASE", client)
 
+        self.assertEqual(len(client.prompts), 1)
         prompt = client.prompts[0]
         self.assertTrue(prompt.startswith("BASE"))
-        self.assertIn("health", prompt)
+        for category in CATEGORIES:
+            self.assertIn(f"Categoria: {category.id}", prompt)
         self.assertIn("asma crónica", prompt)
         self.assertTrue(prompt.endswith(DOCUMENT))
 
+    def test_detect_keeps_model_category(self):
+        reply = (
+            f'{{"findings": [{finding_json("Maria Santos", "identity")}, '
+            f'{finding_json("hipertensão", "health")}]}}'
+        )
+        client = FakeLLMClient(lambda prompt, schema: reply)
+
+        findings = detect(DOCUMENT, CATEGORIES, "BASE", client)
+
+        self.assertEqual(
+            [(f.text, f.category) for f in findings],
+            [("Maria Santos", "identity"), ("hipertensão", "health")],
+        )
+
 
 class TestContextChecker(unittest.TestCase):
-    def test_check_context_lists_findings_in_prompt(self):
+    def test_check_context_is_one_call_for_all_findings(self):
         findings = [
+            Finding(text="Maria Santos", category="identity", reason="r",
+                    context="Nome: Maria Santos"),
             Finding(text="hipertensão", category="health", reason="r",
                     context="Diagnóstico: hipertensão"),
         ]
         reply = (
-            f'{{"additions": [{finding_json("Maria", "wrong")}], '
+            f'{{"additions": [{finding_json("Maria", "identity")}], '
             f'"rejections": ["hipertensão"]}}'
         )
         client = FakeLLMClient(lambda prompt, schema: reply)
 
-        result = check_context(DOCUMENT, HEALTH, findings, "BASE", client)
+        result = check_context(DOCUMENT, CATEGORIES, findings, "BASE",
+                               client)
 
-        self.assertIn("hipertensão", client.prompts[0])
-        self.assertIn("Diagnóstico: hipertensão", client.prompts[0])
+        self.assertEqual(len(client.prompts), 1)
+        prompt = client.prompts[0]
+        for finding in findings:
+            self.assertIn(finding.text, prompt)
+            self.assertIn(finding.context, prompt)
+            self.assertIn(finding.category, prompt)
         self.assertEqual(result.rejections, ["hipertensão"])
-        self.assertEqual(result.additions[0].category, "health")
+        self.assertEqual(result.additions[0].category, "identity")
 
 
 class TestReviewer(unittest.TestCase):

@@ -75,8 +75,8 @@ class TestDataset(unittest.TestCase):
 class TestEvaluate(unittest.TestCase):
     def test_evaluate_micro_averages(self):
         def respond(prompt, schema):
-            if ("Categoria: identity" in prompt
-                    and "detetor de uma categoria" in prompt):
+            if ("detetor de dados sensíveis" in prompt
+                    and prompt.endswith("Nome: Ana")):
                 return json.dumps({"findings": [{
                     "text": "Ana", "category": "identity",
                     "reason": "r", "context": "",

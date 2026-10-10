@@ -9,8 +9,8 @@
 `submission/`, so the team can refine the prompts and agents and plug in
 synthetic data, scoring and prompt optimisation.
 
-**Architecture:** Plain-Python orchestrator. Gemini agents (5 detectors,
-context checkers, 1 reviewer) return `Finding`s as structured JSON. A
+**Architecture:** Plain-Python orchestrator. Gemini agents (1 detector, 1
+context checker, 1 reviewer; see the addendum) return `Finding`s as JSON. A
 deterministic masker turns each sensitive word into `*`. The hand-written
 `prompt.txt` is the shared base of every agent prompt.
 
@@ -689,3 +689,36 @@ diffs `submission.txt`. Category labels aren't needed for that.
   - the unmatched list is empty or explainable.
 - [ ] **Step 4: Checkpoint.** João commits `submission.txt`, `prompt.txt`
   and `outputs/`, then opens the PR when the team is ready.
+
+---
+
+## Addendum: consolidated agents and `retryDelay` (after Task 11)
+
+Free-tier keys allow as few as 5 requests per minute. Tasks 8 and 9 built
+one detector and one context checker **per category**, running in
+parallel: up to 11 calls per document, so a single document was rejected.
+This addendum supersedes their interfaces (spec §4 and §6.3 are current).
+
+**Consolidation**
+- `detect(text, categories: list[Category], base, client) ->
+  list[Finding]`: one call covering every category. Findings keep the
+  category the model assigns (a report label only; masking ignores it).
+- `check_context(text, categories, findings, base, client) ->
+  ContextResult`: one call for all findings, each listed as
+  `[category] "text" (linha: "context")`.
+- `format_categories(categories) -> str` joins `format_category`, which
+  stays unchanged because `data_generator.py` uses it.
+- `run_pipeline(text, base, client, categories=None)`: no thread pool and
+  no `max_workers`. Calls are sequential: detector, then the context
+  checker (skipped when nothing was found), then the reviewer. At most 3.
+- `prompts/detector.md` asks the detector to check every category on every
+  line; `prompts/context_checker.md` lists the categories and all findings.
+- Tests: `test_agents.py` (one call per role, labels kept),
+  `test_orchestrator.py` (exactly 3 calls with findings, 2 without).
+
+**`retryDelay`**
+- On a retryable 429 (per-minute quota), `GeminiClient` waits the delay
+  Google sends (`'retryDelay': '32s'`) instead of 1/2/4 s, capped at
+  `MAX_RETRY_DELAY = 60` seconds. Other retryable errors keep the 1/2/4 s
+  backoff; a per-day 429 still fails fast.
+- Test: `test_429_waits_server_retry_delay` (sleep called with 32).

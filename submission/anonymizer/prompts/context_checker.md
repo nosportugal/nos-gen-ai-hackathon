@@ -1,11 +1,11 @@
 ## A tua tarefa neste passo: verificação de contexto
 
 Ignora a instrução de devolver o documento anonimizado. Um detetor marcou
-os dados abaixo como sensíveis nesta categoria:
+como sensíveis os dados listados mais abaixo, segundo estas categorias:
 
 $category_block
 
-Dados marcados:
+Dados marcados ([id da categoria] "dado" e a linha onde aparece):
 $findings_block
 
 Faz duas verificações, sem nunca reescrever o texto:

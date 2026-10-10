@@ -1,4 +1,3 @@
-from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
 
 from submission.anonymizer.agents.context_checker import check_context
@@ -19,33 +18,24 @@ class PipelineResult:
 
 
 def run_pipeline(text: str, base: str, client: LLMClient,
-                 categories: list[Category] | None = None,
-                 max_workers: int = 5) -> PipelineResult:
-    """Detect -> context-check -> mask -> review -> mask again."""
+                 categories: list[Category] | None = None
+                 ) -> PipelineResult:
+    """Detect -> context-check -> mask -> review -> mask again.
+
+    At most 3 Gemini calls, made one after another: free-tier keys allow as
+    few as 5 requests per minute, so a burst of parallel per-category calls
+    would be rejected before the document is done.
+    """
     if categories is None:
         categories = load_categories()
 
-    with ThreadPoolExecutor(max_workers=max_workers) as pool:
-        detected = list(pool.map(
-            lambda category: detect(text, category, base, client),
-            categories,
-        ))
+    findings = detect(text, categories, base, client)
 
-        flagged = [
-            (category, findings)
-            for category, findings in zip(categories, detected)
-            if findings
-        ]
-        checks = list(pool.map(
-            lambda pair: check_context(text, pair[0], pair[1], base, client),
-            flagged,
-        ))
-
-    findings = [f for category_findings in detected for f in category_findings]
     rejected = []
-    for check in checks:
-        findings.extend(check.additions)
-        rejected.extend(check.rejections)
+    if findings:
+        check = check_context(text, categories, findings, base, client)
+        findings = findings + check.additions
+        rejected = check.rejections
 
     findings = _dedupe(f for f in findings if f.text not in rejected)
     first_pass = apply_findings(text, findings)

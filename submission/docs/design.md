@@ -48,21 +48,28 @@ CI never runs our code. It only reads the two text files.
 ```
 prompt.txt --base_prompt--> shared instructions (document section dropped)
 PDF --extract--> text (no empty lines)
-  -> 5 x detector (parallel)                          -> findings/category
-  -> context_checker for each category with findings  -> +spans / -rejects
-  -> merge + dedupe -> masking.apply_findings          -> masked v1
-  -> reviewer (sees masked v1, flags leaks; 1 pass)   -> extra findings
+  -> detector (all categories, 1 call)               -> labelled findings
+  -> context_checker (all findings, 1 call; skipped
+     when nothing was found)                         -> +spans / -rejects
+  -> merge + dedupe -> masking.apply_findings         -> masked v1
+  -> reviewer (sees masked v1, flags leaks; 1 call)  -> extra findings
   -> masking again -> submission.txt ; report.md ; findings.json
 ```
 
 - **Agent prompt** = shared instructions from `prompt.txt` + the agent's
-  focus from `prompts/<agent>.md` (with the category inserted) + the document
-  text.
-- **Budget:** at most 5 + 5 + 1 = 11 Gemini calls per run, at temperature 0,
-  with JSON-structured output (`response_schema` set to a pydantic model).
-- **Parallelism:** detectors and context checkers run in a
-  `ThreadPoolExecutor`. Rate-limit errors are retried with backoff in
-  `llm.py`.
+  focus from `prompts/<agent>.md` (with every category inserted) + the
+  document text.
+- **Budget:** at most 3 Gemini calls per document, made one after another,
+  at temperature 0, with JSON-structured output (`response_schema` set to a
+  pydantic model).
+- **Why one call per role, not per category:** free-tier keys allow as few
+  as 5 requests per minute, so 5 parallel per-category detectors (up to 11
+  calls per document) were rejected before a single document finished.
+  The cost is that one detector covers every category; its prompt asks it
+  to check every category on every line, and `evaluate/score.py` measures
+  whether recall holds. The category the model assigns is only a report
+  label: masking doesn't depend on it.
+- Rate-limit and connection errors are retried in `llm.py`.
 
 ## 5. Directory layout
 
@@ -150,16 +157,18 @@ class LLMClient(Protocol):
 ```
 
 `GeminiClient(model, temperature=0.0)` implements it with `google-genai`,
-retrying HTTP 429/500/503 with backoff (1 s, 2 s, 4 s). Tests use
+retrying HTTP 429/500/503 and dropped connections with backoff (1 s, 2 s,
+4 s; a per-minute 429 waits the `retryDelay` Google sends, capped at 60 s)
+and failing fast on a per-day 429. Tests use
 `FakeLLMClient` (in `tests/`). It answers through a
 `responder(prompt, schema)` function, routing on prompt content rather than
-call order (agents run in parallel), and records the prompts it receives.
+call order, and records the prompts it receives.
 
 ### 6.3 Agents
 
 ```python
-detect(text, category, base, client) -> list[Finding]
-check_context(text, category, findings, base, client) -> ContextResult
+detect(text, categories, base, client) -> list[Finding]
+check_context(text, categories, findings, base, client) -> ContextResult
 review(masked_text, base, client) -> list[Finding]
 ```
 
