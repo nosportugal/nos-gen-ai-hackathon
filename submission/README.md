@@ -108,4 +108,4 @@ For the human-in-the-loop validation demo:
 * **FastAPI:** (Optional) For serving the validation UI endpoints.
 
 ---
-*Built with ❤️ for JunctionX Lisbon 2026 by João, Rogério, and Salvador.*
+*Built for JunctionX Lisbon 2026 by João Henriques, Rogério Soares, and Salvador Antunes.*
