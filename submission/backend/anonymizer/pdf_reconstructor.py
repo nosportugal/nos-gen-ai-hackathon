@@ -1,9 +1,11 @@
 
 """Reconstruct PDFs with compact groups of masked words."""
 
+import math
 import re
+from collections import Counter
 from dataclasses import dataclass
-from typing import List, Optional, Sequence, Tuple
+from typing import Dict, List, Optional, Sequence, Tuple
 
 import pymupdf
 
@@ -15,6 +17,11 @@ OCR_PADDING = 1.5  # points around OCR word boxes
 # Base-14 Courier Bold: its "*" sits at mid height and reads at small
 # sizes; Helvetica's is thin and floats near the cap height.
 MASK_FONT = "cobo"
+# Half the side of the box that removes one glyph of a tilted line: MuPDF
+# removes a glyph when the box touches the glyph's ink.
+GLYPH_PROBE = 0.1
+POSITION_TOLERANCE = 0.5  # points, comparing words before/after redaction
+HORIZONTAL = (1.0, 0.0)
 
 
 @dataclass(frozen=True)
@@ -30,7 +37,7 @@ class _Glyph:
 
 @dataclass(frozen=True)
 class _Word:
-    """A word of page.get_text("words") and its characters.
+    """A word of page.get_text("words") and the line it sits on.
 
     glyphs is None when the characters of the word could not be told
     apart; such a word can be kept, but not masked.
@@ -38,6 +45,7 @@ class _Word:
 
     text: str
     box: pymupdf.Rect
+    direction: Optional[Tuple[float, float]]
     glyphs: Optional[Tuple[_Glyph, ...]]
 
 
@@ -47,9 +55,10 @@ class _Mask:
 
     page: int
     origin: pymupdf.Point
+    direction: Tuple[float, float]
     size: float
     color: int
-    length: float  # room from origin to the run's end
+    length: float  # room along the line, from origin to the run's end
     text: str
 
 
@@ -83,7 +92,7 @@ def _line_words(line: dict) -> List[List[_Glyph]]:
 
 def _page_words(page: pymupdf.Page,
                 textpage: Optional[pymupdf.TextPage]) -> List[_Word]:
-    """Words in reading order, each with its characters.
+    """Words in reading order, each with its characters and direction.
 
     textpage: the OCR of a scanned page, or None for the page's own text.
     Words and characters are read from one text page, so the numbers of
@@ -96,40 +105,127 @@ def _page_words(page: pymupdf.Page,
         if block["type"] != 0:
             continue
         for line_index, line in enumerate(block["lines"]):
+            direction = tuple(line["dir"])
             for word_index, glyphs in enumerate(_line_words(line)):
-                lines[(block["number"], line_index, word_index)] = tuple(
-                    glyphs
+                lines[(block["number"], line_index, word_index)] = (
+                    direction, tuple(glyphs),
                 )
 
     words = []
     for word in page.get_text("words", sort=False, textpage=textpage):
-        glyphs = lines.get(tuple(word[5:8]))
+        direction, glyphs = lines.get(tuple(word[5:8]), (None, None))
         if glyphs is None or "".join(g.char for g in glyphs) != word[4]:
-            glyphs = None
-        words.append(_Word(word[4], pymupdf.Rect(word[:4]), glyphs))
+            direction, glyphs = None, None
+        words.append(_Word(word[4], pymupdf.Rect(word[:4]), direction, glyphs))
     return words
 
 
-def _run_length(glyphs: Sequence[_Glyph], origin: pymupdf.Point) -> float:
-    """How far the run reaches to the right of `origin`."""
-    return max(glyph.bbox.x1 for glyph in glyphs) - origin.x
+def _ink_centres(page: pymupdf.Page) -> Dict[tuple, pymupdf.Point]:
+    """A point inside the ink of every character, by character origin.
+
+    With accurate boxes a character's box spans its advance and its ink
+    height, so the box centre is inside the ink of nearly every glyph,
+    even a "." that sits on the baseline.
+    """
+    raw = page.get_text(
+        "rawdict",
+        flags=pymupdf.TEXTFLAGS_WORDS | pymupdf.TEXT_ACCURATE_BBOXES,
+    )
+    centres = {}
+    for block in raw["blocks"]:
+        for line in block.get("lines", []):
+            for span in line["spans"]:
+                for char in span["chars"]:
+                    box = pymupdf.Rect(char["bbox"])
+                    centres[_glyph_key(char["c"], char["origin"])] = (
+                        (box.tl + box.br) / 2
+                    )
+    return centres
+
+
+def _glyph_key(char: str, origin: Sequence[float]) -> tuple:
+    return (char, round(origin[0], 3), round(origin[1], 3))
+
+
+def _probe(centre: pymupdf.Point) -> pymupdf.Rect:
+    return pymupdf.Rect(
+        centre.x - GLYPH_PROBE, centre.y - GLYPH_PROBE,
+        centre.x + GLYPH_PROBE, centre.y + GLYPH_PROBE,
+    )
+
+
+def _guard_boxes(word: _Word) -> List[pymupdf.Rect]:
+    """Where a word must not be touched by a redaction.
+
+    The box of a word on a tilted line also covers its neighbours, so
+    such a word is checked letter by letter.
+    """
+    if word.direction == HORIZONTAL or word.glyphs is None:
+        return [word.box]
+    return [glyph.bbox for glyph in word.glyphs]
+
+
+def _run_length(glyphs: Sequence[_Glyph], origin: pymupdf.Point,
+                direction: Tuple[float, float]) -> float:
+    """How far the run reaches along its line from `origin`."""
+    dx, dy = direction
+    return max(
+        (corner.x - origin.x) * dx + (corner.y - origin.y) * dy
+        for glyph in glyphs
+        for corner in (glyph.bbox.tl, glyph.bbox.tr,
+                       glyph.bbox.bl, glyph.bbox.br)
+    )
 
 
 def _insert_mask(page: pymupdf.Page, mask: _Mask) -> None:
     """Draw the asterisks where the value started, on its baseline.
 
     Same size and colour as the value, smaller only when the asterisks
-    would not fit in the value's width.
+    would not fit in the value's length, and along the value's
+    direction when its line is rotated or tilted.
     """
     font = pymupdf.Font(MASK_FONT)
     width = font.text_length(mask.text, fontsize=1)
     if mask.length <= 0 or width <= 0 or mask.size <= 0:
         raise ValueError("Invalid mask rectangle; manual review required.")
     fontsize = min(mask.size, mask.length / width)
+
+    angle = math.degrees(math.atan2(-mask.direction[1], mask.direction[0]))
+    quarter = round(angle / 90)
+    if abs(angle - 90 * quarter) < 0.01:
+        turn = {"rotate": (90 * quarter) % 360}
+    else:
+        turn = {"morph": (mask.origin, pymupdf.Matrix(angle))}
     page.insert_text(
         mask.origin, mask.text, fontname=MASK_FONT, fontsize=fontsize,
-        color=pymupdf.sRGB_to_pdf(mask.color),
+        color=pymupdf.sRGB_to_pdf(mask.color), **turn,
     )
+
+
+def _same_words(before: Sequence[_Word], page: pymupdf.Page) -> bool:
+    """Whether the page still has exactly these words, in these places."""
+    def key(text, box):
+        return (text,) + tuple(round(value, 1) for value in box)
+
+    expected = Counter(key(word.text, word.box) for word in before)
+    found = Counter(
+        key(word[4], word[:4]) for word in page.get_text("words")
+    )
+    missing = list((expected - found).elements())
+    extra = list((found - expected).elements())
+    # Rounding can split equal positions: match the rest with tolerance.
+    for word in missing:
+        match = next((
+            other for other in extra
+            if other[0] == word[0] and all(
+                abs(a - b) <= POSITION_TOLERANCE
+                for a, b in zip(word[1:], other[1:])
+            )
+        ), None)
+        if match is None:
+            return False
+        extra.remove(match)
+    return not extra
 
 
 def _save_pdf(document: pymupdf.Document) -> bytes:
@@ -196,7 +292,6 @@ def reconstruct_pdf_with_report(
 
     word_locations = {}
     page_word_locations = {}
-    rotated_lines = {}
     ocr_pages = set()
     line_number = 0
 
@@ -214,17 +309,6 @@ def reconstruct_pdf_with_report(
             pdf_words = _page_words(page, ocr)
             word_cursor = 0
             page_word_locations[page_index] = []
-            rotated_lines[page_index] = [
-                pymupdf.Rect(line["bbox"])
-                for block in page.get_text(
-                    "dict", flags=(
-                        pymupdf.TEXTFLAGS_DICT & ~pymupdf.TEXT_PRESERVE_IMAGES
-                    ), textpage=ocr,
-                )["blocks"]
-                if block["type"] == 0
-                for line in block["lines"]
-                if line["dir"] != (1.0, 0.0)
-            ]
 
             # Same lines as extract_text(), which drops the trailing
             # space PyMuPDF leaves on Word PDFs (#14).
@@ -294,6 +378,7 @@ def reconstruct_pdf_with_report(
         # Step 2: Group consecutive sensitive words.
         changed_pages = set()
         masks = []
+        ink_centres = {}
 
         for run in runs(result.words):
             positions = [
@@ -309,44 +394,78 @@ def reconstruct_pdf_with_report(
                 raise ValueError("Masked run crosses PDF pages.")
 
             page_index = positions[0][0]
+            page = document[page_index]
             words = [word for _, word in positions]
-            if any(word.glyphs is None for word in words):
+            direction = words[0].direction
+            if (
+                any(word.glyphs is None for word in words)
+                or any(word.direction != direction for word in words)
+            ):
                 raise ValueError(
                     "Masked text has no clear position on page "
                     f"{page_index + 1}; manual review required."
                 )
             glyphs = [glyph for word in words for glyph in word.glyphs]
 
-            # One rectangle covers the entire sensitive run.
-            rect = pymupdf.Rect(words[0].box)
+            if direction == HORIZONTAL:
+                # One rectangle covers the entire sensitive run.
+                rect = pymupdf.Rect(words[0].box)
+                for word in words[1:]:
+                    rect |= word.box
 
-            for word in words[1:]:
-                rect |= word.box
-
-            # OCR boxes hug the glyphs; pad them so no sliver of a
-            # letter is left in the scanned image.
-            if page_index in ocr_pages:
-                rect = pymupdf.Rect(
-                    rect.x0 - OCR_PADDING, rect.y0 - OCR_PADDING,
-                    rect.x1 + OCR_PADDING, rect.y1 + OCR_PADDING,
-                )
+                # OCR boxes hug the glyphs; pad them so no sliver of a
+                # letter is left in the scanned image.
+                if page_index in ocr_pages:
+                    rect = pymupdf.Rect(
+                        rect.x0 - OCR_PADDING, rect.y0 - OCR_PADDING,
+                        rect.x1 + OCR_PADDING, rect.y1 + OCR_PADDING,
+                    )
+                rects = [rect]
+            else:
+                # The upright box of a tilted run also covers the label
+                # and the lines next to it, so each letter is removed on
+                # its own, through a point inside its ink. Those points
+                # would leave the value visible in a picture underneath
+                # (a scan, with or without a text layer): review instead.
+                area = pymupdf.Rect(glyphs[0].bbox)
+                for glyph in glyphs[1:]:
+                    area |= glyph.bbox
+                if page_index in ocr_pages or any(
+                    area.intersects(image["bbox"])
+                    for image in page.get_image_info()
+                ):
+                    raise ValueError(
+                        "Tilted text over an image on page "
+                        f"{page_index + 1}; manual review required."
+                    )
+                if page_index not in ink_centres:
+                    ink_centres[page_index] = _ink_centres(page)
+                rects = []
+                for glyph in glyphs:
+                    centre = ink_centres[page_index].get(
+                        _glyph_key(glyph.char, glyph.origin)
+                    )
+                    if centre is None:
+                        raise ValueError(
+                            "Tilted text has no clear position on page "
+                            f"{page_index + 1}; manual review required."
+                        )
+                    rects.append(_probe(centre))
 
             # MuPDF removes every character whose box overlaps this area.
             # Reject ambiguous geometry before returning a damaged document.
             if any(
-                key not in masked_words and rect.intersects(word.box)
+                rect.intersects(box)
                 for key, word in page_word_locations[page_index]
+                if key not in masked_words
+                for box in _guard_boxes(word)
+                for rect in rects
             ):
                 raise ValueError(
                     "Redaction overlaps unmarked text on page "
                     f"{page_index + 1}; manual review required."
                 )
-            if any(rect.intersects(box)
-                   for box in rotated_lines[page_index]):
-                raise ValueError(
-                    "Rotated sensitive text requires manual review."
-                )
-            if any(document[page_index].annots(
+            if any(page.annots(
                 types=[pymupdf.PDF_ANNOT_REDACT],
             )) and page_index not in changed_pages:
                 raise ValueError(
@@ -366,29 +485,43 @@ def reconstruct_pdf_with_report(
             # fill=False keeps the area transparent, so cell colours and
             # table lines underneath stay; apply_redactions() still deletes
             # the text. (fill=None would mean white in PyMuPDF.)
-            document[page_index].add_redact_annot(
-                rect,
-                fill=False,
-                cross_out=False,
-            )
+            for rect in rects:
+                page.add_redact_annot(
+                    rect,
+                    fill=False,
+                    cross_out=False,
+                )
 
             changed_pages.add(page_index)
             origin = glyphs[0].origin
             masks.append(_Mask(
-                page_index, origin, glyphs[0].size,
+                page_index, origin, direction, glyphs[0].size,
                 # OCR text has no colour of its own: the scan is erased
                 # to white, so draw black.
                 0 if page_index in ocr_pages else glyphs[0].color,
-                _run_length(glyphs, origin), replacement,
+                _run_length(glyphs, origin, direction), replacement,
             ))
 
         # Step 3: Apply redactions to the affected pages.
         for page_index in changed_pages:
+            page = document[page_index]
             # images: on scanned pages the words are pixels, so the
             # pixels under each masked run are erased from the image.
-            document[page_index].apply_redactions(
+            page.apply_redactions(
                 images=pymupdf.PDF_REDACT_IMAGE_PIXELS, graphics=0,
             )
+            # The checks above work on boxes; this one reads the result:
+            # every unmarked word must still be there, every masked word
+            # gone. (Scanned pages have no text layer to read.)
+            kept = [
+                word for key, word in page_word_locations[page_index]
+                if key not in masked_words
+            ]
+            if page_index not in ocr_pages and not _same_words(kept, page):
+                raise ValueError(
+                    "Redaction changed unmarked text on page "
+                    f"{page_index + 1}; manual review required."
+                )
 
         for mask in masks:
             _insert_mask(document[mask.page], mask)

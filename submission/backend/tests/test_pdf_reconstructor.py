@@ -3,6 +3,7 @@ from pathlib import Path
 import pymupdf
 import pytest
 
+from anonymizer import pdf_reconstructor
 from anonymizer.extract import extract_text_from_bytes, ocr_language
 
 from anonymizer.pdf_reconstructor import (
@@ -197,6 +198,25 @@ def test_close_lines_require_review_instead_of_removing_public_text():
         assert document[0].get_text() == "Ana Correia\nPUBLIC DEPARTMENT\n"
 
 
+def _line_of(pdf_data, text):
+    """1-based line of the extracted text that contains `text`."""
+    lines = extract_text_from_bytes(pdf_data).split("\n")
+    return next(number for number, line in enumerate(lines, 1)
+                if text in line)
+
+
+def _start_of(page, text):
+    """Direction of the line holding `text` and the origin of its first
+    character."""
+    for block in page.get_text("rawdict")["blocks"]:
+        for line in block.get("lines", []):
+            chars = [c for span in line["spans"] for c in span["chars"]]
+            at = "".join(c["c"] for c in chars).find(text)
+            if at >= 0:
+                return line["dir"], chars[at]["origin"]
+    raise AssertionError(f"{text!r} not on the page")
+
+
 def _stars(page):
     """Every "*" drawn on the page, with its span and line."""
     return [
@@ -261,16 +281,149 @@ def test_mask_shrinks_only_when_it_would_not_fit():
     assert max(char["bbox"][2] for char, _, _ in stars) <= value.x1 + 0.5
 
 
-def test_rotated_sensitive_text_requires_review():
-    """Avoid replacing vertical text with an unsafe horizontal mask."""
+def test_rotated_line_masks_the_value_and_keeps_its_label():
+    """A 90-degree line: the number goes, its label stays, and the
+    asterisks run up the page like the text did."""
     with pymupdf.open() as document:
         page = document.new_page()
-        page.insert_text((100, 300), "Ana Correia", rotate=90)
+        page.insert_text((100, 500), "Telefone: 912 345 678", rotate=90)
+        direction, origin = _start_of(page, "912")
+        label = _words(page)["Telefone:"]
+        pdf_data = document.tobytes()
+
+    result, unmatched = reconstruct_pdf_with_report(
+        pdf_data, [Span(1, "912 345 678", Category.CONTACT)]
+    )
+
+    assert unmatched == []
+    with pymupdf.open(stream=result, filetype="pdf") as document:
+        page = document[0]
+        words = _words(page)
+        stars = _stars(page)
+    assert words["Telefone:"] == label
+    assert not {"912", "345", "678"} & set(words)
+    assert len(stars) == 3
+    first, _, line = stars[0]
+    assert line["dir"] == pytest.approx(direction)
+    assert first["origin"] == pytest.approx(origin, abs=1)
+
+
+def test_tilted_line_masks_the_value_and_keeps_its_label():
+    """A line at 17 degrees: only the email's letters are removed."""
+    with pymupdf.open() as document:
+        page = document.new_page()
+        start = pymupdf.Point(150, 500)
+        page.insert_text(
+            start, "Email: ana.correia@example.com", fontsize=11,
+            morph=(start, pymupdf.Matrix(17)),
+        )
+        direction, origin = _start_of(page, "ana.correia")
+        label = _words(page)["Email:"]
+        pdf_data = document.tobytes()
+
+    result, unmatched = reconstruct_pdf_with_report(
+        pdf_data, [Span(1, "ana.correia@example.com", Category.CONTACT)]
+    )
+
+    assert unmatched == []
+    with pymupdf.open(stream=result, filetype="pdf") as document:
+        page = document[0]
+        words = _words(page)
+        stars = _stars(page)
+        assert "example" not in page.get_text()
+    assert words["Email:"] == label
+    assert len(stars) == 1
+    first, _, line = stars[0]
+    assert line["dir"] == pytest.approx(direction, abs=0.001)
+    assert first["origin"] == pytest.approx(origin, abs=1)
+
+
+def test_public_text_around_a_tilted_value_is_untouched():
+    """The upright box of a tilted value covers far more than its
+    letters: words inside that box but away from the letters stay."""
+    with pymupdf.open() as document:
+        page = document.new_page()
+        start = pymupdf.Point(100, 500)
+        page.insert_text(
+            start, "Email: ana.correia@example.com", fontsize=11,
+            morph=(start, pymupdf.Matrix(20)),
+        )
+        page.insert_text((200, 495), "Texto publico", fontsize=11)
+        page.insert_text((150, 440), "Outro texto", fontsize=11)
+        before = page.get_text("words")
+        value = next(pymupdf.Rect(w[:4]) for w in before if "@" in w[4])
+        public = {(w[4], tuple(w[:4])) for w in before if "@" not in w[4]}
+        pdf_data = document.tobytes()
+
+    # One redaction box over the value would have erased these words.
+    assert all(value.intersects(box) for word, box in public
+               if word in {"publico", "Outro"})
+    number = _line_of(pdf_data, "ana.correia@example.com")
+
+    result = reconstruct_pdf(
+        pdf_data,
+        [Span(number, "ana.correia@example.com", Category.CONTACT)],
+    )
+
+    with pymupdf.open(stream=result, filetype="pdf") as document:
+        page = document[0]
+        after = {(w[4], tuple(w[:4])) for w in page.get_text("words")}
+        assert "example" not in page.get_text()
+    assert public <= after
+
+
+def test_rotated_value_crossed_by_public_text_requires_review():
+    """A public word drawn across a vertical name: removing the name
+    would cut into it, so the rebuild stops for review instead."""
+    with pymupdf.open() as document:
+        page = document.new_page()
+        page.insert_text((100, 400), "Ana Correia", rotate=90)
+        page.insert_text((90, 380), "PUBLICO")
+        pdf_data = document.tobytes()
+    number = _line_of(pdf_data, "Ana Correia")
+
+    with pytest.raises(ValueError, match="(?i)review"):
+        reconstruct_pdf_with_report(
+            pdf_data, [Span(number, "Ana Correia", Category.NAME)]
+        )
+
+
+def test_tilted_value_over_a_picture_requires_review():
+    """Removing a tilted value letter by letter would leave it visible in
+    a picture underneath, as in a scan with a text layer."""
+    with pymupdf.open() as document:
+        page = document.new_page()
+        picture = pymupdf.Pixmap(pymupdf.csRGB, (0, 0, 40, 40), False)
+        picture.clear_with(200)
+        page.insert_image((80, 380, 360, 520), pixmap=picture)
+        start = pymupdf.Point(100, 500)
+        page.insert_text(
+            start, "Email: ana.correia@example.com", fontsize=11,
+            morph=(start, pymupdf.Matrix(17)),
+        )
         pdf_data = document.tobytes()
 
     with pytest.raises(ValueError, match="(?i)review"):
         reconstruct_pdf_with_report(
-            pdf_data, [Span(1, "Ana Correia", Category.NAME)]
+            pdf_data,
+            [Span(1, "ana.correia@example.com", Category.CONTACT)],
+        )
+
+
+def test_redaction_result_is_read_back(monkeypatch):
+    """Even when the box check is fooled, the words left after the
+    redaction are compared with the words that had to stay."""
+    monkeypatch.setattr(pdf_reconstructor, "_guard_boxes", lambda word: [])
+    with pymupdf.open() as document:
+        page = document.new_page()
+        page.insert_text((100, 400), "Ana Correia", rotate=90)
+        page.insert_text((90, 380), "PUBLICO")
+        pdf_data = document.tobytes()
+    number = _line_of(pdf_data, "Ana Correia")
+
+    with pytest.raises(ValueError, match="(?i)changed unmarked.*review"):
+        reconstruct_pdf_with_report(
+            pdf_data, [Span(number, "Ana Correia", Category.NAME)]
         )
 
 
