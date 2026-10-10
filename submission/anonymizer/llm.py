@@ -1,3 +1,4 @@
+import re
 import time
 from typing import Protocol, TypeVar
 
@@ -67,7 +68,7 @@ class GeminiClient:
                         f"Gemini failed after retries: {error}"
                     ) from error
 
-                self._sleep(2 ** attempt)
+                self._sleep(_retry_delay(error, attempt))
 
 
 def _is_retryable(error: Exception) -> bool:
@@ -77,6 +78,15 @@ def _is_retryable(error: Exception) -> bool:
                           httpx.TransportError)):
         return True
     return getattr(error, "code", None) in config.RETRY_CODES
+
+
+def _retry_delay(error: Exception, attempt: int) -> float:
+    # A per-minute 429 says how long to wait ('retryDelay': '32s'); the
+    # fixed 1/2/4 s backoff would retry too early and fail every time.
+    match = re.search(r"'retryDelay': '(\d+(?:\.\d+)?)s'", str(error))
+    if match:
+        return min(float(match.group(1)), config.MAX_RETRY_DELAY)
+    return 2 ** attempt
 
 
 def _is_daily_quota(error: Exception) -> bool:

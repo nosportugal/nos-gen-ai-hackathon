@@ -15,6 +15,7 @@ DEFAULT_MODEL = "gemini-3.8-flash"
 TEMPERATURE = 0.0
 RETRY_CODES = {429, 500, 503}
 MAX_RETRIES = 3
+MAX_RETRY_DELAY = 60.0
 
 # Every setting loads .env itself, so callers may read a model name before
 # anything else touched the environment. load_dotenv never overrides

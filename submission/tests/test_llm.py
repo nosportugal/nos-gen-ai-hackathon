@@ -97,6 +97,24 @@ class TestGeminiClient(unittest.TestCase):
 
         self.assertEqual(result.score, 87)
 
+    def test_429_waits_server_retry_delay(self):
+        self.generate.side_effect = [
+            Err(429, "PerMinute ... {'retryDelay': '32s'}"), ok_response()
+        ]
+
+        self.make().generate_json("p", EntailmentScore)
+
+        self.sleep.assert_called_once_with(32.0)
+
+    def test_server_retry_delay_is_capped(self):
+        self.generate.side_effect = [
+            Err(429, "{'retryDelay': '600s'}"), ok_response()
+        ]
+
+        self.make().generate_json("p", EntailmentScore)
+
+        self.sleep.assert_called_once_with(config.MAX_RETRY_DELAY)
+
     def test_daily_quota_fails_fast(self):
         self.generate.side_effect = Err(
             429, "quotaId: GenerateRequestsPerDayPerProjectPerModel-FreeTier"
