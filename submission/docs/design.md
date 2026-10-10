@@ -104,7 +104,7 @@ submission/
 Dependencies are listed in the root `requirements.txt`. The API key is read
 from the `API_KEY` env var; a local `.env` (gitignored) is loaded with
 `python-dotenv`. `MODEL` selects the pipeline model (default
-`gemini-2.5-flash`) and `VALIDATION_MODEL` the judge model; without it, the
+`gemini-3.8-flash`) and `VALIDATION_MODEL` the judge model; without it, the
 meaning score is skipped.
 
 ## 6. Contracts
@@ -174,15 +174,14 @@ DocumentValidator(client=None)
 
 ### 6.5 Synthetic data format
 
-One JSON file per document in `synth/data/`:
-
-```json
-{"id": "synth-001",
- "text": "Relatório ...",
- "spans": [{"text": "Maria Santos", "category": "identity"}]}
-```
-
-Category ids must exist in `categories.json`.
+`data_generator.py` writes pairs of files to `synth/data/`:
+`synthetic_document_NNN.txt` (the document, without empty lines) and
+`synthetic_document_NNN_masked.txt` (the ground truth). The generator
+labels spans with the categories from `categories.json` and masks them
+with `apply_findings`, so the ground truth follows the same rules as
+`submission.txt`. `evaluate/score.py` compares our output with it word by
+word (precision, recall and F1 over masked words, by position), the same
+way the hidden CI diffs `submission.txt`.
 
 ## 7. Masking rule
 
@@ -262,8 +261,10 @@ N candidate prompts -> single-shot on synthetic train docs -> score.py
 best by F1 on held-out synthetic docs -> human review -> prompt.txt
 ```
 
-- Fitness is `score.py` against ground truth. Gemini only writes the
-  candidates; judging its own output without labels would be circular.
+- Fitness is the `score_masked` F1 of a candidate's single-shot output
+  against the ground truth. Output whose structure doesn't match scores 0.
+  Gemini only writes the candidates; judging its own output without
+  labels would be circular.
 - The synthetic docs are split into train and held-out sets. The real PDF is
   never used, because it is the test.
 - Cost is capped by flags (default about 4 prompts × 5 docs × 3 rounds ≈ 60
@@ -292,8 +293,8 @@ branch and open a PR to upstream `main`.
 | agents + their focus prompts | core | team |
 | `prompt.txt` | categories | team |
 | `validation.py` | `llm.py` | Rogério |
-| `synth/` | contracts §6.5 | Salvador |
-| `evaluate/score.py` | `synth/` | tbd |
+| `data_generator.py`, `synth/` | `categories.json`, `masking.py` | Salvador |
+| `evaluate/score.py` | `synth/`, `orchestrator` | João |
 | `optimize/` | `synth/`, `score.py` | tbd |
 
 ## 14. Known risks

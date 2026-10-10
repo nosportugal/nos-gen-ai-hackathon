@@ -30,7 +30,7 @@ deterministic masker turns each sensitive word into `*`. The hand-written
   the teammate's `test_validation.py`. Commands run from the repo root.
 - The API key comes from env var `API_KEY`. A local `.env` is loaded with
   `python-dotenv` (never read or print it). The pipeline model comes from
-  env `MODEL` (default `gemini-2.5-flash`), the judge model from env
+  env `MODEL` (default `gemini-3.8-flash`), the judge model from env
   `VALIDATION_MODEL`.
 - All LLM calls run at temperature `0.0` with JSON output
   (`response_mime_type="application/json"`), except single-shot text mode.
@@ -134,7 +134,7 @@ class TestSchemas(unittest.TestCase):
   - `config.py`: `api_key() -> str` (calls `load_dotenv()`, reads
     `API_KEY`, raises `RuntimeError("API_KEY environment variable is not
     set")` if it's missing); `pipeline_model() -> str` (env `MODEL`,
-    default `"gemini-2.5-flash"`); constants `SUBMISSION_DIR`,
+    default `"gemini-3.8-flash"`); constants `SUBMISSION_DIR`,
     `PROMPT_PATH`, `PDF_PATH` (`raw_data/document_to_anonymize.pdf`),
     `SUBMISSION_PATH`, `OUTPUTS_DIR`, `TEMPERATURE = 0.0`,
     `RETRY_CODES = {429, 500, 503}`, `MAX_RETRIES = 3`.
@@ -599,31 +599,79 @@ def test_prompt_txt_ends_with_document(self):
 - [ ] **Step 6: Checkpoint.** Suggested message:
   `feat: CLI entry point and explainability report`.
 
-### Task 11: Interfaces for Salvador and the open tasks
+### Task 11: Scoring against Salvador's synthetic data
+
+Salvador's `submission/data_generator.py` (now on `apply_findings` and
+`categories.json`) writes pairs of files to `submission/synth/data/`:
+`synthetic_document_NNN.txt` (the document) and
+`synthetic_document_NNN_masked.txt` (the ground truth, masked under the
+project's rule). Both end with one `"\n"`. Scoring compares our masked
+output with the ground truth **word by word**, the same way the hidden CI
+diffs `submission.txt`. Category labels aren't needed for that.
 
 **Files:**
-- Create: `submission/synth/README.md`, `submission/evaluate/__init__.py`,
-  `submission/evaluate/score.py`, `submission/optimize/__init__.py`,
-  `submission/optimize/search.py`
+- Create: `submission/evaluate/__init__.py`, `submission/evaluate/score.py`,
+  `submission/optimize/__init__.py`, `submission/optimize/search.py`,
+  `submission/synth/README.md`
+- Modify: `submission/docs/design.md` (§6.5 synthetic format, §11 inputs,
+  §13 ownership)
+- Test: `submission/tests/test_score.py`
 
 **Interfaces:**
-- Produces (bodies raise `NotImplementedError`, with docstrings that cite
-  the spec sections):
-  - `score(predicted: list[Finding], truth: list[dict]) -> dict[str,
-    dict[str, float]]`: per category id → `{"precision", "recall",
-    "f1"}` (spec §6.5).
-  - `search(seed_prompt: str, train: list[dict], held_out: list[dict],
-    client: LLMClient, n: int = 4, rounds: int = 3) ->
-    list[tuple[str, float]]`: ranked by held-out F1 (spec §11).
-  - `synth/README.md`: the §6.5 JSON format, and the rule that ids come
-    from `categories.json`. `synth/` stays without Python files so
-    Salvador's push doesn't conflict.
+- Consumes: `run_pipeline` (Task 9), `load_base` (Task 7),
+  `GeminiClient`/`LLMClient` (Task 2), `config.SUBMISSION_DIR`.
+- Produces, in `evaluate/score.py`:
+  - `score_masked(predicted: str, truth: str) -> dict[str, float]`, with
+    keys `tp`, `fp`, `fn`, `precision`, `recall`, `f1`. A masked word is
+    a whitespace token containing `*`, compared by (line, token)
+    position. If the line or token counts differ, it raises
+    `ValueError` naming the first mismatching line. Both maskings keep
+    tokens 1:1, so a mismatch means the text itself changed. An empty
+    denominator gives a precision or recall of `1.0`, and `p + r == 0`
+    gives an F1 of `0.0`.
+  - `load_dataset(data_dir: Path) -> list[tuple[str, str, str]]`, as
+    `(stem, text, masked)` sorted by stem. It pairs `X.txt` with
+    `X_masked.txt`, ignores `*_sensitive_to_mask.txt`, and strips the
+    single trailing `"\n"`.
+  - `evaluate(dataset, base: str, client: LLMClient) -> dict`, as
+    `{"documents": {stem: scores}, "total": scores}`. The total is a
+    micro-average over the summed tp/fp/fn.
+  - `main(argv: list[str] | None = None, client: LLMClient | None =
+    None) -> int`, with flag `--data` (default `SUBMISSION_DIR / "synth"
+    / "data"`). It prints one line per document plus the total. If no
+    pairs are found, it prints an error and returns 1.
+- Produces, in `optimize/search.py` (stub, raises `NotImplementedError`):
+  `search(seed_prompt: str, train: list[tuple[str, str, str]], held_out:
+  list[tuple[str, str, str]], client: LLMClient, n: int = 4, rounds: int
+  = 3) -> list[tuple[str, float]]`. Fitness is the `score_masked` F1 of a
+  candidate's single-shot output. Output whose structure doesn't match
+  scores 0.
 
-- [ ] **Step 1:** Create the files. Run `python -c "import
-  submission.evaluate.score, submission.optimize.search"`. Expected: no
-  output.
-- [ ] **Step 2: Checkpoint.** Suggested message:
-  `chore: interfaces for synthetic data, scoring and optimisation`.
+- [ ] **Step 1: Write the failing tests** (`test_score.py`):
+  - `test_perfect_match`: identical maskings → `precision`, `recall` and
+    `f1` are all `1.0`.
+  - `test_counts_misses_and_extras`: truth `"Nome: * *\nIdade: 30"`,
+    predicted `"Nome: * Santos\nIdade: *"` → `tp=1`, `fp=1`, `fn=1`.
+  - `test_structure_mismatch_raises`: a different number of tokens on a
+    line → `ValueError` with `"line 1"`.
+  - `test_nothing_masked_anywhere`: `precision` and `recall` are `1.0`.
+  - `test_load_dataset_pairs_files` (temp dir): two pairs plus an items
+    file → 2 entries, sorted, with the trailing newline stripped.
+  - `test_evaluate_micro_averages`: docs `"Nome: Ana"` / `"Nome: Rui"`,
+    both with truth `"Nome: *"`. A fake identity detector returns only
+    `Ana`. Expect a total `precision` of `1.0` and `recall` of `0.5`.
+  - `test_main_without_data_fails`: an empty directory → returns `1`.
+- [ ] **Step 2:** Run `python -m unittest submission.tests.test_score`.
+  Expected: FAIL (ImportError).
+- [ ] **Step 3:** Implement `evaluate/score.py`, write the `search` stub,
+  and write `synth/README.md`. The README covers the file format, the
+  command `python -m submission.data_generator --count N`, and the rule
+  that labels come from `categories.json`.
+- [ ] **Step 4:** Run the tests, the full suite, and `flake8 .`. Expected:
+  all OK, flake8 clean.
+- [ ] **Step 5:** Update the spec sections listed under Files.
+- [ ] **Step 6: Checkpoint.** Suggested message:
+  `feat: word-level scoring against synthetic ground truth`.
 
 ### Task 12: Final verification
 
