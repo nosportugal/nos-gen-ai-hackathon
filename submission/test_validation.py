@@ -1,51 +1,31 @@
 import os
 import re
 import unittest
-from unittest.mock import Mock, patch
+from unittest.mock import patch
 
-from submission.validation import DocumentValidator, call_api
+from submission.tests.fakes import FakeLLMClient
+from submission.validation import DocumentValidator
 
 
 class TestValidation(unittest.TestCase):
-    def test_call_api_uses_environment_configuration(self):
-        response = Mock()
-        response.json.return_value = {"candidates": []}
-
+    def test_default_client_uses_validation_model(self):
         with (
-            patch.dict(
-                os.environ,
-                {
-                    "API_KEY": "test-api-key",
-                    "VALIDATION_MODEL": "models/test-model",
-                },
-            ),
-            patch("submission.validation.requests.post", return_value=response) as post,
+            patch.dict(os.environ, {"VALIDATION_MODEL": "models/test-model"}),
+            patch("submission.validation.GeminiClient") as client_cls,
         ):
-            result = call_api("Test prompt", temperature=0.2)
+            client_cls.return_value.generate_json.return_value.score = 90
+            score = DocumentValidator().entailment("Original", "Anonymized")
 
-        self.assertEqual(result, {"candidates": []})
-        print(f"API call result: {result}", flush=True)
-        post.assert_called_once_with(
-            "https://generativelanguage.googleapis.com/v1beta/"
-            "models/test-model:generateContent",
-            params={"key": "test-api-key"},
-            headers={"Content-Type": "application/json"},
-            json={
-                "contents": [{"parts": [{"text": "Test prompt"}]}],
-                "generationConfig": {"temperature": 0.2},
-            },
-            timeout=60,
-        )
+        self.assertEqual(score, 90)
+        print(f"Default client model: {client_cls.call_args}", flush=True)
+        client_cls.assert_called_once_with(model="models/test-model")
 
-    @patch(
-        "submission.validation.call_api",
-        return_value={
-            "candidates": [
-                {"content": {"parts": [{"text": '{"score": 87}'}]}}
-            ]
-        },
-    )
-    def test_entailment_returns_score(self, call_api_mock):
+    def test_missing_validation_model_raises(self):
+        with patch.dict(os.environ, {}, clear=True):
+            with self.assertRaises(RuntimeError):
+                DocumentValidator().entailment("Original", "Anonymized")
+
+    def test_entailment_returns_score(self):
         original_document = """Relatório de Admissão
 Nome: Maria Santos
 Telefone: +351 912 345 678
@@ -54,8 +34,9 @@ Diagnóstico: hipertensão"""
 Nome: * *
 Telefone: *
 Diagnóstico: hipertensão"""
+        client = FakeLLMClient(lambda prompt, schema: '{"score": 87}')
 
-        score = DocumentValidator().entailment(
+        score = DocumentValidator(client).entailment(
             original_document,
             anonymized_document,
         )
@@ -71,22 +52,16 @@ Diagnóstico: hipertensão"""
         print(f"\nAPI response: {{'score': {score}}}", flush=True)
         print(f"Entailment score: {score}/100", flush=True)
         print("Entailment score valid: yes", flush=True)
-        call_api_mock.assert_called_once()
-        prompt = call_api_mock.call_args.args[0]
+        self.assertEqual(len(client.prompts), 1)
+        prompt = client.prompts[0]
         self.assertIn(original_document, prompt)
         self.assertIn(anonymized_document, prompt)
 
-    @patch(
-        "submission.validation.call_api",
-        return_value={
-            "candidates": [
-                {"content": {"parts": [{"text": '{"score": 101}'}]}}
-            ]
-        },
-    )
-    def test_entailment_rejects_scores_outside_range(self, call_api_mock):
+    def test_entailment_rejects_scores_outside_range(self):
+        client = FakeLLMClient(lambda prompt, schema: '{"score": 101}')
+
         with self.assertRaises(ValueError):
-            DocumentValidator().entailment("Original", "Anonymized")
+            DocumentValidator(client).entailment("Original", "Anonymized")
 
     def test_check_removed_words_counts_mask_sequences(self):
         validator = DocumentValidator()
@@ -97,14 +72,18 @@ Email: *"""
         expected_count = 4
         removed_words = re.findall(r"\*+", anonymized_document)
         removed_count = len(removed_words)
-        result = validator.check_removed_words(anonymized_document, expected_count)
+        result = validator.check_removed_words(
+            anonymized_document, expected_count
+        )
         print("\n=== Removed-word validation ===", flush=True)
         print("Anonymized document:", flush=True)
         print(anonymized_document, flush=True)
         print(f"Masked values found: {removed_words}", flush=True)
         print(f"Removed words: {removed_count}", flush=True)
         print(f"Expected removed words: {expected_count}", flush=True)
-        print(f"Word count matches: {'yes' if result else 'no'}", flush=True)
+        print(
+            f"Word count matches: {'yes' if result else 'no'}", flush=True
+        )
         self.assertEqual(removed_count, expected_count)
         self.assertTrue(result)
 
