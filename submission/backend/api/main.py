@@ -23,6 +23,7 @@ from pydantic import BaseModel
 
 from anonymizer import detector, entities, extract, pdf_reconstructor
 from anonymizer.spans import Span
+from api.frontend import mount_frontend, static_dir
 from api.store import Analysis, AnalysisStore
 
 MAX_BYTES = 10 * 1024 * 1024
@@ -161,3 +162,13 @@ def _rebuild_pdf(analysis: Analysis, spans: List[Span]) -> Optional[bytes]:
                     len(unmatched))
         return None
     return pdf
+
+
+@app.get("/api/health")
+def health() -> dict:
+    """For the hosting platform's health check."""
+    return {"status": "ok"}
+
+
+# Last, so the API routes above take precedence over "/".
+mount_frontend(app, static_dir())
