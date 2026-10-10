@@ -12,10 +12,10 @@ ID: any personal identifier (NIF, Cartão de Cidadão, NISS, nº de utente, pass
 CONTACT: phone, e-mail, home address including postal code and city.
 DOB: date of birth.
 FINANCIAL: card number, expiry, CVV, IBAN, income, insurance plan and policy number.
-HEALTH: symptoms, diagnoses, medication and doses, exams and results, allergies, procedures, measurements (height, weight, blood pressure, blood type), family history, diagnosis or treatment dates.
+HEALTH: symptoms, diagnoses, medication and doses, exams and results, allergies, procedures, measurements (height, weight, blood pressure, blood type), family history, when a diagnosis or treatment happened (dates, "há 5 anos").
 SPECIAL: ethnicity, religion, political opinion, sexual orientation, genetic data.
 PRIVATE_LIFE: marital status, children, kinship or friendship, habits (smoking, alcohol), addictions, personal problems.
-AGE: the person's age.
+AGE: the age of any person mentioned (the patient, children, relatives), including the age at death. Durations ("há 5 anos") are not ages.
 OCCUPATION: job and employer.
 CLINICIAN: treating professional's name, registration number, specialty, work phone or e-mail.
 SEX: sex or gender.
