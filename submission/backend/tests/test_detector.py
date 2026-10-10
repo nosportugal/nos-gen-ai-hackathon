@@ -81,6 +81,30 @@ def test_locate_keeps_number_glued_to_unit(line, text):
     assert spans == [Span(line, text, Category.HEALTH, "r")]
 
 
+DOSES = [
+    "Dose anterior: 1500mg ",
+    "Nota: dose reduzida ",
+    "Prescrição: Losartana 50mg 1x/dia ",
+]
+
+
+def test_locate_prefers_start_of_word_for_partial_match():
+    """#9: "50" belongs to "50mg" (line 3), not inside "1500mg" (line 1)."""
+    spans = detector._locate([found(2, "50", Category.HEALTH)], DOSES)
+    assert spans == [Span(3, "50", Category.HEALTH, "r")]
+
+
+def test_locate_still_finds_text_inside_a_word():
+    spans = detector._locate([found(1, "123", Category.ID)], ["ABC123XYZ"])
+    assert spans == [Span(1, "123", Category.ID, "r")]
+
+
+def test_locate_never_matches_one_character_inside_a_word():
+    """A single character stays on the LLM's line for mask() to report."""
+    spans = detector._locate([found(2, "5", Category.AGE)], DOSES)
+    assert spans == [Span(2, "5", Category.AGE, "r")]
+
+
 @pytest.mark.parametrize("llm_line, kept_line", [(2, 2), (99, 4)])
 def test_locate_keeps_unfound_span_on_llm_line(llm_line, kept_line):
     """Nothing is dropped silently: mask() reports it as unmatched."""
