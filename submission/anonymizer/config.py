@@ -25,4 +25,4 @@ def api_key() -> str:
 
 
 def pipeline_model() -> str:
-    return os.getenv("MODEL", "gemini-2.5-flash")
+    return os.getenv("MODEL", "gemini-3.8-flash")

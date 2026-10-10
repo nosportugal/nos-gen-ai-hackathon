@@ -98,7 +98,7 @@ class TestConfig(unittest.TestCase):
 
     def test_pipeline_model_default(self):
         with patch.dict(os.environ, {}, clear=True):
-            self.assertEqual(config.pipeline_model(), "gemini-2.5-flash")
+            self.assertEqual(config.pipeline_model(), "gemini-3.8-flash")
 
 
 if __name__ == "__main__":

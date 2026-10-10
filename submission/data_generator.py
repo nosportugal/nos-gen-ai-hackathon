@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 """
-Generate synthetic medical admission documents and masked versions using Gemini.
+Generate synthetic medical admission documents and masked versions using
+Gemini.
 
-Requirements:
-    pip install google-genai python-dotenv
+What counts as sensitive comes from anonymizer/categories.json, and masking
+uses the pipeline's own apply_findings, so the ground truth follows the same
+rules as submission.txt.
 
 .env file:
     Either of these is accepted:
@@ -11,11 +13,11 @@ Requirements:
     or:
         API_KEY=your_gemini_api_key_here
 
-Examples:
-    python data_generator.py --count 2
-    python data_generator.py --count 5 --outdir generated_documents
-    python data_generator.py --count 2 --max-retries 6
-    python data_generator.py --count 2 --write-items-file
+Examples (from the repo root):
+    python -m submission.data_generator --count 2
+    python -m submission.data_generator --count 5 --outdir generated
+    python -m submission.data_generator --count 2 --max-retries 6
+    python -m submission.data_generator --count 2 --write-items-file
 """
 
 import argparse
@@ -32,31 +34,32 @@ from dotenv import load_dotenv
 from google import genai
 from google.genai import types
 
+from submission.anonymizer import config
+from submission.anonymizer.agents.detector import format_category
+from submission.anonymizer.categories import load_categories
+from submission.anonymizer.masking import apply_findings
+from submission.anonymizer.schemas import Finding
 
-DEFAULT_MODEL = "gemini-3.8-flash"
-DEFAULT_OUTDIR = "generated_documents"
+DEFAULT_OUTDIR = config.SUBMISSION_DIR / "synth" / "data"
 
 RETRYABLE_STATUS_CODES = {429, 500, 502, 503, 504}
 
-# Matches words/numbers while preserving punctuation around them.
-# Examples:
-#   Ana Correia -> * *
-#   12/03/1978 -> */*/*
-#   +351 912 345 678 -> +* * * *
-#   ana.correia@email.pt -> *.*@*.*
-MASKABLE_TOKEN_RE = re.compile(r"[A-Za-zÀ-ÖØ-öø-ÿ0-9]+")
-
 
 def build_prompt(document_number: int) -> str:
+    categories = "\n\n".join(
+        format_category(category) for category in load_categories()
+    )
     return f"""
 Generate one fully synthetic Portuguese medical admission report.
 
-The document must be similar in style, structure, and level of detail to a hospital or medical admission report from Portugal.
+The document must be similar in style, structure, and level of detail to a
+hospital or medical admission report from Portugal.
 
 The document must be written in Portuguese from Portugal.
 
 All data must be completely fictitious.
-Do not use real people, real patients, real public figures, or real addresses tied to real individuals.
+Do not use real people, real patients, real public figures, or real
+addresses tied to real individuals.
 Use realistic but mock data only.
 
 The response must be valid JSON only.
@@ -69,8 +72,9 @@ Return exactly this JSON structure:
   "document_text": "Full synthetic report text here",
   "sensitive_items": [
     {{
-      "category": "Name",
-      "text": "Exact sensitive text span appearing in document_text"
+      "category": "identity",
+      "text": "Exact sensitive text span appearing in document_text",
+      "context": "The full line of document_text where the span appears"
     }}
   ]
 }}
@@ -87,71 +91,33 @@ The generated document should include realistic sections such as:
 - Contactos de Emergência
 - Assinatura Digital
 
-Sensitive information that MUST be included in sensitive_items:
-- Patient full name and partial names when repeated in the text
-- Family member names
-- Emergency contact names
-- Companion names
-- Doctor, nurse, or staff names if tied to personal identification
-- NIF
-- Cartão de Cidadão
-- Número de Utente do SNS
-- Número de Segurança Social or NISS
-- Passport numbers, if present
-- Phone numbers
-- Email addresses
-- Residential addresses
-- Door numbers
-- Postal codes
-- Specific neighbourhood names if they are part of the personal address
-- Date of birth
-- Exact patient age
-- Marital status
-- Profession
-- Employer
-- Nationality
-- Religion
-- Political affiliation, if present
-- Patient hospital file numbers
-- Patient-specific admission IDs
-- Insurance policy numbers
-- IBAN
-- Bank account numbers
-- Credit card numbers
-- Credit card expiry dates
-- CVV
-- Biometric identifiers
-- Fingerprint IDs
-- Face recognition IDs
-- Professional licence numbers tied to a named doctor or nurse, such as CRM or Ordem number
+Sensitive information, by category. Every span of these categories MUST be
+included in sensitive_items, and "category" MUST be one of these ids:
+
+{categories}
 
 Information that MUST NOT be included in sensitive_items:
-- Document labels, such as "Nome:", "Data de Nascimento:", "Morada:", "Contacto:"
+- Document labels, such as "Nome:", "Data de Nascimento:", "Morada:"
 - Section headers, such as "Informações do Paciente:"
-- Hospital, clinic, or institution names
-- Document creation dates, such as "Data: 15 de abril de 2025"
-- General administrative document references, such as "Referência: ADM-2025-04-15-089"
-- Generic medical terms
-- Symptoms
-- Diagnosis names
-- Medication names
-- Procedure names
-- Department names
-- Generic clinical values such as height, weight, blood type, and blood pressure, unless they are part of a unique biometric identifier
+- The institution name in the report title
+- The document creation date, such as "Data: 15 de abril de 2025"
+- The report reference code, such as "Referência: ADM-2025-04-15-089"
 
 Rules for sensitive_items:
-- Include only exact substrings that appear in document_text.
-- Include minimal spans that should be masked while preserving the sentence context.
+- "text" and "context" are exact substrings of document_text.
+- "context" is the whole line that contains "text".
+- Include minimal spans that should be masked while preserving the
+  sentence context.
 - Do not include full sentences unless the entire sentence is sensitive.
 - Do not include labels or punctuation that can safely remain visible.
-- If a full name appears once and a partial name appears elsewhere, include both exact spans.
-- Avoid standalone city names like "Lisboa" unless they are inside a full residential address span.
+- If a value appears on several lines, include one item per line.
 - Avoid duplicates.
 - Be comprehensive.
 
 Masking examples:
 - "Ana Correia" should be listed as "Ana Correia"
-- "Rua das Flores, 123, 2.º Esq., 1000-001 Lisboa" should be listed as that exact address
+- "Rua das Flores, 123, 2.º Esq., 1000-001 Lisboa" should be listed as
+  that exact address
 - "ana.correia@example.invalid" should be listed as that exact email
 
 Document number: {document_number}
@@ -176,14 +142,17 @@ def extract_json(text: str) -> Dict[str, Any]:
     cleaned = text.strip()
 
     if cleaned.startswith("```"):
-        cleaned = re.sub(r"^```(?:json)?", "", cleaned, flags=re.IGNORECASE).strip()
+        cleaned = re.sub(
+            r"^```(?:json)?", "", cleaned, flags=re.IGNORECASE
+        ).strip()
         cleaned = re.sub(r"```$", "", cleaned).strip()
 
     try:
         payload = json.loads(cleaned)
     except json.JSONDecodeError as exc:
         raise ValueError(
-            f"Could not parse Gemini response as JSON.\n\nResponse was:\n{cleaned}"
+            "Could not parse Gemini response as JSON.\n\n"
+            f"Response was:\n{cleaned}"
         ) from exc
 
     if not isinstance(payload, dict):
@@ -211,6 +180,7 @@ def normalize_payload(payload: Dict[str, Any]) -> Dict[str, Any]:
 
             category = str(item.get("category", "")).strip()
             text = str(item.get("text", "")).strip()
+            context = str(item.get("context", "")).strip()
 
             if not category or not text:
                 continue
@@ -219,6 +189,7 @@ def normalize_payload(payload: Dict[str, Any]) -> Dict[str, Any]:
                 {
                     "category": category,
                     "text": text,
+                    "context": context,
                 }
             )
 
@@ -229,7 +200,8 @@ def normalize_payload(payload: Dict[str, Any]) -> Dict[str, Any]:
 
 def validate_payload(payload: Dict[str, Any]) -> None:
     """
-    Basic validation to make sure the generated response has the expected shape.
+    Basic validation to make sure the generated response has the expected
+    shape.
     """
     if not isinstance(payload, dict):
         raise ValueError("Gemini response is not a JSON object.")
@@ -254,7 +226,9 @@ def validate_payload(payload: Dict[str, Any]) -> None:
             raise ValueError("Each sensitive item must be an object.")
 
         if "category" not in item or "text" not in item:
-            raise ValueError("Each sensitive item must contain category and text.")
+            raise ValueError(
+                "Each sensitive item must contain category and text."
+            )
 
         if not isinstance(item["category"], str):
             raise ValueError("Sensitive item category must be a string.")
@@ -269,7 +243,8 @@ def validate_payload(payload: Dict[str, Any]) -> None:
 
     if missing_items:
         print(
-            "Warning: Some sensitive items were not found exactly in the document text:",
+            "Warning: Some sensitive items were not found exactly in the "
+            "document text:",
             file=sys.stderr,
         )
         for value in missing_items:
@@ -366,8 +341,8 @@ def generate_document(
             )
 
             print(
-                f"Temporary Gemini/API error while generating document {document_number}. "
-                f"Attempt {attempt}/{max_retries}. "
+                "Temporary Gemini/API error while generating document "
+                f"{document_number}. Attempt {attempt}/{max_retries}. "
                 f"Reason: {exc}",
                 file=sys.stderr,
             )
@@ -375,46 +350,29 @@ def generate_document(
             time.sleep(backoff_seconds)
 
     raise RuntimeError(
-        f"Failed to generate document {document_number} after {max_retries} attempts. "
-        f"Last error: {last_error}"
+        f"Failed to generate document {document_number} after "
+        f"{max_retries} attempts. Last error: {last_error}"
     )
-
-
-def mask_sensitive_value(value: str) -> str:
-    """
-    Replace each word/number token with a single asterisk.
-
-    Preserves punctuation and spacing inside the value.
-
-    Examples:
-        Ana Correia -> * *
-        12/03/1978 -> */*/*
-        +351 912 345 678 -> +* * * *
-        ana.correia@example.invalid -> *.*@*.*
-        12345678-9ZX0 -> *-*
-    """
-    return MASKABLE_TOKEN_RE.sub("*", value)
 
 
 def build_unique_sensitive_items(
     sensitive_items: List[Dict[str, str]],
 ) -> List[Dict[str, str]]:
     """
-    Remove duplicate sensitive items and sort longest first.
-
-    Sorting longest first avoids problems like masking "Ana" before "Ana Correia".
+    Remove duplicate sensitive items.
     """
-    seen: Set[Tuple[str, str]] = set()
+    seen: Set[Tuple[str, str, str]] = set()
     unique_items: List[Dict[str, str]] = []
 
     for item in sensitive_items:
         category = item.get("category", "").strip()
         text = item.get("text", "").strip()
+        context = item.get("context", "").strip()
 
         if not category or not text:
             continue
 
-        key = (category.lower(), text)
+        key = (category.lower(), text, context)
 
         if key in seen:
             continue
@@ -424,10 +382,9 @@ def build_unique_sensitive_items(
             {
                 "category": category,
                 "text": text,
+                "context": context,
             }
         )
-
-    unique_items.sort(key=lambda item: len(item["text"]), reverse=True)
 
     return unique_items
 
@@ -437,34 +394,25 @@ def mask_document(
     sensitive_items: List[Dict[str, str]],
 ) -> str:
     """
-    Mask the sensitive items in the document.
+    Mask the sensitive items with the pipeline's own masker, so the ground
+    truth follows exactly the rules submission.txt is produced with
+    (spec §7): one '*' per whitespace-separated word, edge punctuation
+    kept, whole-word matches only, and masking limited to each item's
+    context line when it has one.
 
-    Keeps:
-    - labels
-    - punctuation
-    - colons
-    - non-empty line breaks
-    - overall structure
-
-    Removes:
-    - empty lines
+    Removes empty lines.
     """
-    masked_text = remove_empty_lines(document_text)
-    unique_items = build_unique_sensitive_items(sensitive_items)
-
-    for item in unique_items:
-        sensitive_text = item["text"]
-
-        if not sensitive_text:
-            continue
-
-        if sensitive_text not in masked_text:
-            continue
-
-        replacement = mask_sensitive_value(sensitive_text)
-        masked_text = masked_text.replace(sensitive_text, replacement)
-
-    return remove_empty_lines(masked_text)
+    findings = [
+        Finding(
+            text=item["text"],
+            category=item["category"],
+            reason="synthetic ground truth",
+            context=item.get("context", ""),
+        )
+        for item in build_unique_sensitive_items(sensitive_items)
+    ]
+    result = apply_findings(remove_empty_lines(document_text), findings)
+    return result.masked
 
 
 def write_outputs(
@@ -481,9 +429,10 @@ def write_outputs(
     """
     outdir.mkdir(parents=True, exist_ok=True)
 
-    document_path = outdir / f"synthetic_document_{document_number:03d}.txt"
-    masked_path = outdir / f"synthetic_document_{document_number:03d}_masked.txt"
-    items_path = outdir / f"synthetic_document_{document_number:03d}_sensitive_to_mask.txt"
+    stem = f"synthetic_document_{document_number:03d}"
+    document_path = outdir / f"{stem}.txt"
+    masked_path = outdir / f"{stem}_masked.txt"
+    items_path = outdir / f"{stem}_sensitive_to_mask.txt"
 
     document_text = remove_empty_lines(payload["document_text"].strip())
     sensitive_items = build_unique_sensitive_items(payload["sensitive_items"])
@@ -506,14 +455,17 @@ def write_outputs(
             file.write("=============================\n")
 
             for item in sensitive_items:
-                file.write(f"{item['category']} | {item['text']}\n")
+                file.write(
+                    f"{item['category']} | {item['text']} | "
+                    f"{item['context']}\n"
+                )
 
         print(f"Created: {items_path}")
 
 
-def parse_args() -> argparse.Namespace:
+def parse_args(argv: Optional[List[str]] = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Generate synthetic sensitive documents using Google Gemini."
+        description="Generate synthetic sensitive documents using Gemini."
     )
 
     parser.add_argument(
@@ -526,44 +478,54 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--outdir",
         type=str,
-        default=DEFAULT_OUTDIR,
-        help=f"Output directory where the generated .txt files will be saved. Default: {DEFAULT_OUTDIR}",
+        default=str(DEFAULT_OUTDIR),
+        help="Directory for the generated .txt files. "
+             f"Default: {DEFAULT_OUTDIR}",
     )
 
     parser.add_argument(
         "--model",
         type=str,
-        default=DEFAULT_MODEL,
-        help=f"Gemini model name. Default: {DEFAULT_MODEL}",
+        default=None,
+        help="Gemini model name. Default: the pipeline's model "
+             "(env MODEL).",
     )
 
     parser.add_argument(
         "--max-retries",
         type=int,
         default=5,
-        help="Maximum retry attempts per document for temporary API errors. Default: 5",
+        help="Maximum retry attempts per document for temporary API "
+             "errors. Default: 5",
     )
 
     parser.add_argument(
         "--write-items-file",
         action="store_true",
-        help="Also write a .txt file listing the sensitive spans used for masking.",
+        help="Also write a .txt file listing the sensitive spans used for "
+             "masking.",
     )
 
     parser.add_argument(
         "--fail-fast",
         action="store_true",
-        help="Stop the whole script if one document fails. By default, failed documents are skipped.",
+        help="Stop the whole script if one document fails. By default, "
+             "failed documents are skipped.",
     )
 
-    return parser.parse_args()
+    return parser.parse_args(argv)
+
+
+def resolve_model(args: argparse.Namespace) -> str:
+    return args.model or config.pipeline_model()
 
 
 def get_api_key() -> str:
     """
     Read Gemini API key from environment.
 
-    Accepts both GEMINI_API_KEY and API_KEY so your current .env keeps working.
+    Accepts both GEMINI_API_KEY and API_KEY so your current .env keeps
+    working.
     """
     api_key = os.getenv("GEMINI_API_KEY") or os.getenv("API_KEY")
 
@@ -592,6 +554,7 @@ def main() -> None:
     api_key = get_api_key()
     client = genai.Client(api_key=api_key)
     outdir = Path(args.outdir)
+    model = resolve_model(args)
 
     successful = 0
     failed = 0
@@ -600,7 +563,7 @@ def main() -> None:
         try:
             payload = generate_document(
                 client=client,
-                model=args.model,
+                model=model,
                 document_number=document_number,
                 max_retries=args.max_retries,
             )
@@ -618,7 +581,8 @@ def main() -> None:
             failed += 1
 
             print(
-                f"Error: failed to generate document {document_number}. {exc}",
+                f"Error: failed to generate document {document_number}. "
+                f"{exc}",
                 file=sys.stderr,
             )
 
