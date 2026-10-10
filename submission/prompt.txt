@@ -34,6 +34,7 @@ Read the whole document first. Then go line by line and decide, from the context
 - Return the complete value (full name, full address, full date such as "12 de maio de 1980"), without its label or trailing punctuation.
 - Leave out titles (Dr., Dra., Sr.) and unit words that say nothing alone ("anos", "kg").
 - One entry per occurrence: a value repeated on two lines is listed twice.
+- A value that continues on the next line is returned as one entry per line, each with the part of the text that is on that line.
 - "reason": at most 8 words on why it is sensitive.
 </rules>
 
@@ -43,7 +44,8 @@ L002| Data de registo: 3 de março de 2024
 L003| Cliente: Rui Manuel Tavares, 47 anos, engenheiro civil na Construtora Atlântico
 L004| NIF: 245 873 190 | Telemóvel: +351 934 552 018
 L005| Morada: Avenida da Liberdade, 120, 3.º Dto, 1250-146 Lisboa
-L006| Notas: diabético tipo 2, toma metformina; casado, dois filhos
+L006| Notas: diabético tipo 2, toma metformina; casado, dois
+L007| filhos
 {"spans": [
 {"line": 3, "text": "Rui Manuel Tavares", "category": "NAME", "reason": "customer's full name"},
 {"line": 3, "text": "47", "category": "AGE", "reason": "customer's age"},
@@ -55,7 +57,8 @@ L006| Notas: diabético tipo 2, toma metformina; casado, dois filhos
 {"line": 6, "text": "diabético tipo 2", "category": "HEALTH", "reason": "medical condition"},
 {"line": 6, "text": "metformina", "category": "HEALTH", "reason": "medication"},
 {"line": 6, "text": "casado", "category": "PRIVATE_LIFE", "reason": "marital status"},
-{"line": 6, "text": "dois filhos", "category": "PRIVATE_LIFE", "reason": "family situation"}
+{"line": 6, "text": "dois", "category": "PRIVATE_LIFE", "reason": "number of children"},
+{"line": 7, "text": "filhos", "category": "PRIVATE_LIFE", "reason": "number of children"}
 ]}
 "Loja Centro" (institution), the registration date and the labels are kept.
 </example>
