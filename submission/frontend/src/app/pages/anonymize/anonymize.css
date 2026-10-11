@@ -1,0 +1,524 @@
+:host {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+}
+.selection-page {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 0;
+  padding: 8px 0 24px;
+}
+.home-intro {
+  flex-shrink: 0;
+  max-width: 680px;
+  margin: 0 auto;
+  padding-bottom: 48px;
+  text-align: center;
+}
+.home-intro h1 {
+  margin: 0;
+  font-size: clamp(1.6rem, 3vw, 2.3rem);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.035em;
+}
+.home-intro p {
+  max-width: 520px;
+  margin: 10px auto 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+.upload-section {
+  display: flex;
+  flex: 0 1 356px;
+  flex-direction: column;
+  min-height: 0;
+  width: 100%;
+  max-width: 800px;
+  margin: 16px auto 0;
+}
+.selection-page > app-document-progress {
+  margin-top: 32px;
+}
+.upload-panel {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+  padding: 16px;
+  background: color-mix(in srgb, var(--surface) 44%, transparent);
+  border-color: color-mix(in srgb, var(--line-bright) 62%, transparent);
+  box-shadow:
+    0 12px 28px rgb(15 23 42 / 7%),
+    inset 0 1px 0 rgb(255 255 255 / 10%),
+    inset 0 -1px 0 rgb(15 23 42 / 4%);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(24px);
+}
+.upload-panel::before {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background:
+    radial-gradient(ellipse at 18% 0%, rgb(255 255 255 / 6%), transparent 42%),
+    linear-gradient(115deg, rgb(255 255 255 / 2%), transparent 34%);
+  content: '';
+}
+.upload-panel > * {
+  position: relative;
+  z-index: 1;
+}
+.upload-heading {
+  flex-shrink: 0;
+  margin-bottom: 12px;
+}
+.upload-heading h2 {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin: 0;
+}
+.upload-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 4px;
+  margin: -4px;
+}
+.upload-body.has-file {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+.drop-zone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  border: 1px dashed var(--line-bright);
+  border-radius: 6px;
+  text-align: center;
+  padding: 16px 12px;
+  background: var(--well);
+}
+.drop-zone.dragging {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+.upload-icon {
+  color: var(--accent-text);
+  margin-bottom: 12px;
+}
+.drop-zone h3 {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+.file-hint {
+  color: var(--muted);
+  font-size: 0.73rem;
+  margin: 10px 0 0;
+}
+.error-message {
+  grid-column: 1 / -1;
+  color: var(--error);
+  margin: 6px 0 0;
+  font-size: 0.8rem;
+  line-height: 1.25;
+}
+.preview-heading {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) max-content minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
+  height: 36px;
+  min-height: 36px;
+  padding: 5px 12px;
+}
+.preview-heading-main {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.preview-heading-main h2 {
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.preview-heading .preview-file-name {
+  grid-column: 3;
+  grid-row: 1;
+  justify-self: end;
+}
+.analysis-pdf-controls {
+  grid-column: 2;
+  grid-row: 1;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.analysis-pdf-controls button {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  min-width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 1px solid var(--line-bright);
+  border-radius: 4px;
+  color: var(--ink);
+  background: var(--surface);
+  font: inherit;
+  font-size: 0.78rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.analysis-pdf-controls button:nth-child(2) {
+  width: 44px;
+  min-width: 44px;
+  font-size: 0.7rem;
+}
+.analysis-pdf-controls button:disabled {
+  cursor: default;
+  opacity: 0.45;
+}
+.analysis-pdf-controls button:first-child,
+.analysis-pdf-controls button:nth-child(3) {
+  font-size: 0;
+}
+.analysis-pdf-controls button:first-child::before,
+.analysis-pdf-controls button:nth-child(3)::before {
+  display: block;
+  color: currentColor;
+  font-size: 1rem;
+  line-height: 1;
+}
+.analysis-pdf-controls button:first-child::before { content: '−'; }
+.analysis-pdf-controls button:nth-child(3)::before { content: '+'; }
+
+@container (max-width: 650px) {
+  .preview-heading {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 4px;
+    height: 92px;
+    padding: 5px 8px 8px;
+  }
+  .preview-heading.is-text-view {
+    height: 64px;
+    padding: 5px 8px 6px;
+  }
+  .preview-heading-main {
+    grid-column: 1 / -1;
+    grid-row: 1;
+  }
+  .preview-heading .preview-file-name {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    justify-self: center;
+    max-width: 100%;
+    text-align: center;
+  }
+  .analysis-pdf-controls {
+    grid-column: 1 / -1;
+    grid-row: 3;
+    justify-self: center;
+  }
+}
+.selected-file {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  min-height: 0;
+  padding: 12px;
+  text-align: center;
+  background: var(--well);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+}
+.file-toolbar {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: space-between;
+}
+.format-label {
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 4px 7px;
+  font-size: 0.65rem;
+  line-height: 18px;
+}
+.remove-file {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 0;
+  color: var(--muted);
+}
+.remove-file:hover {
+  color: var(--ink);
+  background: var(--accent-soft);
+}
+.file-details {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: safe center;
+  gap: 10px;
+  min-height: 0;
+  overflow: auto;
+}
+.file-details > div {
+  width: 100%;
+}
+.selected-file strong,
+.selected-file .small {
+  display: block;
+  overflow-wrap: anywhere;
+}
+.selected-file strong {
+  font-size: 0.87rem;
+}
+.upload-actions {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 16px;
+}
+.upload-error {
+  flex: 1;
+  min-width: 0;
+}
+.upload-error .error-message {
+  margin: 0;
+}
+.analysis-grid {
+  grid-template-columns: minmax(0, 1.8fr) minmax(220px, 0.55fr);
+}
+.analysis-grid .paper {
+  box-shadow: none;
+}
+/* The form for a selection is positioned inside the paper. */
+.paper {
+  position: relative;
+}
+/* Outline and background only, so the text keeps its layout. */
+.pending-highlight {
+  background: transparent;
+}
+.pending-highlight.is-open {
+  background: var(--accent-soft);
+  outline: 1px dashed var(--accent-text);
+  outline-offset: 1px;
+}
+.anonymization-modal-backdrop {
+  position: fixed;
+  z-index: 1050;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgb(8 12 28 / 42%);
+}
+.anonymization-modal {
+  display: grid;
+  justify-items: center;
+  width: min(100%, 360px);
+  padding: 28px 30px 26px;
+  border: 1px solid var(--line-bright);
+  border-radius: 10px;
+  color: var(--muted);
+  background: var(--surface);
+  text-align: center;
+}
+.anonymization-status-icon {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  margin-bottom: 14px;
+  border-radius: 50%;
+  color: var(--accent-text);
+  background: var(--accent-soft);
+}
+.anonymization-modal strong {
+  color: var(--ink);
+  font-size: 1rem;
+}
+.anonymization-modal p {
+  margin: 7px 0 18px;
+}
+.anonymization-modal .spinner-border {
+  color: var(--accent-text);
+}
+@media (max-width: 900px) {
+  .analysis-grid {
+    grid-template-columns: minmax(0, 1fr);
+    grid-auto-rows: max-content;
+  }
+  /* The preview does not scroll here, so the selection form may extend past its panel. */
+  .analysis-grid .preview-panel {
+    overflow: visible;
+  }
+  .preview-panel .panel-heading {
+    border-radius: 7px 7px 0 0;
+  }
+}
+@media (max-width: 575px) {
+  .workspace-page {
+    gap: 14px;
+  }
+  .analysis-grid {
+    gap: 14px;
+  }
+  .selection-page {
+    flex: 1 0 auto;
+    min-height: 0;
+    justify-content: center;
+  }
+  .upload-section {
+    flex: 0 0 auto;
+    margin-top: 0;
+  }
+  .home-intro {
+    padding-bottom: 20px;
+  }
+  .upload-actions {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .upload-error {
+    min-height: 1.6rem;
+  }
+  .upload-actions .btn {
+    align-self: flex-end;
+  }
+  .workspace-page > .page-actions {
+    align-items: center;
+    flex-direction: row;
+    gap: 12px;
+  }
+  .workspace-page > .page-actions > .page-action-group {
+    flex: 0 0 auto;
+  }
+  .workspace-page > .page-actions > .btn {
+    flex: 0 1 auto;
+    min-width: 0;
+  }
+  .workspace-page > .page-actions > .btn.btn-primary {
+    padding: 7px 10px;
+    font-size: 0.74rem;
+    gap: 6px;
+  }
+  .upload-panel {
+    min-height: 0;
+    padding: 12px;
+  }
+  .upload-body.has-file {
+    grid-template-columns: 1fr;
+  }
+  .drop-zone {
+    padding: 12px 8px;
+  }
+  .drop-zone h3 {
+    font-size: 0.9rem;
+  }
+  .drop-zone .btn {
+    padding: 8px 6px;
+    font-size: 0.78rem;
+  }
+  .selected-file {
+    padding: 10px;
+  }
+  .selected-file strong {
+    font-size: 0.78rem;
+  }
+}
+@media (max-height: 700px) {
+  .selection-page {
+    padding: 12px 0;
+  }
+  .upload-section {
+    flex-basis: 280px;
+  }
+  .upload-icon {
+    display: none;
+  }
+  .home-intro {
+    padding-bottom: 16px;
+  }
+  .home-intro h1 {
+    font-size: 1.5rem;
+  }
+  .home-intro p {
+    font-size: 0.84rem;
+    margin-top: 8px;
+  }
+}
+@media (max-height: 620px) {
+  .selection-page {
+    padding: 8px 0;
+  }
+  .home-intro {
+    padding-bottom: 10px;
+  }
+  .home-intro h1 {
+    font-size: 1.3rem;
+  }
+  .home-intro p {
+    line-height: 1.5;
+  }
+  .drop-zone h3 {
+    margin-bottom: 8px;
+  }
+}
+.manual-hint {
+  flex-shrink: 0;
+  margin: 8px 12px 0;
+  color: var(--muted);
+  font-size: 0.7rem;
+}
+/* PDF or text: a small segmented control in the preview heading. */
+.view-switch {
+  display: inline-flex;
+  padding: 2px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+}
+.view-option {
+  padding: 3px 10px;
+  border: 0;
+  border-radius: 999px;
+  color: var(--muted);
+  background: transparent;
+  font-size: 0.7rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+.view-option.is-selected {
+  color: var(--button-ink);
+  background: var(--accent);
+}
+.view-option:focus-visible {
+  outline: 2px solid var(--accent-text);
+  outline-offset: 2px;
+}

@@ -1,0 +1,36 @@
+<ol
+  class="document-progress"
+  [attr.aria-label]="language.text().documentProgress"
+  aria-live="polite"
+  aria-atomic="true"
+>
+  @for (step of steps; track step; let index = $index) {
+    <li
+      [class.complete]="index + 1 < current()"
+      [class.current]="index + 1 === current()"
+      [attr.aria-current]="index + 1 === current() ? 'step' : null"
+    >
+      <span class="step-marker" aria-hidden="true">
+        @if (index + 1 < current()) {
+          <svg
+            width="12"
+            height="12"
+            [attr.viewBox]="'0 0 ' + completeIcon.icon[0] + ' ' + completeIcon.icon[1]"
+            fill="currentColor"
+            focusable="false"
+          >
+            <path [attr.d]="completeIcon.icon[4]" />
+          </svg>
+        } @else {
+          {{ index + 1 }}
+        }
+      </span>
+      <span
+        >{{ language.text()[step] }}
+        @if (index + 1 < current()) {
+          <span class="visually-hidden"> — {{ language.text().stepComplete }}</span>
+        }
+      </span>
+    </li>
+  }
+</ol>

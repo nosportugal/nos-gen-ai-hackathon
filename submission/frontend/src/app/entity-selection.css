@@ -1,0 +1,223 @@
+:host,
+.entities-panel {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+}
+.entities-panel {
+  flex: 1;
+  padding: 0;
+  overflow: hidden;
+}
+.entity-scroll {
+  min-height: 0;
+  overflow: auto;
+  padding: 10px 14px 14px;
+}
+input {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+  accent-color: var(--category-color, var(--accent));
+  cursor: pointer;
+}
+label {
+  cursor: pointer;
+}
+.select-all,
+.category-heading,
+.entity-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+}
+.select-all {
+  padding: 2px 0 12px;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.78rem;
+  font-weight: 500;
+}
+.select-all + .category-group {
+  margin-top: 0;
+  border-top: 0;
+}
+.category-group {
+  box-sizing: border-box;
+  min-width: 0;
+  width: 100%;
+  border: 0;
+  border-top: 1px solid var(--line);
+  margin: 2px 0 0;
+  padding-bottom: 0;
+}
+.category-group.is-open {
+  padding-bottom: 6px;
+}
+.category-heading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 40px;
+  margin: 0;
+  padding: 6px 0;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+.category-heading > input {
+  flex-shrink: 0;
+}
+.category-selection input {
+  margin: 0;
+}
+.category-toggle {
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr) 2.5rem 16px;
+  align-items: center;
+  column-gap: 10px;
+  min-width: 0;
+  flex: 1;
+  padding: 0;
+  border: 0;
+  border-radius: 4px;
+  color: inherit;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+}
+.category-toggle:focus-visible {
+  outline: 2px solid var(--accent-text);
+  outline-offset: 2px;
+}
+.category-toggle > span:nth-child(2) {
+  font-weight: 700;
+}
+.category-toggle > span:nth-child(3) {
+  flex-shrink: 0;
+}
+.category-chevron {
+  display: grid;
+  place-items: center;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  color: var(--muted);
+}
+.category-chevron::before {
+  width: 7px;
+  height: 7px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: translateY(-2px) rotate(45deg);
+  content: '';
+}
+.category-items {
+  display: grid;
+  grid-template-rows: 0fr;
+}
+.category-items > div {
+  min-height: 0;
+  overflow: hidden;
+}
+.category-group.is-open .category-items {
+  grid-template-rows: 1fr;
+}
+.category-group.is-open .category-chevron {
+  transform: rotate(180deg);
+}
+.category-icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  border-radius: 5px;
+  color: var(--category-color);
+  background: color-mix(in srgb, var(--category-color) 12%, transparent);
+}
+.category-icon svg {
+  width: 16px;
+  height: 16px;
+}
+.category-count {
+  min-width: 0;
+  margin-left: 0;
+  text-align: right;
+  font-weight: 400;
+}
+.entity-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 2px;
+}
+.entity-option {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 15px minmax(0, 1fr);
+  align-items: flex-start;
+  column-gap: 10px;
+  padding: 3px 4px 0 28px;
+  font-size: 0.76rem;
+  line-height: 1.25;
+}
+.category-items .entity-option:first-child {
+  padding-top: 6px;
+}
+.category-items > div > .entity-item:last-child .entity-option {
+  padding-bottom: 6px;
+}
+.entity-option input {
+  margin-top: 2px;
+}
+.entity-option > span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.entity-option strong {
+  font-weight: 500;
+}
+.entity-option small {
+  display: block;
+  color: var(--muted);
+  font-size: 0.68rem;
+  margin-top: 1px;
+  line-height: 1.2;
+}
+.entity-option .manual-badge {
+  width: fit-content;
+  padding: 0 6px;
+  border-radius: 999px;
+  color: var(--accent-text);
+  background: var(--accent-soft);
+  font-weight: 500;
+}
+.remove-manual {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  margin-top: 3px;
+  padding: 0;
+  border: 0;
+  color: var(--muted);
+}
+.remove-manual:hover {
+  color: var(--ink);
+  background: var(--accent-soft);
+}
+/* Bootstrap's .btn:focus-visible removes the outline and has no shadow colour for a bare .btn. */
+.remove-manual:focus-visible {
+  outline: 2px solid var(--accent-text);
+  outline-offset: 1px;
+  color: var(--ink);
+}
+.empty-entities {
+  margin: 0;
+}
+@media (max-width: 575px) {
+  .entity-scroll {
+    overflow: visible;
+  }
+}
