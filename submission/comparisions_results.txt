@@ -1,0 +1,6 @@
+Wrongly censored:
+Morada: Rua das Flores, 123, Apt 45, Sacavém, *Lisboa* 
+
+Should have been censored:
+
+Knowing these mistakes, modify the prompt accordingly, keeping previous instructions and examples that were right.
