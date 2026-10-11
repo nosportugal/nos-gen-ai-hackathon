@@ -19,7 +19,7 @@ API_URL = (
 
 def extract_text_from_pdf(path: str) -> str:
     """
-    Extracts text content from all pages of a PDF file.
+      Extracts text content from all pages of a PDF file.
     """
     text = ""
     with pymupdf.open(path) as doc:
@@ -27,10 +27,14 @@ def extract_text_from_pdf(path: str) -> str:
             text += page.get_text()
     return text
 
+raw_text = extract_text_from_pdf(pdf_path)
+print(raw_text)
+
+
 
 def drop_empty_lines(text: str) -> str:
     """The only layout change allowed by the brief: remove empty lines."""
-    lines = (line.rstrip() for line in text.splitlines())
+1    lines = (line.rstrip() for line in text.splitlines())
     return "\n".join(line for line in lines if line.strip()) 
 
 def strip_fences(text: str) -> str:
