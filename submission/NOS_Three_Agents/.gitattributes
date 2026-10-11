@@ -1,0 +1,4 @@
+# Store and check out every file byte-for-byte. The canonical source,
+# run artifacts and frozen hashes depend on exact bytes (LF newlines and
+# trailing spaces), so no end-of-line conversion is allowed here.
+* -text

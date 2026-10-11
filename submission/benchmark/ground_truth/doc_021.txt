@@ -1,0 +1,27 @@
+RELATÓRIO CLÍNICO — Banco de Portugal
+Data do documento: 22/10/2026    |    Referência: REF-2026-0021
+Nome do titular: * *
+Profissão: engenheiro informático
+Morada de contacto: * * *, *, * * * * *
+Telefone: * * * * *    Email: *
+Identificador fiscal: *
+Entidade responsável: Banco de Portugal
+Campo                         | Valor
+------------------------------+--------------------------------
+Processo                       | REF-2026-0021
+Data de registo                | 22/09/2026
+Valor administrativo          | 373,40 EUR
+O nome Banco de Portugal refere-se a uma organização, não à identidade do titular.
+O nome da cidade do Porto é aqui uma localização institucional e deve permanecer visível.
+O número REF-2026-0021 é uma referência de processo não pessoal nesta política.
+O documento foi revisto por * * e posteriormente confirmado por *.
+Diagnóstico: hipertensão arterial.
+Rede social indicada: *; perfil público da instituição: @instituicao_oficial.
+Profissional responsável: * *.
+IBAN associado ao titular: * * * * * * *.
+Observações complementares:
+A consulta decorreu sem intercorrências. A equipa registou os sinais vitais, explicou os procedimentos e entregou recomendações gerais de acompanhamento.
+A informação relativa ao diagnóstico é relevante para o tratamento e não constitui, por si só, um identificador pessoal nesta política de teste.
+Na nota de seguimento, * confirmou ter compreendido as indicações. O registo administrativo foi atualizado sem alterar a data do episódio.
+  Nota de rodapé: verificar o registo.  
+Observação final: * * confirmou que * é a mesma pessoa.

@@ -1,0 +1,33 @@
+FORMULÁRIO ESCOLAR — Autoridade Tributária e Aduaneira
+Data do documento: 17/05/2026    |    Referência: REF-2026-0016
+
+Nome do titular: Teresa Figueiredo
+Profissão: advogada
+Morada de contacto: Rua da Alegria, 184, 4000-042 Porto
+Telefone: +351 91 016 92 04    Email: teresa.figueiredo@example.org
+Identificador fiscal: 100000016
+Entidade responsável: Autoridade Tributária e Aduaneira
+
+Campo                         | Valor
+------------------------------+--------------------------------
+Processo                       | REF-2026-0016
+Data de registo                | 17/09/2026
+Valor administrativo          | 308,40 EUR
+
+O nome da cidade do Porto é aqui uma localização institucional e deve permanecer visível.
+O nome Autoridade Tributária e Aduaneira refere-se a uma organização, não à identidade do titular.
+Endereço de correspondência repetido: Rua da Alegria, 184, 4000-042 Porto.
+Contacto secundário: Patrícia Moreira (cônjuge).
+Rede social indicada: @teresa_figueiredo16; perfil público da instituição: @instituicao_oficial.
+Nota interna: Teresa enviou os documentos por correio eletrónico.
+A data 17/09/2026 corresponde ao processamento do pedido e não à data de nascimento.
+IBAN associado ao titular: PT50 0002 0123 1234 5678 9015 4.
+
+Observações complementares:
+A entidade responsável recebeu o pedido e confirmou que a documentação apresentada seria analisada no prazo habitual.
+O conteúdo deste registo descreve factos administrativos e deve continuar legível depois de removidos os identificadores pessoais.
+Durante o contacto posterior, Teresa solicitou uma cópia para arquivo e confirmou que a morada indicada continua atual.
+
+  Item	Estado	Comentário
+  A	OK	--
+  B	Pendente	...

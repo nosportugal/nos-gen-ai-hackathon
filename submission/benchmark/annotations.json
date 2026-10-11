@@ -1,0 +1,4116 @@
+[
+  {
+    "id": "doc_001",
+    "language": "pt",
+    "document_type": "relatório clínico",
+    "word_count": 201,
+    "annotations": [
+      {
+        "start": 120,
+        "end": 137,
+        "text": "Ana Sofia Martins",
+        "category": "NAME"
+      },
+      {
+        "start": 180,
+        "end": 233,
+        "text": "Avenida da República, 732, 4430-190 Vila Nova de Gaia",
+        "category": "ADDR"
+      },
+      {
+        "start": 244,
+        "end": 261,
+        "text": "+351 91 001 37 19",
+        "category": "PHONE"
+      },
+      {
+        "start": 272,
+        "end": 301,
+        "text": "ana.sofia.martins@example.org",
+        "category": "EMAIL"
+      },
+      {
+        "start": 324,
+        "end": 333,
+        "text": "100000001",
+        "category": "TAX"
+      },
+      {
+        "start": 657,
+        "end": 675,
+        "text": "Marta Isabel Lopes",
+        "category": "SECOND"
+      },
+      {
+        "start": 699,
+        "end": 718,
+        "text": "@ana_sofia_martins1",
+        "category": "HANDLE"
+      },
+      {
+        "start": 874,
+        "end": 892,
+        "text": "Marta Isabel Lopes",
+        "category": "SECOND"
+      },
+      {
+        "start": 930,
+        "end": 948,
+        "text": "Marta Isabel Lopes",
+        "category": "SECOND"
+      },
+      {
+        "start": 981,
+        "end": 984,
+        "text": "Ana",
+        "category": "SHORT"
+      },
+      {
+        "start": 1024,
+        "end": 1077,
+        "text": "Avenida da República, 732, 4430-190 Vila Nova de Gaia",
+        "category": "ADDR"
+      },
+      {
+        "start": 1093,
+        "end": 1096,
+        "text": "Ana",
+        "category": "SHORT"
+      },
+      {
+        "start": 1493,
+        "end": 1496,
+        "text": "Ana",
+        "category": "SHORT"
+      }
+    ]
+  },
+  {
+    "id": "doc_002",
+    "language": "pt",
+    "document_type": "email",
+    "word_count": 225,
+    "annotations": [
+      {
+        "start": 116,
+        "end": 134,
+        "text": "João Pedro Almeida",
+        "category": "NAME"
+      },
+      {
+        "start": 189,
+        "end": 242,
+        "text": "Avenida da República, 732, 4430-190 Vila Nova de Gaia",
+        "category": "ADDR"
+      },
+      {
+        "start": 253,
+        "end": 270,
+        "text": "+351 91 002 74 38",
+        "category": "PHONE"
+      },
+      {
+        "start": 281,
+        "end": 311,
+        "text": "joão.pedro.almeida@example.org",
+        "category": "EMAIL"
+      },
+      {
+        "start": 334,
+        "end": 343,
+        "text": "100000002",
+        "category": "TAX"
+      },
+      {
+        "start": 758,
+        "end": 811,
+        "text": "Avenida da República, 732, 4430-190 Vila Nova de Gaia",
+        "category": "ADDR"
+      },
+      {
+        "start": 992,
+        "end": 996,
+        "text": "João",
+        "category": "SHORT"
+      },
+      {
+        "start": 1070,
+        "end": 1085,
+        "text": "Gonçalo Pereira",
+        "category": "SECOND"
+      },
+      {
+        "start": 1118,
+        "end": 1122,
+        "text": "João",
+        "category": "SHORT"
+      },
+      {
+        "start": 1151,
+        "end": 1182,
+        "text": "PT50 0002 0123 1234 5678 9015 4",
+        "category": "IBAN"
+      },
+      {
+        "start": 1281,
+        "end": 1308,
+        "text": "gonçalo.pereira@example.org",
+        "category": "SECOND_EMAIL"
+      },
+      {
+        "start": 1617,
+        "end": 1621,
+        "text": "João",
+        "category": "SHORT"
+      }
+    ]
+  },
+  {
+    "id": "doc_003",
+    "language": "pt",
+    "document_type": "contrato de arrendamento",
+    "word_count": 239,
+    "annotations": [
+      {
+        "start": 159,
+        "end": 178,
+        "text": "Maria Inês Ferreira",
+        "category": "NAME"
+      },
+      {
+        "start": 233,
+        "end": 271,
+        "text": "Rua da Liberdade, 27, 3000-120 Coimbra",
+        "category": "ADDR"
+      },
+      {
+        "start": 282,
+        "end": 299,
+        "text": "+351 91 003 11 57",
+        "category": "PHONE"
+      },
+      {
+        "start": 310,
+        "end": 341,
+        "text": "maria.inês.ferreira@example.org",
+        "category": "EMAIL"
+      },
+      {
+        "start": 364,
+        "end": 373,
+        "text": "100000003",
+        "category": "TAX"
+      },
+      {
+        "start": 696,
+        "end": 715,
+        "text": "Maria Inês Ferreira",
+        "category": "NAME"
+      },
+      {
+        "start": 732,
+        "end": 744,
+        "text": "Leonor Silva",
+        "category": "SECOND"
+      },
+      {
+        "start": 767,
+        "end": 779,
+        "text": "Leonor Silva",
+        "category": "SECOND"
+      },
+      {
+        "start": 827,
+        "end": 865,
+        "text": "Rua da Liberdade, 27, 3000-120 Coimbra",
+        "category": "ADDR"
+      },
+      {
+        "start": 1075,
+        "end": 1106,
+        "text": "PT50 0002 0123 1234 5678 9015 4",
+        "category": "IBAN"
+      },
+      {
+        "start": 1122,
+        "end": 1127,
+        "text": "Maria",
+        "category": "SHORT"
+      },
+      {
+        "start": 1365,
+        "end": 1386,
+        "text": "@maria_inês_ferreira3",
+        "category": "HANDLE"
+      },
+      {
+        "start": 1749,
+        "end": 1754,
+        "text": "Maria",
+        "category": "SHORT"
+      }
+    ]
+  },
+  {
+    "id": "doc_004",
+    "language": "pt",
+    "document_type": "formulário de candidatura",
+    "word_count": 251,
+    "annotations": [
+      {
+        "start": 154,
+        "end": 170,
+        "text": "Rui Miguel Costa",
+        "category": "NAME"
+      },
+      {
+        "start": 225,
+        "end": 263,
+        "text": "Rua dos Limoeiros, 48, 2780-102 Oeiras",
+        "category": "ADDR"
+      },
+      {
+        "start": 274,
+        "end": 291,
+        "text": "+351 91 004 48 76",
+        "category": "PHONE"
+      },
+      {
+        "start": 302,
+        "end": 330,
+        "text": "rui.miguel.costa@example.org",
+        "category": "EMAIL"
+      },
+      {
+        "start": 353,
+        "end": 362,
+        "text": "100000004",
+        "category": "TAX"
+      },
+      {
+        "start": 695,
+        "end": 715,
+        "text": "Pedro Henrique Gomes",
+        "category": "SECOND"
+      },
+      {
+        "start": 748,
+        "end": 751,
+        "text": "Rui",
+        "category": "SHORT"
+      },
+      {
+        "start": 767,
+        "end": 770,
+        "text": "Rui",
+        "category": "SHORT"
+      },
+      {
+        "start": 923,
+        "end": 941,
+        "text": "@rui_miguel_costa4",
+        "category": "HANDLE"
+      },
+      {
+        "start": 1023,
+        "end": 1054,
+        "text": "PT50 0002 0123 1234 5678 9015 4",
+        "category": "IBAN"
+      },
+      {
+        "start": 1373,
+        "end": 1411,
+        "text": "Rua dos Limoeiros, 48, 2780-102 Oeiras",
+        "category": "ADDR"
+      },
+      {
+        "start": 1434,
+        "end": 1454,
+        "text": "Pedro Henrique Gomes",
+        "category": "SECOND"
+      },
+      {
+        "start": 1772,
+        "end": 1775,
+        "text": "Rui",
+        "category": "SHORT"
+      }
+    ]
+  },
+  {
+    "id": "doc_005",
+    "language": "pt",
+    "document_type": "extrato bancário",
+    "word_count": 194,
+    "annotations": [
+      {
+        "start": 123,
+        "end": 136,
+        "text": "Beatriz Sousa",
+        "category": "NAME"
+      },
+      {
+        "start": 177,
+        "end": 230,
+        "text": "Avenida da República, 732, 4430-190 Vila Nova de Gaia",
+        "category": "ADDR"
+      },
+      {
+        "start": 241,
+        "end": 258,
+        "text": "+351 91 005 85 95",
+        "category": "PHONE"
+      },
+      {
+        "start": 269,
+        "end": 294,
+        "text": "beatriz.sousa@example.org",
+        "category": "EMAIL"
+      },
+      {
+        "start": 317,
+        "end": 326,
+        "text": "100000005",
+        "category": "TAX"
+      },
+      {
+        "start": 670,
+        "end": 683,
+        "text": "Beatriz Sousa",
+        "category": "NAME"
+      },
+      {
+        "start": 706,
+        "end": 716,
+        "text": "Inês Matos",
+        "category": "SECOND"
+      },
+      {
+        "start": 750,
+        "end": 765,
+        "text": "@beatriz_sousa5",
+        "category": "HANDLE"
+      },
+      {
+        "start": 858,
+        "end": 911,
+        "text": "Avenida da República, 732, 4430-190 Vila Nova de Gaia",
+        "category": "ADDR"
+      },
+      {
+        "start": 967,
+        "end": 977,
+        "text": "Inês Matos",
+        "category": "SECOND"
+      },
+      {
+        "start": 1393,
+        "end": 1400,
+        "text": "Beatriz",
+        "category": "SHORT"
+      }
+    ]
+  },
+  {
+    "id": "doc_006",
+    "language": "pt",
+    "document_type": "ficha de filiação política",
+    "word_count": 220,
+    "annotations": [
+      {
+        "start": 129,
+        "end": 149,
+        "text": "Tiago Manuel Ribeiro",
+        "category": "NAME"
+      },
+      {
+        "start": 192,
+        "end": 230,
+        "text": "Rua da Liberdade, 27, 3000-120 Coimbra",
+        "category": "ADDR"
+      },
+      {
+        "start": 241,
+        "end": 258,
+        "text": "+351 91 006 22 14",
+        "category": "PHONE"
+      },
+      {
+        "start": 269,
+        "end": 301,
+        "text": "tiago.manuel.ribeiro@example.org",
+        "category": "EMAIL"
+      },
+      {
+        "start": 324,
+        "end": 333,
+        "text": "100000006",
+        "category": "TAX"
+      },
+      {
+        "start": 800,
+        "end": 820,
+        "text": "Tiago Manuel Ribeiro",
+        "category": "NAME"
+      },
+      {
+        "start": 860,
+        "end": 898,
+        "text": "Rua da Liberdade, 27, 3000-120 Coimbra",
+        "category": "ADDR"
+      },
+      {
+        "start": 999,
+        "end": 1004,
+        "text": "Tiago",
+        "category": "SHORT"
+      },
+      {
+        "start": 1072,
+        "end": 1094,
+        "text": "@tiago_manuel_ribeiro6",
+        "category": "HANDLE"
+      },
+      {
+        "start": 1570,
+        "end": 1575,
+        "text": "Tiago",
+        "category": "SHORT"
+      }
+    ]
+  },
+  {
+    "id": "doc_007",
+    "language": "pt",
+    "document_type": "registo familiar",
+    "word_count": 230,
+    "annotations": [
+      {
+        "start": 127,
+        "end": 142,
+        "text": "Carolina Mendes",
+        "category": "NAME"
+      },
+      {
+        "start": 197,
+        "end": 250,
+        "text": "Avenida da República, 732, 4430-190 Vila Nova de Gaia",
+        "category": "ADDR"
+      },
+      {
+        "start": 261,
+        "end": 278,
+        "text": "+351 91 007 59 33",
+        "category": "PHONE"
+      },
+      {
+        "start": 289,
+        "end": 316,
+        "text": "carolina.mendes@example.org",
+        "category": "EMAIL"
+      },
+      {
+        "start": 339,
+        "end": 348,
+        "text": "100000007",
+        "category": "TAX"
+      },
+      {
+        "start": 657,
+        "end": 674,
+        "text": "@carolina_mendes7",
+        "category": "HANDLE"
+      },
+      {
+        "start": 842,
+        "end": 861,
+        "text": "Miguel Ângelo Pinto",
+        "category": "SECOND"
+      },
+      {
+        "start": 1066,
+        "end": 1074,
+        "text": "Carolina",
+        "category": "SHORT"
+      },
+      {
+        "start": 1158,
+        "end": 1211,
+        "text": "Avenida da República, 732, 4430-190 Vila Nova de Gaia",
+        "category": "ADDR"
+      },
+      {
+        "start": 1234,
+        "end": 1253,
+        "text": "Miguel Ângelo Pinto",
+        "category": "SECOND"
+      },
+      {
+        "start": 1293,
+        "end": 1312,
+        "text": "Miguel Ângelo Pinto",
+        "category": "SECOND"
+      },
+      {
+        "start": 1345,
+        "end": 1353,
+        "text": "Carolina",
+        "category": "SHORT"
+      },
+      {
+        "start": 1639,
+        "end": 1647,
+        "text": "Carolina",
+        "category": "SHORT"
+      },
+      {
+        "start": 1747,
+        "end": 1762,
+        "text": "Carolina Mendes",
+        "category": "NAME"
+      },
+      {
+        "start": 1777,
+        "end": 1785,
+        "text": "Carolina",
+        "category": "SHORT"
+      }
+    ]
+  },
+  {
+    "id": "doc_008",
+    "language": "pt",
+    "document_type": "declaração profissional",
+    "word_count": 246,
+    "annotations": [
+      {
+        "start": 129,
+        "end": 144,
+        "text": "Duarte Oliveira",
+        "category": "NAME"
+      },
+      {
+        "start": 199,
+        "end": 252,
+        "text": "Avenida da República, 732, 4430-190 Vila Nova de Gaia",
+        "category": "ADDR"
+      },
+      {
+        "start": 263,
+        "end": 280,
+        "text": "+351 91 008 96 52",
+        "category": "PHONE"
+      },
+      {
+        "start": 291,
+        "end": 318,
+        "text": "duarte.oliveira@example.org",
+        "category": "EMAIL"
+      },
+      {
+        "start": 341,
+        "end": 350,
+        "text": "100000008",
+        "category": "TAX"
+      },
+      {
+        "start": 654,
+        "end": 671,
+        "text": "@duarte_oliveira8",
+        "category": "HANDLE"
+      },
+      {
+        "start": 764,
+        "end": 817,
+        "text": "Avenida da República, 732, 4430-190 Vila Nova de Gaia",
+        "category": "ADDR"
+      },
+      {
+        "start": 846,
+        "end": 877,
+        "text": "PT50 0002 0123 1234 5678 9015 4",
+        "category": "IBAN"
+      },
+      {
+        "start": 907,
+        "end": 924,
+        "text": "Teresa Figueiredo",
+        "category": "SECOND"
+      },
+      {
+        "start": 957,
+        "end": 963,
+        "text": "Duarte",
+        "category": "SHORT"
+      },
+      {
+        "start": 1242,
+        "end": 1259,
+        "text": "Teresa Figueiredo",
+        "category": "SECOND"
+      },
+      {
+        "start": 1283,
+        "end": 1289,
+        "text": "Duarte",
+        "category": "SHORT"
+      },
+      {
+        "start": 1728,
+        "end": 1734,
+        "text": "Duarte",
+        "category": "SHORT"
+      }
+    ]
+  },
+  {
+    "id": "doc_009",
+    "language": "pt",
+    "document_type": "pedido de apoio social",
+    "word_count": 238,
+    "annotations": [
+      {
+        "start": 129,
+        "end": 147,
+        "text": "Marta Isabel Lopes",
+        "category": "NAME"
+      },
+      {
+        "start": 202,
+        "end": 240,
+        "text": "Travessa do Pinhal, 16, 4700-291 Braga",
+        "category": "ADDR"
+      },
+      {
+        "start": 251,
+        "end": 268,
+        "text": "+351 91 009 33 71",
+        "category": "PHONE"
+      },
+      {
+        "start": 279,
+        "end": 309,
+        "text": "marta.isabel.lopes@example.org",
+        "category": "EMAIL"
+      },
+      {
+        "start": 332,
+        "end": 341,
+        "text": "100000009",
+        "category": "TAX"
+      },
+      {
+        "start": 646,
+        "end": 666,
+        "text": "@marta_isabel_lopes9",
+        "category": "HANDLE"
+      },
+      {
+        "start": 742,
+        "end": 755,
+        "text": "Ricardo Nunes",
+        "category": "SECOND"
+      },
+      {
+        "start": 977,
+        "end": 1015,
+        "text": "Travessa do Pinhal, 16, 4700-291 Braga",
+        "category": "ADDR"
+      },
+      {
+        "start": 1031,
+        "end": 1036,
+        "text": "Marta",
+        "category": "SHORT"
+      },
+      {
+        "start": 1200,
+        "end": 1213,
+        "text": "Ricardo Nunes",
+        "category": "SECOND"
+      },
+      {
+        "start": 1246,
+        "end": 1251,
+        "text": "Marta",
+        "category": "SHORT"
+      },
+      {
+        "start": 1360,
+        "end": 1391,
+        "text": "PT50 0002 0123 1234 5678 9015 4",
+        "category": "IBAN"
+      },
+      {
+        "start": 1701,
+        "end": 1706,
+        "text": "Marta",
+        "category": "SHORT"
+      }
+    ]
+  },
+  {
+    "id": "doc_010",
+    "language": "pt",
+    "document_type": "relatório de sinistro",
+    "word_count": 217,
+    "annotations": [
+      {
+        "start": 150,
+        "end": 165,
+        "text": "Gonçalo Pereira",
+        "category": "NAME"
+      },
+      {
+        "start": 208,
+        "end": 246,
+        "text": "Rua dos Limoeiros, 48, 2780-102 Oeiras",
+        "category": "ADDR"
+      },
+      {
+        "start": 257,
+        "end": 274,
+        "text": "+351 91 010 70 90",
+        "category": "PHONE"
+      },
+      {
+        "start": 285,
+        "end": 312,
+        "text": "gonçalo.pereira@example.org",
+        "category": "EMAIL"
+      },
+      {
+        "start": 335,
+        "end": 344,
+        "text": "100000010",
+        "category": "TAX"
+      },
+      {
+        "start": 670,
+        "end": 683,
+        "text": "Catarina Reis",
+        "category": "SECOND"
+      },
+      {
+        "start": 829,
+        "end": 860,
+        "text": "PT50 0002 0123 1234 5678 9015 4",
+        "category": "IBAN"
+      },
+      {
+        "start": 1041,
+        "end": 1048,
+        "text": "Gonçalo",
+        "category": "SHORT"
+      },
+      {
+        "start": 1492,
+        "end": 1499,
+        "text": "Gonçalo",
+        "category": "SHORT"
+      }
+    ]
+  },
+  {
+    "id": "doc_011",
+    "language": "pt",
+    "document_type": "registo de rede social",
+    "word_count": 203,
+    "annotations": [
+      {
+        "start": 129,
+        "end": 141,
+        "text": "Leonor Silva",
+        "category": "NAME"
+      },
+      {
+        "start": 184,
+        "end": 220,
+        "text": "Rua de Cedofeita, 91, 4050-174 Porto",
+        "category": "ADDR"
+      },
+      {
+        "start": 231,
+        "end": 248,
+        "text": "+351 91 011 07 09",
+        "category": "PHONE"
+      },
+      {
+        "start": 259,
+        "end": 283,
+        "text": "leonor.silva@example.org",
+        "category": "EMAIL"
+      },
+      {
+        "start": 306,
+        "end": 315,
+        "text": "100000011",
+        "category": "TAX"
+      },
+      {
+        "start": 612,
+        "end": 618,
+        "text": "Leonor",
+        "category": "SHORT"
+      },
+      {
+        "start": 763,
+        "end": 778,
+        "text": "@leonor_silva11",
+        "category": "HANDLE"
+      },
+      {
+        "start": 896,
+        "end": 927,
+        "text": "PT50 0002 0123 1234 5678 9015 4",
+        "category": "IBAN"
+      },
+      {
+        "start": 951,
+        "end": 966,
+        "text": "@leonor_silva11",
+        "category": "HANDLE"
+      },
+      {
+        "start": 1122,
+        "end": 1128,
+        "text": "Leonor",
+        "category": "SHORT"
+      },
+      {
+        "start": 1497,
+        "end": 1503,
+        "text": "Leonor",
+        "category": "SHORT"
+      }
+    ]
+  },
+  {
+    "id": "doc_012",
+    "language": "pt",
+    "document_type": "consentimento informado",
+    "word_count": 237,
+    "annotations": [
+      {
+        "start": 142,
+        "end": 162,
+        "text": "Pedro Henrique Gomes",
+        "category": "NAME"
+      },
+      {
+        "start": 203,
+        "end": 241,
+        "text": "Travessa do Pinhal, 16, 4700-291 Braga",
+        "category": "ADDR"
+      },
+      {
+        "start": 252,
+        "end": 269,
+        "text": "+351 91 012 44 28",
+        "category": "PHONE"
+      },
+      {
+        "start": 280,
+        "end": 312,
+        "text": "pedro.henrique.gomes@example.org",
+        "category": "EMAIL"
+      },
+      {
+        "start": 335,
+        "end": 344,
+        "text": "100000012",
+        "category": "TAX"
+      },
+      {
+        "start": 677,
+        "end": 715,
+        "text": "Travessa do Pinhal, 16, 4700-291 Braga",
+        "category": "ADDR"
+      },
+      {
+        "start": 835,
+        "end": 849,
+        "text": "Joana Carvalho",
+        "category": "SECOND"
+      },
+      {
+        "start": 882,
+        "end": 887,
+        "text": "Pedro",
+        "category": "SHORT"
+      },
+      {
+        "start": 996,
+        "end": 1027,
+        "text": "PT50 0002 0123 1234 5678 9015 4",
+        "category": "IBAN"
+      },
+      {
+        "start": 1149,
+        "end": 1163,
+        "text": "Joana Carvalho",
+        "category": "SECOND"
+      },
+      {
+        "start": 1280,
+        "end": 1303,
+        "text": "@pedro_henrique_gomes12",
+        "category": "HANDLE"
+      },
+      {
+        "start": 1666,
+        "end": 1671,
+        "text": "Pedro",
+        "category": "SHORT"
+      }
+    ]
+  },
+  {
+    "id": "doc_013",
+    "language": "pt",
+    "document_type": "recibo de vencimento",
+    "word_count": 210,
+    "annotations": [
+      {
+        "start": 127,
+        "end": 137,
+        "text": "Inês Matos",
+        "category": "NAME"
+      },
+      {
+        "start": 180,
+        "end": 215,
+        "text": "Rua da Alegria, 184, 4000-042 Porto",
+        "category": "ADDR"
+      },
+      {
+        "start": 226,
+        "end": 243,
+        "text": "+351 91 013 81 47",
+        "category": "PHONE"
+      },
+      {
+        "start": 254,
+        "end": 276,
+        "text": "inês.matos@example.org",
+        "category": "EMAIL"
+      },
+      {
+        "start": 299,
+        "end": 308,
+        "text": "100000013",
+        "category": "TAX"
+      },
+      {
+        "start": 629,
+        "end": 664,
+        "text": "Rua da Alegria, 184, 4000-042 Porto",
+        "category": "ADDR"
+      },
+      {
+        "start": 684,
+        "end": 694,
+        "text": "Inês Matos",
+        "category": "NAME"
+      },
+      {
+        "start": 723,
+        "end": 754,
+        "text": "PT50 0002 0123 1234 5678 9015 4",
+        "category": "IBAN"
+      },
+      {
+        "start": 784,
+        "end": 796,
+        "text": "André Santos",
+        "category": "SECOND"
+      },
+      {
+        "start": 829,
+        "end": 833,
+        "text": "Inês",
+        "category": "SHORT"
+      },
+      {
+        "start": 889,
+        "end": 901,
+        "text": "André Santos",
+        "category": "SECOND"
+      },
+      {
+        "start": 924,
+        "end": 936,
+        "text": "André Santos",
+        "category": "SECOND"
+      },
+      {
+        "start": 1058,
+        "end": 1071,
+        "text": "@inês_matos13",
+        "category": "HANDLE"
+      },
+      {
+        "start": 1183,
+        "end": 1187,
+        "text": "Inês",
+        "category": "SHORT"
+      },
+      {
+        "start": 1557,
+        "end": 1561,
+        "text": "Inês",
+        "category": "SHORT"
+      }
+    ]
+  },
+  {
+    "id": "doc_014",
+    "language": "pt",
+    "document_type": "ata de reunião",
+    "word_count": 248,
+    "annotations": [
+      {
+        "start": 143,
+        "end": 158,
+        "text": "Sofia Rodrigues",
+        "category": "NAME"
+      },
+      {
+        "start": 199,
+        "end": 234,
+        "text": "Rua da Alegria, 184, 4000-042 Porto",
+        "category": "ADDR"
+      },
+      {
+        "start": 245,
+        "end": 262,
+        "text": "+351 91 014 18 66",
+        "category": "PHONE"
+      },
+      {
+        "start": 273,
+        "end": 300,
+        "text": "sofia.rodrigues@example.org",
+        "category": "EMAIL"
+      },
+      {
+        "start": 323,
+        "end": 332,
+        "text": "100000014",
+        "category": "TAX"
+      },
+      {
+        "start": 659,
+        "end": 677,
+        "text": "@sofia_rodrigues14",
+        "category": "HANDLE"
+      },
+      {
+        "start": 940,
+        "end": 945,
+        "text": "Sofia",
+        "category": "SHORT"
+      },
+      {
+        "start": 1018,
+        "end": 1049,
+        "text": "PT50 0002 0123 1234 5678 9015 4",
+        "category": "IBAN"
+      },
+      {
+        "start": 1169,
+        "end": 1183,
+        "text": "Helena Barbosa",
+        "category": "SECOND"
+      },
+      {
+        "start": 1216,
+        "end": 1221,
+        "text": "Sofia",
+        "category": "SHORT"
+      },
+      {
+        "start": 1261,
+        "end": 1296,
+        "text": "Rua da Alegria, 184, 4000-042 Porto",
+        "category": "ADDR"
+      },
+      {
+        "start": 1319,
+        "end": 1333,
+        "text": "Helena Barbosa",
+        "category": "SECOND"
+      },
+      {
+        "start": 1733,
+        "end": 1738,
+        "text": "Sofia",
+        "category": "SHORT"
+      },
+      {
+        "start": 1841,
+        "end": 1856,
+        "text": "Sofia Rodrigues",
+        "category": "NAME"
+      },
+      {
+        "start": 1871,
+        "end": 1876,
+        "text": "Sofia",
+        "category": "SHORT"
+      }
+    ]
+  },
+  {
+    "id": "doc_015",
+    "language": "pt",
+    "document_type": "pedido de crédito",
+    "word_count": 211,
+    "annotations": [
+      {
+        "start": 136,
+        "end": 155,
+        "text": "Miguel Ângelo Pinto",
+        "category": "NAME"
+      },
+      {
+        "start": 198,
+        "end": 236,
+        "text": "Travessa do Pinhal, 16, 4700-291 Braga",
+        "category": "ADDR"
+      },
+      {
+        "start": 247,
+        "end": 264,
+        "text": "+351 91 015 55 85",
+        "category": "PHONE"
+      },
+      {
+        "start": 275,
+        "end": 306,
+        "text": "miguel.ângelo.pinto@example.org",
+        "category": "EMAIL"
+      },
+      {
+        "start": 329,
+        "end": 338,
+        "text": "100000015",
+        "category": "TAX"
+      },
+      {
+        "start": 647,
+        "end": 653,
+        "text": "Miguel",
+        "category": "SHORT"
+      },
+      {
+        "start": 971,
+        "end": 990,
+        "text": "Luís Miguel Azevedo",
+        "category": "SECOND"
+      },
+      {
+        "start": 1010,
+        "end": 1029,
+        "text": "Miguel Ângelo Pinto",
+        "category": "NAME"
+      },
+      {
+        "start": 1435,
+        "end": 1441,
+        "text": "Miguel",
+        "category": "SHORT"
+      }
+    ]
+  },
+  {
+    "id": "doc_016",
+    "language": "pt",
+    "document_type": "formulário escolar",
+    "word_count": 215,
+    "annotations": [
+      {
+        "start": 137,
+        "end": 154,
+        "text": "Teresa Figueiredo",
+        "category": "NAME"
+      },
+      {
+        "start": 195,
+        "end": 230,
+        "text": "Rua da Alegria, 184, 4000-042 Porto",
+        "category": "ADDR"
+      },
+      {
+        "start": 241,
+        "end": 258,
+        "text": "+351 91 016 92 04",
+        "category": "PHONE"
+      },
+      {
+        "start": 269,
+        "end": 298,
+        "text": "teresa.figueiredo@example.org",
+        "category": "EMAIL"
+      },
+      {
+        "start": 321,
+        "end": 330,
+        "text": "100000016",
+        "category": "TAX"
+      },
+      {
+        "start": 852,
+        "end": 887,
+        "text": "Rua da Alegria, 184, 4000-042 Porto",
+        "category": "ADDR"
+      },
+      {
+        "start": 910,
+        "end": 926,
+        "text": "Patrícia Moreira",
+        "category": "SECOND"
+      },
+      {
+        "start": 960,
+        "end": 980,
+        "text": "@teresa_figueiredo16",
+        "category": "HANDLE"
+      },
+      {
+        "start": 1049,
+        "end": 1055,
+        "text": "Teresa",
+        "category": "SHORT"
+      },
+      {
+        "start": 1213,
+        "end": 1244,
+        "text": "PT50 0002 0123 1234 5678 9015 4",
+        "category": "IBAN"
+      },
+      {
+        "start": 1554,
+        "end": 1560,
+        "text": "Teresa",
+        "category": "SHORT"
+      }
+    ]
+  },
+  {
+    "id": "doc_017",
+    "language": "pt",
+    "document_type": "relatório de fisioterapia",
+    "word_count": 219,
+    "annotations": [
+      {
+        "start": 128,
+        "end": 141,
+        "text": "Ricardo Nunes",
+        "category": "NAME"
+      },
+      {
+        "start": 196,
+        "end": 249,
+        "text": "Avenida da República, 732, 4430-190 Vila Nova de Gaia",
+        "category": "ADDR"
+      },
+      {
+        "start": 260,
+        "end": 277,
+        "text": "+351 91 017 29 23",
+        "category": "PHONE"
+      },
+      {
+        "start": 288,
+        "end": 313,
+        "text": "ricardo.nunes@example.org",
+        "category": "EMAIL"
+      },
+      {
+        "start": 336,
+        "end": 345,
+        "text": "100000017",
+        "category": "TAX"
+      },
+      {
+        "start": 646,
+        "end": 662,
+        "text": "@ricardo_nunes17",
+        "category": "HANDLE"
+      },
+      {
+        "start": 824,
+        "end": 855,
+        "text": "PT50 0002 0123 1234 5678 9015 4",
+        "category": "IBAN"
+      },
+      {
+        "start": 962,
+        "end": 977,
+        "text": "Vasco Fernandes",
+        "category": "SECOND"
+      },
+      {
+        "start": 1076,
+        "end": 1083,
+        "text": "Ricardo",
+        "category": "SHORT"
+      },
+      {
+        "start": 1202,
+        "end": 1255,
+        "text": "Avenida da República, 732, 4430-190 Vila Nova de Gaia",
+        "category": "ADDR"
+      },
+      {
+        "start": 1608,
+        "end": 1615,
+        "text": "Ricardo",
+        "category": "SHORT"
+      }
+    ]
+  },
+  {
+    "id": "doc_018",
+    "language": "pt",
+    "document_type": "contrato de prestação de serviços",
+    "word_count": 238,
+    "annotations": [
+      {
+        "start": 144,
+        "end": 157,
+        "text": "Catarina Reis",
+        "category": "NAME"
+      },
+      {
+        "start": 212,
+        "end": 248,
+        "text": "Rua de Cedofeita, 91, 4050-174 Porto",
+        "category": "ADDR"
+      },
+      {
+        "start": 259,
+        "end": 276,
+        "text": "+351 91 018 66 42",
+        "category": "PHONE"
+      },
+      {
+        "start": 287,
+        "end": 312,
+        "text": "catarina.reis@example.org",
+        "category": "EMAIL"
+      },
+      {
+        "start": 335,
+        "end": 344,
+        "text": "100000018",
+        "category": "TAX"
+      },
+      {
+        "start": 733,
+        "end": 746,
+        "text": "Catarina Reis",
+        "category": "NAME"
+      },
+      {
+        "start": 763,
+        "end": 776,
+        "text": "Raquel Coelho",
+        "category": "SECOND"
+      },
+      {
+        "start": 879,
+        "end": 892,
+        "text": "Raquel Coelho",
+        "category": "SECOND"
+      },
+      {
+        "start": 916,
+        "end": 924,
+        "text": "Catarina",
+        "category": "SHORT"
+      },
+      {
+        "start": 1077,
+        "end": 1093,
+        "text": "@catarina_reis18",
+        "category": "HANDLE"
+      },
+      {
+        "start": 1333,
+        "end": 1346,
+        "text": "Raquel Coelho",
+        "category": "SECOND"
+      },
+      {
+        "start": 1379,
+        "end": 1387,
+        "text": "Catarina",
+        "category": "SHORT"
+      },
+      {
+        "start": 1697,
+        "end": 1705,
+        "text": "Catarina",
+        "category": "SHORT"
+      }
+    ]
+  },
+  {
+    "id": "doc_019",
+    "language": "pt",
+    "document_type": "declaração de residência",
+    "word_count": 231,
+    "annotations": [
+      {
+        "start": 143,
+        "end": 158,
+        "text": "Filipe Teixeira",
+        "category": "NAME"
+      },
+      {
+        "start": 199,
+        "end": 237,
+        "text": "Rua dos Limoeiros, 48, 2780-102 Oeiras",
+        "category": "ADDR"
+      },
+      {
+        "start": 248,
+        "end": 265,
+        "text": "+351 91 019 03 61",
+        "category": "PHONE"
+      },
+      {
+        "start": 276,
+        "end": 303,
+        "text": "filipe.teixeira@example.org",
+        "category": "EMAIL"
+      },
+      {
+        "start": 326,
+        "end": 335,
+        "text": "100000019",
+        "category": "TAX"
+      },
+      {
+        "start": 926,
+        "end": 944,
+        "text": "@filipe_teixeira19",
+        "category": "HANDLE"
+      },
+      {
+        "start": 1027,
+        "end": 1039,
+        "text": "Daniel Rocha",
+        "category": "SECOND"
+      },
+      {
+        "start": 1072,
+        "end": 1078,
+        "text": "Filipe",
+        "category": "SHORT"
+      },
+      {
+        "start": 1094,
+        "end": 1100,
+        "text": "Filipe",
+        "category": "SHORT"
+      },
+      {
+        "start": 1184,
+        "end": 1222,
+        "text": "Rua dos Limoeiros, 48, 2780-102 Oeiras",
+        "category": "ADDR"
+      },
+      {
+        "start": 1251,
+        "end": 1282,
+        "text": "PT50 0002 0123 1234 5678 9015 4",
+        "category": "IBAN"
+      },
+      {
+        "start": 1305,
+        "end": 1317,
+        "text": "Daniel Rocha",
+        "category": "SECOND"
+      },
+      {
+        "start": 1715,
+        "end": 1721,
+        "text": "Filipe",
+        "category": "SHORT"
+      }
+    ]
+  },
+  {
+    "id": "doc_020",
+    "language": "pt",
+    "document_type": "reclamação de consumidor",
+    "word_count": 225,
+    "annotations": [
+      {
+        "start": 153,
+        "end": 167,
+        "text": "Joana Carvalho",
+        "category": "NAME"
+      },
+      {
+        "start": 222,
+        "end": 258,
+        "text": "Rua de Cedofeita, 91, 4050-174 Porto",
+        "category": "ADDR"
+      },
+      {
+        "start": 269,
+        "end": 286,
+        "text": "+351 91 020 40 80",
+        "category": "PHONE"
+      },
+      {
+        "start": 297,
+        "end": 323,
+        "text": "joana.carvalho@example.org",
+        "category": "EMAIL"
+      },
+      {
+        "start": 346,
+        "end": 355,
+        "text": "100000020",
+        "category": "TAX"
+      },
+      {
+        "start": 754,
+        "end": 759,
+        "text": "Joana",
+        "category": "SHORT"
+      },
+      {
+        "start": 928,
+        "end": 964,
+        "text": "Rua de Cedofeita, 91, 4050-174 Porto",
+        "category": "ADDR"
+      },
+      {
+        "start": 1084,
+        "end": 1099,
+        "text": "Cláudia Fonseca",
+        "category": "SECOND"
+      },
+      {
+        "start": 1132,
+        "end": 1137,
+        "text": "Joana",
+        "category": "SHORT"
+      },
+      {
+        "start": 1161,
+        "end": 1178,
+        "text": "@joana_carvalho20",
+        "category": "HANDLE"
+      },
+      {
+        "start": 1541,
+        "end": 1546,
+        "text": "Joana",
+        "category": "SHORT"
+      }
+    ]
+  },
+  {
+    "id": "doc_021",
+    "language": "pt",
+    "document_type": "relatório clínico",
+    "word_count": 229,
+    "annotations": [
+      {
+        "start": 120,
+        "end": 132,
+        "text": "André Santos",
+        "category": "NAME"
+      },
+      {
+        "start": 187,
+        "end": 240,
+        "text": "Avenida da República, 732, 4430-190 Vila Nova de Gaia",
+        "category": "ADDR"
+      },
+      {
+        "start": 251,
+        "end": 268,
+        "text": "+351 91 021 77 99",
+        "category": "PHONE"
+      },
+      {
+        "start": 279,
+        "end": 303,
+        "text": "andré.santos@example.org",
+        "category": "EMAIL"
+      },
+      {
+        "start": 326,
+        "end": 335,
+        "text": "100000021",
+        "category": "TAX"
+      },
+      {
+        "start": 895,
+        "end": 907,
+        "text": "Nuno Cardoso",
+        "category": "SECOND"
+      },
+      {
+        "start": 940,
+        "end": 945,
+        "text": "André",
+        "category": "SHORT"
+      },
+      {
+        "start": 1004,
+        "end": 1019,
+        "text": "@andré_santos21",
+        "category": "HANDLE"
+      },
+      {
+        "start": 1100,
+        "end": 1112,
+        "text": "Nuno Cardoso",
+        "category": "SECOND"
+      },
+      {
+        "start": 1141,
+        "end": 1172,
+        "text": "PT50 0002 0123 1234 5678 9015 4",
+        "category": "IBAN"
+      },
+      {
+        "start": 1525,
+        "end": 1530,
+        "text": "André",
+        "category": "SHORT"
+      },
+      {
+        "start": 1710,
+        "end": 1722,
+        "text": "André Santos",
+        "category": "NAME"
+      },
+      {
+        "start": 1737,
+        "end": 1742,
+        "text": "André",
+        "category": "SHORT"
+      }
+    ]
+  },
+  {
+    "id": "doc_022",
+    "language": "pt",
+    "document_type": "email",
+    "word_count": 201,
+    "annotations": [
+      {
+        "start": 124,
+        "end": 138,
+        "text": "Helena Barbosa",
+        "category": "NAME"
+      },
+      {
+        "start": 179,
+        "end": 214,
+        "text": "Rua da Alegria, 184, 4000-042 Porto",
+        "category": "ADDR"
+      },
+      {
+        "start": 225,
+        "end": 242,
+        "text": "+351 91 022 14 18",
+        "category": "PHONE"
+      },
+      {
+        "start": 253,
+        "end": 279,
+        "text": "helena.barbosa@example.org",
+        "category": "EMAIL"
+      },
+      {
+        "start": 302,
+        "end": 311,
+        "text": "100000022",
+        "category": "TAX"
+      },
+      {
+        "start": 634,
+        "end": 647,
+        "text": "Sara Monteiro",
+        "category": "SECOND"
+      },
+      {
+        "start": 680,
+        "end": 686,
+        "text": "Helena",
+        "category": "SHORT"
+      },
+      {
+        "start": 715,
+        "end": 746,
+        "text": "PT50 0002 0123 1234 5678 9015 4",
+        "category": "IBAN"
+      },
+      {
+        "start": 807,
+        "end": 824,
+        "text": "@helena_barbosa22",
+        "category": "HANDLE"
+      },
+      {
+        "start": 982,
+        "end": 1008,
+        "text": "helena.barbosa@example.org",
+        "category": "EMAIL"
+      },
+      {
+        "start": 1105,
+        "end": 1130,
+        "text": "sara.monteiro@example.org",
+        "category": "SECOND_EMAIL"
+      },
+      {
+        "start": 1524,
+        "end": 1530,
+        "text": "Helena",
+        "category": "SHORT"
+      }
+    ]
+  },
+  {
+    "id": "doc_023",
+    "language": "pt",
+    "document_type": "contrato de arrendamento",
+    "word_count": 240,
+    "annotations": [
+      {
+        "start": 159,
+        "end": 178,
+        "text": "Luís Miguel Azevedo",
+        "category": "NAME"
+      },
+      {
+        "start": 221,
+        "end": 256,
+        "text": "Rua da Alegria, 184, 4000-042 Porto",
+        "category": "ADDR"
+      },
+      {
+        "start": 267,
+        "end": 284,
+        "text": "+351 91 023 51 37",
+        "category": "PHONE"
+      },
+      {
+        "start": 295,
+        "end": 326,
+        "text": "luís.miguel.azevedo@example.org",
+        "category": "EMAIL"
+      },
+      {
+        "start": 349,
+        "end": 358,
+        "text": "100000023",
+        "category": "TAX"
+      },
+      {
+        "start": 696,
+        "end": 727,
+        "text": "PT50 0002 0123 1234 5678 9015 4",
+        "category": "IBAN"
+      },
+      {
+        "start": 833,
+        "end": 837,
+        "text": "Luís",
+        "category": "SHORT"
+      },
+      {
+        "start": 990,
+        "end": 1012,
+        "text": "@luís_miguel_azevedo23",
+        "category": "HANDLE"
+      },
+      {
+        "start": 1095,
+        "end": 1110,
+        "text": "Francisco Pires",
+        "category": "SECOND"
+      },
+      {
+        "start": 1143,
+        "end": 1147,
+        "text": "Luís",
+        "category": "SHORT"
+      },
+      {
+        "start": 1187,
+        "end": 1222,
+        "text": "Rua da Alegria, 184, 4000-042 Porto",
+        "category": "ADDR"
+      },
+      {
+        "start": 1236,
+        "end": 1255,
+        "text": "Luís Miguel Azevedo",
+        "category": "NAME"
+      },
+      {
+        "start": 1272,
+        "end": 1287,
+        "text": "Francisco Pires",
+        "category": "SECOND"
+      },
+      {
+        "start": 1792,
+        "end": 1796,
+        "text": "Luís",
+        "category": "SHORT"
+      }
+    ]
+  },
+  {
+    "id": "doc_024",
+    "language": "pt",
+    "document_type": "formulário de candidatura",
+    "word_count": 252,
+    "annotations": [
+      {
+        "start": 154,
+        "end": 170,
+        "text": "Patrícia Moreira",
+        "category": "NAME"
+      },
+      {
+        "start": 213,
+        "end": 249,
+        "text": "Rua de Cedofeita, 91, 4050-174 Porto",
+        "category": "ADDR"
+      },
+      {
+        "start": 260,
+        "end": 277,
+        "text": "+351 91 024 88 56",
+        "category": "PHONE"
+      },
+      {
+        "start": 288,
+        "end": 316,
+        "text": "patrícia.moreira@example.org",
+        "category": "EMAIL"
+      },
+      {
+        "start": 339,
+        "end": 348,
+        "text": "100000024",
+        "category": "TAX"
+      },
+      {
+        "start": 680,
+        "end": 711,
+        "text": "PT50 0002 0123 1234 5678 9015 4",
+        "category": "IBAN"
+      },
+      {
+        "start": 825,
+        "end": 844,
+        "text": "@patrícia_moreira24",
+        "category": "HANDLE"
+      },
+      {
+        "start": 913,
+        "end": 921,
+        "text": "Patrícia",
+        "category": "SHORT"
+      },
+      {
+        "start": 1080,
+        "end": 1095,
+        "text": "Mariana Correia",
+        "category": "SECOND"
+      },
+      {
+        "start": 1128,
+        "end": 1136,
+        "text": "Patrícia",
+        "category": "SHORT"
+      },
+      {
+        "start": 1159,
+        "end": 1174,
+        "text": "Mariana Correia",
+        "category": "SECOND"
+      },
+      {
+        "start": 1302,
+        "end": 1338,
+        "text": "Rua de Cedofeita, 91, 4050-174 Porto",
+        "category": "ADDR"
+      },
+      {
+        "start": 1757,
+        "end": 1765,
+        "text": "Patrícia",
+        "category": "SHORT"
+      }
+    ]
+  },
+  {
+    "id": "doc_025",
+    "language": "pt",
+    "document_type": "extrato bancário",
+    "word_count": 206,
+    "annotations": [
+      {
+        "start": 123,
+        "end": 138,
+        "text": "Vasco Fernandes",
+        "category": "NAME"
+      },
+      {
+        "start": 193,
+        "end": 229,
+        "text": "Rua de Cedofeita, 91, 4050-174 Porto",
+        "category": "ADDR"
+      },
+      {
+        "start": 240,
+        "end": 257,
+        "text": "+351 91 025 25 75",
+        "category": "PHONE"
+      },
+      {
+        "start": 268,
+        "end": 295,
+        "text": "vasco.fernandes@example.org",
+        "category": "EMAIL"
+      },
+      {
+        "start": 318,
+        "end": 327,
+        "text": "100000025",
+        "category": "TAX"
+      },
+      {
+        "start": 722,
+        "end": 753,
+        "text": "PT50 0002 0123 1234 5678 9015 4",
+        "category": "IBAN"
+      },
+      {
+        "start": 856,
+        "end": 875,
+        "text": "José António Vieira",
+        "category": "SECOND"
+      },
+      {
+        "start": 899,
+        "end": 904,
+        "text": "Vasco",
+        "category": "SHORT"
+      },
+      {
+        "start": 1004,
+        "end": 1023,
+        "text": "José António Vieira",
+        "category": "SECOND"
+      },
+      {
+        "start": 1436,
+        "end": 1441,
+        "text": "Vasco",
+        "category": "SHORT"
+      }
+    ]
+  },
+  {
+    "id": "doc_026",
+    "language": "pt",
+    "document_type": "ficha de filiação política",
+    "word_count": 217,
+    "annotations": [
+      {
+        "start": 132,
+        "end": 145,
+        "text": "Raquel Coelho",
+        "category": "NAME"
+      },
+      {
+        "start": 186,
+        "end": 221,
+        "text": "Rua da Alegria, 184, 4000-042 Porto",
+        "category": "ADDR"
+      },
+      {
+        "start": 232,
+        "end": 249,
+        "text": "+351 91 026 62 94",
+        "category": "PHONE"
+      },
+      {
+        "start": 260,
+        "end": 285,
+        "text": "raquel.coelho@example.org",
+        "category": "EMAIL"
+      },
+      {
+        "start": 308,
+        "end": 317,
+        "text": "100000026",
+        "category": "TAX"
+      },
+      {
+        "start": 628,
+        "end": 641,
+        "text": "Raquel Coelho",
+        "category": "NAME"
+      },
+      {
+        "start": 755,
+        "end": 771,
+        "text": "@raquel_coelho26",
+        "category": "HANDLE"
+      },
+      {
+        "start": 1035,
+        "end": 1070,
+        "text": "Rua da Alegria, 184, 4000-042 Porto",
+        "category": "ADDR"
+      },
+      {
+        "start": 1099,
+        "end": 1130,
+        "text": "PT50 0002 0123 1234 5678 9015 4",
+        "category": "IBAN"
+      },
+      {
+        "start": 1146,
+        "end": 1152,
+        "text": "Raquel",
+        "category": "SHORT"
+      },
+      {
+        "start": 1539,
+        "end": 1545,
+        "text": "Raquel",
+        "category": "SHORT"
+      }
+    ]
+  },
+  {
+    "id": "doc_027",
+    "language": "pt",
+    "document_type": "registo familiar",
+    "word_count": 218,
+    "annotations": [
+      {
+        "start": 119,
+        "end": 131,
+        "text": "Daniel Rocha",
+        "category": "NAME"
+      },
+      {
+        "start": 174,
+        "end": 227,
+        "text": "Avenida da República, 732, 4430-190 Vila Nova de Gaia",
+        "category": "ADDR"
+      },
+      {
+        "start": 238,
+        "end": 255,
+        "text": "+351 91 027 99 13",
+        "category": "PHONE"
+      },
+      {
+        "start": 266,
+        "end": 290,
+        "text": "daniel.rocha@example.org",
+        "category": "EMAIL"
+      },
+      {
+        "start": 313,
+        "end": 322,
+        "text": "100000027",
+        "category": "TAX"
+      },
+      {
+        "start": 729,
+        "end": 782,
+        "text": "Avenida da República, 732, 4430-190 Vila Nova de Gaia",
+        "category": "ADDR"
+      },
+      {
+        "start": 881,
+        "end": 887,
+        "text": "Daniel",
+        "category": "SHORT"
+      },
+      {
+        "start": 956,
+        "end": 967,
+        "text": "Bruno Cunha",
+        "category": "SECOND"
+      },
+      {
+        "start": 1006,
+        "end": 1017,
+        "text": "Bruno Cunha",
+        "category": "SECOND"
+      },
+      {
+        "start": 1129,
+        "end": 1144,
+        "text": "@daniel_rocha27",
+        "category": "HANDLE"
+      },
+      {
+        "start": 1227,
+        "end": 1238,
+        "text": "Bruno Cunha",
+        "category": "SECOND"
+      },
+      {
+        "start": 1271,
+        "end": 1277,
+        "text": "Daniel",
+        "category": "SHORT"
+      },
+      {
+        "start": 1563,
+        "end": 1569,
+        "text": "Daniel",
+        "category": "SHORT"
+      }
+    ]
+  },
+  {
+    "id": "doc_028",
+    "language": "pt",
+    "document_type": "declaração profissional",
+    "word_count": 258,
+    "annotations": [
+      {
+        "start": 152,
+        "end": 167,
+        "text": "Cláudia Fonseca",
+        "category": "NAME"
+      },
+      {
+        "start": 222,
+        "end": 258,
+        "text": "Rua de Cedofeita, 91, 4050-174 Porto",
+        "category": "ADDR"
+      },
+      {
+        "start": 269,
+        "end": 286,
+        "text": "+351 91 028 36 32",
+        "category": "PHONE"
+      },
+      {
+        "start": 297,
+        "end": 324,
+        "text": "cláudia.fonseca@example.org",
+        "category": "EMAIL"
+      },
+      {
+        "start": 347,
+        "end": 356,
+        "text": "100000028",
+        "category": "TAX"
+      },
+      {
+        "start": 688,
+        "end": 719,
+        "text": "PT50 0002 0123 1234 5678 9015 4",
+        "category": "IBAN"
+      },
+      {
+        "start": 749,
+        "end": 759,
+        "text": "Lara Neves",
+        "category": "SECOND"
+      },
+      {
+        "start": 792,
+        "end": 799,
+        "text": "Cláudia",
+        "category": "SHORT"
+      },
+      {
+        "start": 903,
+        "end": 921,
+        "text": "@cláudia_fonseca28",
+        "category": "HANDLE"
+      },
+      {
+        "start": 990,
+        "end": 997,
+        "text": "Cláudia",
+        "category": "SHORT"
+      },
+      {
+        "start": 1263,
+        "end": 1273,
+        "text": "Lara Neves",
+        "category": "SECOND"
+      },
+      {
+        "start": 1408,
+        "end": 1444,
+        "text": "Rua de Cedofeita, 91, 4050-174 Porto",
+        "category": "ADDR"
+      },
+      {
+        "start": 1754,
+        "end": 1761,
+        "text": "Cláudia",
+        "category": "SHORT"
+      },
+      {
+        "start": 1917,
+        "end": 1932,
+        "text": "Cláudia Fonseca",
+        "category": "NAME"
+      },
+      {
+        "start": 1947,
+        "end": 1954,
+        "text": "Cláudia",
+        "category": "SHORT"
+      }
+    ]
+  },
+  {
+    "id": "doc_029",
+    "language": "pt",
+    "document_type": "pedido de apoio social",
+    "word_count": 232,
+    "annotations": [
+      {
+        "start": 128,
+        "end": 140,
+        "text": "Nuno Cardoso",
+        "category": "NAME"
+      },
+      {
+        "start": 183,
+        "end": 221,
+        "text": "Rua da Liberdade, 27, 3000-120 Coimbra",
+        "category": "ADDR"
+      },
+      {
+        "start": 232,
+        "end": 249,
+        "text": "+351 91 029 73 51",
+        "category": "PHONE"
+      },
+      {
+        "start": 260,
+        "end": 284,
+        "text": "nuno.cardoso@example.org",
+        "category": "EMAIL"
+      },
+      {
+        "start": 307,
+        "end": 316,
+        "text": "100000029",
+        "category": "TAX"
+      },
+      {
+        "start": 612,
+        "end": 616,
+        "text": "Nuno",
+        "category": "SHORT"
+      },
+      {
+        "start": 689,
+        "end": 720,
+        "text": "PT50 0002 0123 1234 5678 9015 4",
+        "category": "IBAN"
+      },
+      {
+        "start": 840,
+        "end": 878,
+        "text": "Rua da Liberdade, 27, 3000-120 Coimbra",
+        "category": "ADDR"
+      },
+      {
+        "start": 993,
+        "end": 1006,
+        "text": "David Tavares",
+        "category": "SECOND"
+      },
+      {
+        "start": 1039,
+        "end": 1043,
+        "text": "Nuno",
+        "category": "SHORT"
+      },
+      {
+        "start": 1243,
+        "end": 1258,
+        "text": "@nuno_cardoso29",
+        "category": "HANDLE"
+      },
+      {
+        "start": 1334,
+        "end": 1347,
+        "text": "David Tavares",
+        "category": "SECOND"
+      },
+      {
+        "start": 1667,
+        "end": 1671,
+        "text": "Nuno",
+        "category": "SHORT"
+      }
+    ]
+  },
+  {
+    "id": "doc_030",
+    "language": "pt",
+    "document_type": "relatório de sinistro",
+    "word_count": 209,
+    "annotations": [
+      {
+        "start": 124,
+        "end": 137,
+        "text": "Sara Monteiro",
+        "category": "NAME"
+      },
+      {
+        "start": 180,
+        "end": 215,
+        "text": "Rua da Alegria, 184, 4000-042 Porto",
+        "category": "ADDR"
+      },
+      {
+        "start": 226,
+        "end": 243,
+        "text": "+351 91 030 10 70",
+        "category": "PHONE"
+      },
+      {
+        "start": 254,
+        "end": 279,
+        "text": "sara.monteiro@example.org",
+        "category": "EMAIL"
+      },
+      {
+        "start": 302,
+        "end": 311,
+        "text": "100000030",
+        "category": "TAX"
+      },
+      {
+        "start": 611,
+        "end": 622,
+        "text": "Eva Marques",
+        "category": "SECOND"
+      },
+      {
+        "start": 899,
+        "end": 903,
+        "text": "Sara",
+        "category": "SHORT"
+      },
+      {
+        "start": 976,
+        "end": 1007,
+        "text": "PT50 0002 0123 1234 5678 9015 4",
+        "category": "IBAN"
+      },
+      {
+        "start": 1031,
+        "end": 1047,
+        "text": "@sara_monteiro30",
+        "category": "HANDLE"
+      },
+      {
+        "start": 1410,
+        "end": 1414,
+        "text": "Sara",
+        "category": "SHORT"
+      }
+    ]
+  },
+  {
+    "id": "doc_031",
+    "language": "pt",
+    "document_type": "registo de rede social",
+    "word_count": 193,
+    "annotations": [
+      {
+        "start": 125,
+        "end": 140,
+        "text": "Francisco Pires",
+        "category": "NAME"
+      },
+      {
+        "start": 183,
+        "end": 219,
+        "text": "Rua de Cedofeita, 91, 4050-174 Porto",
+        "category": "ADDR"
+      },
+      {
+        "start": 230,
+        "end": 247,
+        "text": "+351 91 031 47 89",
+        "category": "PHONE"
+      },
+      {
+        "start": 258,
+        "end": 285,
+        "text": "francisco.pires@example.org",
+        "category": "EMAIL"
+      },
+      {
+        "start": 308,
+        "end": 317,
+        "text": "100000031",
+        "category": "TAX"
+      },
+      {
+        "start": 610,
+        "end": 619,
+        "text": "Francisco",
+        "category": "SHORT"
+      },
+      {
+        "start": 677,
+        "end": 695,
+        "text": "@francisco_pires31",
+        "category": "HANDLE"
+      },
+      {
+        "start": 717,
+        "end": 730,
+        "text": "Tomás Batista",
+        "category": "SECOND"
+      },
+      {
+        "start": 767,
+        "end": 798,
+        "text": "PT50 0002 0123 1234 5678 9015 4",
+        "category": "IBAN"
+      },
+      {
+        "start": 918,
+        "end": 954,
+        "text": "Rua de Cedofeita, 91, 4050-174 Porto",
+        "category": "ADDR"
+      },
+      {
+        "start": 1062,
+        "end": 1071,
+        "text": "Francisco",
+        "category": "SHORT"
+      },
+      {
+        "start": 1436,
+        "end": 1445,
+        "text": "Francisco",
+        "category": "SHORT"
+      }
+    ]
+  },
+  {
+    "id": "doc_032",
+    "language": "pt",
+    "document_type": "consentimento informado",
+    "word_count": 223,
+    "annotations": [
+      {
+        "start": 130,
+        "end": 145,
+        "text": "Mariana Correia",
+        "category": "NAME"
+      },
+      {
+        "start": 200,
+        "end": 238,
+        "text": "Rua da Liberdade, 27, 3000-120 Coimbra",
+        "category": "ADDR"
+      },
+      {
+        "start": 249,
+        "end": 266,
+        "text": "+351 91 032 84 08",
+        "category": "PHONE"
+      },
+      {
+        "start": 277,
+        "end": 304,
+        "text": "mariana.correia@example.org",
+        "category": "EMAIL"
+      },
+      {
+        "start": 327,
+        "end": 336,
+        "text": "100000032",
+        "category": "TAX"
+      },
+      {
+        "start": 633,
+        "end": 640,
+        "text": "Mariana",
+        "category": "SHORT"
+      },
+      {
+        "start": 793,
+        "end": 824,
+        "text": "PT50 0002 0123 1234 5678 9015 4",
+        "category": "IBAN"
+      },
+      {
+        "start": 1036,
+        "end": 1074,
+        "text": "Rua da Liberdade, 27, 3000-120 Coimbra",
+        "category": "ADDR"
+      },
+      {
+        "start": 1098,
+        "end": 1116,
+        "text": "@mariana_correia32",
+        "category": "HANDLE"
+      },
+      {
+        "start": 1192,
+        "end": 1203,
+        "text": "Isabel Dias",
+        "category": "SECOND"
+      },
+      {
+        "start": 1241,
+        "end": 1252,
+        "text": "Isabel Dias",
+        "category": "SECOND"
+      },
+      {
+        "start": 1285,
+        "end": 1292,
+        "text": "Mariana",
+        "category": "SHORT"
+      },
+      {
+        "start": 1602,
+        "end": 1609,
+        "text": "Mariana",
+        "category": "SHORT"
+      }
+    ]
+  },
+  {
+    "id": "doc_033",
+    "language": "pt",
+    "document_type": "recibo de vencimento",
+    "word_count": 236,
+    "annotations": [
+      {
+        "start": 155,
+        "end": 174,
+        "text": "José António Vieira",
+        "category": "NAME"
+      },
+      {
+        "start": 229,
+        "end": 267,
+        "text": "Rua da Liberdade, 27, 3000-120 Coimbra",
+        "category": "ADDR"
+      },
+      {
+        "start": 278,
+        "end": 295,
+        "text": "+351 91 033 21 27",
+        "category": "PHONE"
+      },
+      {
+        "start": 306,
+        "end": 337,
+        "text": "josé.antónio.vieira@example.org",
+        "category": "EMAIL"
+      },
+      {
+        "start": 360,
+        "end": 369,
+        "text": "100000033",
+        "category": "TAX"
+      },
+      {
+        "start": 702,
+        "end": 724,
+        "text": "@josé_antónio_vieira33",
+        "category": "HANDLE"
+      },
+      {
+        "start": 793,
+        "end": 797,
+        "text": "José",
+        "category": "SHORT"
+      },
+      {
+        "start": 966,
+        "end": 1004,
+        "text": "Rua da Liberdade, 27, 3000-120 Coimbra",
+        "category": "ADDR"
+      },
+      {
+        "start": 1160,
+        "end": 1177,
+        "text": "Ana Sofia Martins",
+        "category": "SECOND"
+      },
+      {
+        "start": 1214,
+        "end": 1245,
+        "text": "PT50 0002 0123 1234 5678 9015 4",
+        "category": "IBAN"
+      },
+      {
+        "start": 1301,
+        "end": 1318,
+        "text": "Ana Sofia Martins",
+        "category": "SECOND"
+      },
+      {
+        "start": 1348,
+        "end": 1365,
+        "text": "Ana Sofia Martins",
+        "category": "SECOND"
+      },
+      {
+        "start": 1398,
+        "end": 1402,
+        "text": "José",
+        "category": "SHORT"
+      },
+      {
+        "start": 1728,
+        "end": 1732,
+        "text": "José",
+        "category": "SHORT"
+      }
+    ]
+  },
+  {
+    "id": "doc_034",
+    "language": "pt",
+    "document_type": "ata de reunião",
+    "word_count": 236,
+    "annotations": [
+      {
+        "start": 121,
+        "end": 132,
+        "text": "Alice Brito",
+        "category": "NAME"
+      },
+      {
+        "start": 173,
+        "end": 226,
+        "text": "Avenida da República, 732, 4430-190 Vila Nova de Gaia",
+        "category": "ADDR"
+      },
+      {
+        "start": 237,
+        "end": 254,
+        "text": "+351 91 034 58 46",
+        "category": "PHONE"
+      },
+      {
+        "start": 265,
+        "end": 288,
+        "text": "alice.brito@example.org",
+        "category": "EMAIL"
+      },
+      {
+        "start": 311,
+        "end": 320,
+        "text": "100000034",
+        "category": "TAX"
+      },
+      {
+        "start": 714,
+        "end": 732,
+        "text": "João Pedro Almeida",
+        "category": "SECOND"
+      },
+      {
+        "start": 770,
+        "end": 788,
+        "text": "João Pedro Almeida",
+        "category": "SECOND"
+      },
+      {
+        "start": 821,
+        "end": 826,
+        "text": "Alice",
+        "category": "SHORT"
+      },
+      {
+        "start": 1020,
+        "end": 1051,
+        "text": "PT50 0002 0123 1234 5678 9015 4",
+        "category": "IBAN"
+      },
+      {
+        "start": 1091,
+        "end": 1144,
+        "text": "Avenida da República, 732, 4430-190 Vila Nova de Gaia",
+        "category": "ADDR"
+      },
+      {
+        "start": 1247,
+        "end": 1252,
+        "text": "Alice",
+        "category": "SHORT"
+      },
+      {
+        "start": 1320,
+        "end": 1334,
+        "text": "@alice_brito34",
+        "category": "HANDLE"
+      },
+      {
+        "start": 1697,
+        "end": 1702,
+        "text": "Alice",
+        "category": "SHORT"
+      }
+    ]
+  },
+  {
+    "id": "doc_035",
+    "language": "pt",
+    "document_type": "pedido de crédito",
+    "word_count": 219,
+    "annotations": [
+      {
+        "start": 128,
+        "end": 139,
+        "text": "Bruno Cunha",
+        "category": "NAME"
+      },
+      {
+        "start": 182,
+        "end": 220,
+        "text": "Travessa do Pinhal, 16, 4700-291 Braga",
+        "category": "ADDR"
+      },
+      {
+        "start": 231,
+        "end": 248,
+        "text": "+351 91 035 95 65",
+        "category": "PHONE"
+      },
+      {
+        "start": 259,
+        "end": 282,
+        "text": "bruno.cunha@example.org",
+        "category": "EMAIL"
+      },
+      {
+        "start": 305,
+        "end": 314,
+        "text": "100000035",
+        "category": "TAX"
+      },
+      {
+        "start": 712,
+        "end": 731,
+        "text": "Maria Inês Ferreira",
+        "category": "SECOND"
+      },
+      {
+        "start": 806,
+        "end": 820,
+        "text": "@bruno_cunha35",
+        "category": "HANDLE"
+      },
+      {
+        "start": 902,
+        "end": 933,
+        "text": "PT50 0002 0123 1234 5678 9015 4",
+        "category": "IBAN"
+      },
+      {
+        "start": 963,
+        "end": 982,
+        "text": "Maria Inês Ferreira",
+        "category": "SECOND"
+      },
+      {
+        "start": 1015,
+        "end": 1020,
+        "text": "Bruno",
+        "category": "SHORT"
+      },
+      {
+        "start": 1437,
+        "end": 1442,
+        "text": "Bruno",
+        "category": "SHORT"
+      },
+      {
+        "start": 1629,
+        "end": 1640,
+        "text": "Bruno Cunha",
+        "category": "NAME"
+      },
+      {
+        "start": 1655,
+        "end": 1660,
+        "text": "Bruno",
+        "category": "SHORT"
+      }
+    ]
+  },
+  {
+    "id": "doc_036",
+    "language": "pt",
+    "document_type": "formulário escolar",
+    "word_count": 229,
+    "annotations": [
+      {
+        "start": 121,
+        "end": 131,
+        "text": "Lara Neves",
+        "category": "NAME"
+      },
+      {
+        "start": 186,
+        "end": 224,
+        "text": "Rua dos Limoeiros, 48, 2780-102 Oeiras",
+        "category": "ADDR"
+      },
+      {
+        "start": 235,
+        "end": 252,
+        "text": "+351 91 036 32 84",
+        "category": "PHONE"
+      },
+      {
+        "start": 263,
+        "end": 285,
+        "text": "lara.neves@example.org",
+        "category": "EMAIL"
+      },
+      {
+        "start": 308,
+        "end": 317,
+        "text": "100000036",
+        "category": "TAX"
+      },
+      {
+        "start": 781,
+        "end": 794,
+        "text": "@lara_neves36",
+        "category": "HANDLE"
+      },
+      {
+        "start": 877,
+        "end": 893,
+        "text": "Rui Miguel Costa",
+        "category": "SECOND"
+      },
+      {
+        "start": 926,
+        "end": 930,
+        "text": "Lara",
+        "category": "SHORT"
+      },
+      {
+        "start": 1031,
+        "end": 1035,
+        "text": "Lara",
+        "category": "SHORT"
+      },
+      {
+        "start": 1108,
+        "end": 1139,
+        "text": "PT50 0002 0123 1234 5678 9015 4",
+        "category": "IBAN"
+      },
+      {
+        "start": 1539,
+        "end": 1543,
+        "text": "Lara",
+        "category": "SHORT"
+      }
+    ]
+  },
+  {
+    "id": "doc_037",
+    "language": "pt",
+    "document_type": "relatório de fisioterapia",
+    "word_count": 229,
+    "annotations": [
+      {
+        "start": 154,
+        "end": 167,
+        "text": "David Tavares",
+        "category": "NAME"
+      },
+      {
+        "start": 210,
+        "end": 248,
+        "text": "Rua da Liberdade, 27, 3000-120 Coimbra",
+        "category": "ADDR"
+      },
+      {
+        "start": 259,
+        "end": 276,
+        "text": "+351 91 037 69 03",
+        "category": "PHONE"
+      },
+      {
+        "start": 287,
+        "end": 312,
+        "text": "david.tavares@example.org",
+        "category": "EMAIL"
+      },
+      {
+        "start": 335,
+        "end": 344,
+        "text": "100000037",
+        "category": "TAX"
+      },
+      {
+        "start": 677,
+        "end": 690,
+        "text": "Beatriz Sousa",
+        "category": "SECOND"
+      },
+      {
+        "start": 723,
+        "end": 728,
+        "text": "David",
+        "category": "SHORT"
+      },
+      {
+        "start": 836,
+        "end": 867,
+        "text": "PT50 0002 0123 1234 5678 9015 4",
+        "category": "IBAN"
+      },
+      {
+        "start": 907,
+        "end": 945,
+        "text": "Rua da Liberdade, 27, 3000-120 Coimbra",
+        "category": "ADDR"
+      },
+      {
+        "start": 969,
+        "end": 985,
+        "text": "@david_tavares37",
+        "category": "HANDLE"
+      },
+      {
+        "start": 1134,
+        "end": 1139,
+        "text": "David",
+        "category": "SHORT"
+      },
+      {
+        "start": 1211,
+        "end": 1224,
+        "text": "Beatriz Sousa",
+        "category": "SECOND"
+      },
+      {
+        "start": 1686,
+        "end": 1691,
+        "text": "David",
+        "category": "SHORT"
+      }
+    ]
+  },
+  {
+    "id": "doc_038",
+    "language": "pt",
+    "document_type": "contrato de prestação de serviços",
+    "word_count": 239,
+    "annotations": [
+      {
+        "start": 140,
+        "end": 151,
+        "text": "Eva Marques",
+        "category": "NAME"
+      },
+      {
+        "start": 192,
+        "end": 245,
+        "text": "Avenida da República, 732, 4430-190 Vila Nova de Gaia",
+        "category": "ADDR"
+      },
+      {
+        "start": 256,
+        "end": 273,
+        "text": "+351 91 038 06 22",
+        "category": "PHONE"
+      },
+      {
+        "start": 284,
+        "end": 307,
+        "text": "eva.marques@example.org",
+        "category": "EMAIL"
+      },
+      {
+        "start": 330,
+        "end": 339,
+        "text": "100000038",
+        "category": "TAX"
+      },
+      {
+        "start": 729,
+        "end": 743,
+        "text": "@eva_marques38",
+        "category": "HANDLE"
+      },
+      {
+        "start": 900,
+        "end": 911,
+        "text": "Eva Marques",
+        "category": "NAME"
+      },
+      {
+        "start": 928,
+        "end": 948,
+        "text": "Tiago Manuel Ribeiro",
+        "category": "SECOND"
+      },
+      {
+        "start": 977,
+        "end": 1008,
+        "text": "PT50 0002 0123 1234 5678 9015 4",
+        "category": "IBAN"
+      },
+      {
+        "start": 1090,
+        "end": 1093,
+        "text": "Eva",
+        "category": "SHORT"
+      },
+      {
+        "start": 1167,
+        "end": 1187,
+        "text": "Tiago Manuel Ribeiro",
+        "category": "SECOND"
+      },
+      {
+        "start": 1220,
+        "end": 1223,
+        "text": "Eva",
+        "category": "SHORT"
+      },
+      {
+        "start": 1263,
+        "end": 1316,
+        "text": "Avenida da República, 732, 4430-190 Vila Nova de Gaia",
+        "category": "ADDR"
+      },
+      {
+        "start": 1713,
+        "end": 1716,
+        "text": "Eva",
+        "category": "SHORT"
+      }
+    ]
+  },
+  {
+    "id": "doc_039",
+    "language": "pt",
+    "document_type": "declaração de residência",
+    "word_count": 237,
+    "annotations": [
+      {
+        "start": 135,
+        "end": 148,
+        "text": "Tomás Batista",
+        "category": "NAME"
+      },
+      {
+        "start": 189,
+        "end": 227,
+        "text": "Rua dos Limoeiros, 48, 2780-102 Oeiras",
+        "category": "ADDR"
+      },
+      {
+        "start": 238,
+        "end": 255,
+        "text": "+351 91 039 43 41",
+        "category": "PHONE"
+      },
+      {
+        "start": 266,
+        "end": 291,
+        "text": "tomás.batista@example.org",
+        "category": "EMAIL"
+      },
+      {
+        "start": 314,
+        "end": 323,
+        "text": "100000039",
+        "category": "TAX"
+      },
+      {
+        "start": 728,
+        "end": 743,
+        "text": "Carolina Mendes",
+        "category": "SECOND"
+      },
+      {
+        "start": 776,
+        "end": 781,
+        "text": "Tomás",
+        "category": "SHORT"
+      },
+      {
+        "start": 882,
+        "end": 887,
+        "text": "Tomás",
+        "category": "SHORT"
+      },
+      {
+        "start": 954,
+        "end": 969,
+        "text": "Carolina Mendes",
+        "category": "SECOND"
+      },
+      {
+        "start": 1019,
+        "end": 1057,
+        "text": "Rua dos Limoeiros, 48, 2780-102 Oeiras",
+        "category": "ADDR"
+      },
+      {
+        "start": 1081,
+        "end": 1097,
+        "text": "@tomás_batista39",
+        "category": "HANDLE"
+      },
+      {
+        "start": 1259,
+        "end": 1290,
+        "text": "PT50 0002 0123 1234 5678 9015 4",
+        "category": "IBAN"
+      },
+      {
+        "start": 1691,
+        "end": 1696,
+        "text": "Tomás",
+        "category": "SHORT"
+      }
+    ]
+  },
+  {
+    "id": "doc_040",
+    "language": "pt",
+    "document_type": "reclamação de consumidor",
+    "word_count": 223,
+    "annotations": [
+      {
+        "start": 130,
+        "end": 141,
+        "text": "Isabel Dias",
+        "category": "NAME"
+      },
+      {
+        "start": 196,
+        "end": 234,
+        "text": "Travessa do Pinhal, 16, 4700-291 Braga",
+        "category": "ADDR"
+      },
+      {
+        "start": 245,
+        "end": 262,
+        "text": "+351 91 040 80 60",
+        "category": "PHONE"
+      },
+      {
+        "start": 273,
+        "end": 296,
+        "text": "isabel.dias@example.org",
+        "category": "EMAIL"
+      },
+      {
+        "start": 319,
+        "end": 328,
+        "text": "100000040",
+        "category": "TAX"
+      },
+      {
+        "start": 638,
+        "end": 653,
+        "text": "Duarte Oliveira",
+        "category": "SECOND"
+      },
+      {
+        "start": 686,
+        "end": 692,
+        "text": "Isabel",
+        "category": "SHORT"
+      },
+      {
+        "start": 721,
+        "end": 752,
+        "text": "PT50 0002 0123 1234 5678 9015 4",
+        "category": "IBAN"
+      },
+      {
+        "start": 941,
+        "end": 955,
+        "text": "@isabel_dias40",
+        "category": "HANDLE"
+      },
+      {
+        "start": 1110,
+        "end": 1116,
+        "text": "Isabel",
+        "category": "SHORT"
+      },
+      {
+        "start": 1470,
+        "end": 1476,
+        "text": "Isabel",
+        "category": "SHORT"
+      }
+    ]
+  },
+  {
+    "id": "doc_041",
+    "language": "en",
+    "document_type": "clinical report",
+    "word_count": 176,
+    "annotations": [
+      {
+        "start": 114,
+        "end": 126,
+        "text": "Emily Carter",
+        "category": "NAME"
+      },
+      {
+        "start": 167,
+        "end": 198,
+        "text": "7 Harbour Road, Dublin D02 KX31",
+        "category": "ADDR"
+      },
+      {
+        "start": 206,
+        "end": 221,
+        "text": "+44 7700 000041",
+        "category": "PHONE"
+      },
+      {
+        "start": 232,
+        "end": 256,
+        "text": "emily.carter@example.org",
+        "category": "EMAIL"
+      },
+      {
+        "start": 273,
+        "end": 282,
+        "text": "QQ000041C",
+        "category": "TAX"
+      },
+      {
+        "start": 587,
+        "end": 614,
+        "text": "GB82 WEST 1234 5698 7654 32",
+        "category": "IBAN"
+      },
+      {
+        "start": 635,
+        "end": 647,
+        "text": "Grace Morgan",
+        "category": "SECOND"
+      },
+      {
+        "start": 768,
+        "end": 780,
+        "text": "Grace Morgan",
+        "category": "SECOND"
+      },
+      {
+        "start": 804,
+        "end": 809,
+        "text": "Emily",
+        "category": "SHORT"
+      },
+      {
+        "start": 956,
+        "end": 961,
+        "text": "Emily",
+        "category": "SHORT"
+      },
+      {
+        "start": 1319,
+        "end": 1324,
+        "text": "Emily",
+        "category": "SHORT"
+      }
+    ]
+  },
+  {
+    "id": "doc_042",
+    "language": "en",
+    "document_type": "email correspondence",
+    "word_count": 202,
+    "annotations": [
+      {
+        "start": 122,
+        "end": 134,
+        "text": "James Wilson",
+        "category": "NAME"
+      },
+      {
+        "start": 175,
+        "end": 206,
+        "text": "7 Harbour Road, Dublin D02 KX31",
+        "category": "ADDR"
+      },
+      {
+        "start": 214,
+        "end": 229,
+        "text": "+44 7700 000042",
+        "category": "PHONE"
+      },
+      {
+        "start": 240,
+        "end": 264,
+        "text": "james.wilson@example.org",
+        "category": "EMAIL"
+      },
+      {
+        "start": 281,
+        "end": 290,
+        "text": "QQ000042C",
+        "category": "TAX"
+      },
+      {
+        "start": 584,
+        "end": 608,
+        "text": "james.wilson@example.org",
+        "category": "EMAIL"
+      },
+      {
+        "start": 635,
+        "end": 666,
+        "text": "7 Harbour Road, Dublin D02 KX31",
+        "category": "ADDR"
+      },
+      {
+        "start": 729,
+        "end": 734,
+        "text": "James",
+        "category": "SHORT"
+      },
+      {
+        "start": 802,
+        "end": 815,
+        "text": "Daniel Foster",
+        "category": "SECOND"
+      },
+      {
+        "start": 839,
+        "end": 844,
+        "text": "James",
+        "category": "SHORT"
+      },
+      {
+        "start": 1004,
+        "end": 1031,
+        "text": "GB82 WEST 1234 5698 7654 32",
+        "category": "IBAN"
+      },
+      {
+        "start": 1386,
+        "end": 1391,
+        "text": "James",
+        "category": "SHORT"
+      },
+      {
+        "start": 1506,
+        "end": 1518,
+        "text": "James Wilson",
+        "category": "NAME"
+      },
+      {
+        "start": 1534,
+        "end": 1539,
+        "text": "James",
+        "category": "SHORT"
+      }
+    ]
+  },
+  {
+    "id": "doc_043",
+    "language": "en",
+    "document_type": "rental agreement",
+    "word_count": 205,
+    "annotations": [
+      {
+        "start": 117,
+        "end": 131,
+        "text": "Olivia Bennett",
+        "category": "NAME"
+      },
+      {
+        "start": 167,
+        "end": 200,
+        "text": "18 Willow Street, Bristol BS1 4QA",
+        "category": "ADDR"
+      },
+      {
+        "start": 208,
+        "end": 223,
+        "text": "+44 7700 000043",
+        "category": "PHONE"
+      },
+      {
+        "start": 234,
+        "end": 260,
+        "text": "olivia.bennett@example.org",
+        "category": "EMAIL"
+      },
+      {
+        "start": 277,
+        "end": 286,
+        "text": "QQ000043C",
+        "category": "TAX"
+      },
+      {
+        "start": 888,
+        "end": 905,
+        "text": "@olivia_bennett43",
+        "category": "HANDLE"
+      },
+      {
+        "start": 980,
+        "end": 992,
+        "text": "Emily Carter",
+        "category": "SECOND"
+      },
+      {
+        "start": 1016,
+        "end": 1022,
+        "text": "Olivia",
+        "category": "SHORT"
+      },
+      {
+        "start": 1043,
+        "end": 1055,
+        "text": "Emily Carter",
+        "category": "SECOND"
+      },
+      {
+        "start": 1152,
+        "end": 1166,
+        "text": "Olivia Bennett",
+        "category": "NAME"
+      },
+      {
+        "start": 1177,
+        "end": 1189,
+        "text": "Emily Carter",
+        "category": "SECOND"
+      },
+      {
+        "start": 1211,
+        "end": 1238,
+        "text": "GB82 WEST 1234 5698 7654 32",
+        "category": "IBAN"
+      },
+      {
+        "start": 1507,
+        "end": 1513,
+        "text": "Olivia",
+        "category": "SHORT"
+      }
+    ]
+  },
+  {
+    "id": "doc_044",
+    "language": "en",
+    "document_type": "application form",
+    "word_count": 215,
+    "annotations": [
+      {
+        "start": 118,
+        "end": 131,
+        "text": "Noah Thompson",
+        "category": "NAME"
+      },
+      {
+        "start": 172,
+        "end": 203,
+        "text": "7 Harbour Road, Dublin D02 KX31",
+        "category": "ADDR"
+      },
+      {
+        "start": 211,
+        "end": 226,
+        "text": "+44 7700 000044",
+        "category": "PHONE"
+      },
+      {
+        "start": 237,
+        "end": 262,
+        "text": "noah.thompson@example.org",
+        "category": "EMAIL"
+      },
+      {
+        "start": 279,
+        "end": 288,
+        "text": "QQ000044C",
+        "category": "TAX"
+      },
+      {
+        "start": 685,
+        "end": 701,
+        "text": "@noah_thompson44",
+        "category": "HANDLE"
+      },
+      {
+        "start": 769,
+        "end": 796,
+        "text": "GB82 WEST 1234 5698 7654 32",
+        "category": "IBAN"
+      },
+      {
+        "start": 825,
+        "end": 837,
+        "text": "James Wilson",
+        "category": "SECOND"
+      },
+      {
+        "start": 861,
+        "end": 865,
+        "text": "Noah",
+        "category": "SHORT"
+      },
+      {
+        "start": 1043,
+        "end": 1055,
+        "text": "James Wilson",
+        "category": "SECOND"
+      },
+      {
+        "start": 1145,
+        "end": 1149,
+        "text": "Noah",
+        "category": "SHORT"
+      },
+      {
+        "start": 1216,
+        "end": 1247,
+        "text": "7 Harbour Road, Dublin D02 KX31",
+        "category": "ADDR"
+      },
+      {
+        "start": 1516,
+        "end": 1520,
+        "text": "Noah",
+        "category": "SHORT"
+      }
+    ]
+  },
+  {
+    "id": "doc_045",
+    "language": "en",
+    "document_type": "bank statement",
+    "word_count": 183,
+    "annotations": [
+      {
+        "start": 115,
+        "end": 130,
+        "text": "Charlotte Evans",
+        "category": "NAME"
+      },
+      {
+        "start": 168,
+        "end": 201,
+        "text": "18 Willow Street, Bristol BS1 4QA",
+        "category": "ADDR"
+      },
+      {
+        "start": 209,
+        "end": 224,
+        "text": "+44 7700 000045",
+        "category": "PHONE"
+      },
+      {
+        "start": 235,
+        "end": 262,
+        "text": "charlotte.evans@example.org",
+        "category": "EMAIL"
+      },
+      {
+        "start": 279,
+        "end": 288,
+        "text": "QQ000045C",
+        "category": "TAX"
+      },
+      {
+        "start": 590,
+        "end": 599,
+        "text": "Charlotte",
+        "category": "SHORT"
+      },
+      {
+        "start": 797,
+        "end": 811,
+        "text": "Olivia Bennett",
+        "category": "SECOND"
+      },
+      {
+        "start": 965,
+        "end": 980,
+        "text": "Charlotte Evans",
+        "category": "NAME"
+      },
+      {
+        "start": 1268,
+        "end": 1277,
+        "text": "Charlotte",
+        "category": "SHORT"
+      }
+    ]
+  },
+  {
+    "id": "doc_046",
+    "language": "en",
+    "document_type": "political membership form",
+    "word_count": 174,
+    "annotations": [
+      {
+        "start": 127,
+        "end": 141,
+        "text": "William Parker",
+        "category": "NAME"
+      },
+      {
+        "start": 182,
+        "end": 213,
+        "text": "7 Harbour Road, Dublin D02 KX31",
+        "category": "ADDR"
+      },
+      {
+        "start": 221,
+        "end": 236,
+        "text": "+44 7700 000046",
+        "category": "PHONE"
+      },
+      {
+        "start": 247,
+        "end": 273,
+        "text": "william.parker@example.org",
+        "category": "EMAIL"
+      },
+      {
+        "start": 290,
+        "end": 299,
+        "text": "QQ000046C",
+        "category": "TAX"
+      },
+      {
+        "start": 652,
+        "end": 683,
+        "text": "7 Harbour Road, Dublin D02 KX31",
+        "category": "ADDR"
+      },
+      {
+        "start": 704,
+        "end": 718,
+        "text": "William Parker",
+        "category": "NAME"
+      },
+      {
+        "start": 747,
+        "end": 760,
+        "text": "Noah Thompson",
+        "category": "SECOND"
+      },
+      {
+        "start": 784,
+        "end": 791,
+        "text": "William",
+        "category": "SHORT"
+      },
+      {
+        "start": 879,
+        "end": 896,
+        "text": "@william_parker46",
+        "category": "HANDLE"
+      },
+      {
+        "start": 1027,
+        "end": 1034,
+        "text": "William",
+        "category": "SHORT"
+      },
+      {
+        "start": 1366,
+        "end": 1373,
+        "text": "William",
+        "category": "SHORT"
+      }
+    ]
+  },
+  {
+    "id": "doc_047",
+    "language": "en",
+    "document_type": "family record",
+    "word_count": 184,
+    "annotations": [
+      {
+        "start": 115,
+        "end": 128,
+        "text": "Amelia Harris",
+        "category": "NAME"
+      },
+      {
+        "start": 169,
+        "end": 202,
+        "text": "18 Willow Street, Bristol BS1 4QA",
+        "category": "ADDR"
+      },
+      {
+        "start": 210,
+        "end": 225,
+        "text": "+44 7700 000047",
+        "category": "PHONE"
+      },
+      {
+        "start": 236,
+        "end": 261,
+        "text": "amelia.harris@example.org",
+        "category": "EMAIL"
+      },
+      {
+        "start": 278,
+        "end": 287,
+        "text": "QQ000047C",
+        "category": "TAX"
+      },
+      {
+        "start": 669,
+        "end": 684,
+        "text": "Charlotte Evans",
+        "category": "SECOND"
+      },
+      {
+        "start": 807,
+        "end": 840,
+        "text": "18 Willow Street, Bristol BS1 4QA",
+        "category": "ADDR"
+      },
+      {
+        "start": 857,
+        "end": 872,
+        "text": "Charlotte Evans",
+        "category": "SECOND"
+      },
+      {
+        "start": 919,
+        "end": 935,
+        "text": "@amelia_harris47",
+        "category": "HANDLE"
+      },
+      {
+        "start": 1080,
+        "end": 1086,
+        "text": "Amelia",
+        "category": "SHORT"
+      },
+      {
+        "start": 1147,
+        "end": 1174,
+        "text": "GB82 WEST 1234 5698 7654 32",
+        "category": "IBAN"
+      },
+      {
+        "start": 1411,
+        "end": 1417,
+        "text": "Amelia",
+        "category": "SHORT"
+      }
+    ]
+  },
+  {
+    "id": "doc_048",
+    "language": "en",
+    "document_type": "employment statement",
+    "word_count": 219,
+    "annotations": [
+      {
+        "start": 113,
+        "end": 126,
+        "text": "Benjamin Reed",
+        "category": "NAME"
+      },
+      {
+        "start": 167,
+        "end": 200,
+        "text": "18 Willow Street, Bristol BS1 4QA",
+        "category": "ADDR"
+      },
+      {
+        "start": 208,
+        "end": 223,
+        "text": "+44 7700 000048",
+        "category": "PHONE"
+      },
+      {
+        "start": 234,
+        "end": 259,
+        "text": "benjamin.reed@example.org",
+        "category": "EMAIL"
+      },
+      {
+        "start": 276,
+        "end": 285,
+        "text": "QQ000048C",
+        "category": "TAX"
+      },
+      {
+        "start": 661,
+        "end": 688,
+        "text": "GB82 WEST 1234 5698 7654 32",
+        "category": "IBAN"
+      },
+      {
+        "start": 717,
+        "end": 731,
+        "text": "William Parker",
+        "category": "SECOND"
+      },
+      {
+        "start": 755,
+        "end": 763,
+        "text": "Benjamin",
+        "category": "SHORT"
+      },
+      {
+        "start": 847,
+        "end": 861,
+        "text": "William Parker",
+        "category": "SECOND"
+      },
+      {
+        "start": 900,
+        "end": 933,
+        "text": "18 Willow Street, Bristol BS1 4QA",
+        "category": "ADDR"
+      },
+      {
+        "start": 1025,
+        "end": 1033,
+        "text": "Benjamin",
+        "category": "SHORT"
+      },
+      {
+        "start": 1179,
+        "end": 1195,
+        "text": "@benjamin_reed48",
+        "category": "HANDLE"
+      },
+      {
+        "start": 1510,
+        "end": 1518,
+        "text": "Benjamin",
+        "category": "SHORT"
+      }
+    ]
+  },
+  {
+    "id": "doc_049",
+    "language": "en",
+    "document_type": "insurance claim",
+    "word_count": 218,
+    "annotations": [
+      {
+        "start": 116,
+        "end": 128,
+        "text": "Grace Morgan",
+        "category": "NAME"
+      },
+      {
+        "start": 169,
+        "end": 202,
+        "text": "18 Willow Street, Bristol BS1 4QA",
+        "category": "ADDR"
+      },
+      {
+        "start": 210,
+        "end": 225,
+        "text": "+44 7700 000049",
+        "category": "PHONE"
+      },
+      {
+        "start": 236,
+        "end": 260,
+        "text": "grace.morgan@example.org",
+        "category": "EMAIL"
+      },
+      {
+        "start": 277,
+        "end": 286,
+        "text": "QQ000049C",
+        "category": "TAX"
+      },
+      {
+        "start": 663,
+        "end": 676,
+        "text": "Amelia Harris",
+        "category": "SECOND"
+      },
+      {
+        "start": 700,
+        "end": 705,
+        "text": "Grace",
+        "category": "SHORT"
+      },
+      {
+        "start": 722,
+        "end": 727,
+        "text": "Grace",
+        "category": "SHORT"
+      },
+      {
+        "start": 791,
+        "end": 806,
+        "text": "@grace_morgan49",
+        "category": "HANDLE"
+      },
+      {
+        "start": 874,
+        "end": 901,
+        "text": "GB82 WEST 1234 5698 7654 32",
+        "category": "IBAN"
+      },
+      {
+        "start": 1086,
+        "end": 1119,
+        "text": "18 Willow Street, Bristol BS1 4QA",
+        "category": "ADDR"
+      },
+      {
+        "start": 1225,
+        "end": 1238,
+        "text": "Amelia Harris",
+        "category": "SECOND"
+      },
+      {
+        "start": 1517,
+        "end": 1522,
+        "text": "Grace",
+        "category": "SHORT"
+      },
+      {
+        "start": 1600,
+        "end": 1612,
+        "text": "Grace Morgan",
+        "category": "NAME"
+      },
+      {
+        "start": 1628,
+        "end": 1633,
+        "text": "Grace",
+        "category": "SHORT"
+      }
+    ]
+  },
+  {
+    "id": "doc_050",
+    "language": "en",
+    "document_type": "social media account record",
+    "word_count": 179,
+    "annotations": [
+      {
+        "start": 126,
+        "end": 139,
+        "text": "Daniel Foster",
+        "category": "NAME"
+      },
+      {
+        "start": 177,
+        "end": 208,
+        "text": "65 King Street, London WC2E 8JD",
+        "category": "ADDR"
+      },
+      {
+        "start": 216,
+        "end": 231,
+        "text": "+44 7700 000050",
+        "category": "PHONE"
+      },
+      {
+        "start": 242,
+        "end": 267,
+        "text": "daniel.foster@example.org",
+        "category": "EMAIL"
+      },
+      {
+        "start": 284,
+        "end": 293,
+        "text": "QQ000050C",
+        "category": "TAX"
+      },
+      {
+        "start": 588,
+        "end": 604,
+        "text": "@daniel_foster50",
+        "category": "HANDLE"
+      },
+      {
+        "start": 713,
+        "end": 744,
+        "text": "65 King Street, London WC2E 8JD",
+        "category": "ADDR"
+      },
+      {
+        "start": 769,
+        "end": 785,
+        "text": "@daniel_foster50",
+        "category": "HANDLE"
+      },
+      {
+        "start": 852,
+        "end": 865,
+        "text": "Benjamin Reed",
+        "category": "SECOND"
+      },
+      {
+        "start": 904,
+        "end": 917,
+        "text": "Benjamin Reed",
+        "category": "SECOND"
+      },
+      {
+        "start": 941,
+        "end": 947,
+        "text": "Daniel",
+        "category": "SHORT"
+      },
+      {
+        "start": 965,
+        "end": 971,
+        "text": "Daniel",
+        "category": "SHORT"
+      },
+      {
+        "start": 1293,
+        "end": 1299,
+        "text": "Daniel",
+        "category": "SHORT"
+      }
+    ]
+  }
+]

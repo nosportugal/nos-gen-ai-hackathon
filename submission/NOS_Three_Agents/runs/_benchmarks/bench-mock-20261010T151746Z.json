@@ -1,0 +1,84 @@
+{
+  "benchmark_id": "bench-mock-20261010T151746Z",
+  "mode": "MOCK",
+  "started_utc": "2026-10-10T15:17:46+00:00",
+  "model_id": "gemini-3.6-flash",
+  "freeze_ok": true,
+  "freeze_manifest_sha256": "35f37e8b0f71e4697e9e58010f9f2ffd684955b754c3dd4c8e358945dbbc4b2c",
+  "planned_inference_requests": 12,
+  "runs": [
+    {
+      "agent": "A",
+      "trial": 1,
+      "mode": "MOCK",
+      "run_id": "A-mock-t01-20261010T151746992050Z",
+      "status": "CANDIDATE_VALID",
+      "result": "runs/A_gated_rewrite/A-mock-t01-20261010T151746992050Z/result.json"
+    },
+    {
+      "agent": "B",
+      "trial": 1,
+      "mode": "MOCK",
+      "run_id": "B-mock-t01-20261010T151747001062Z",
+      "status": "CANDIDATE_VALID",
+      "result": "runs/B_decision_ledger/B-mock-t01-20261010T151747001062Z/result.json"
+    },
+    {
+      "agent": "C",
+      "trial": 1,
+      "mode": "MOCK",
+      "run_id": "C-mock-t01-20261010T151747015888Z",
+      "status": "CANDIDATE_VALID",
+      "result": "runs/C_span_ledger/C-mock-t01-20261010T151747015888Z/result.json"
+    },
+    {
+      "agent": "A",
+      "trial": 2,
+      "mode": "MOCK",
+      "run_id": "A-mock-t02-20261010T151747027893Z",
+      "status": "CANDIDATE_VALID",
+      "result": "runs/A_gated_rewrite/A-mock-t02-20261010T151747027893Z/result.json"
+    },
+    {
+      "agent": "B",
+      "trial": 2,
+      "mode": "MOCK",
+      "run_id": "B-mock-t02-20261010T151747035892Z",
+      "status": "CANDIDATE_VALID",
+      "result": "runs/B_decision_ledger/B-mock-t02-20261010T151747035892Z/result.json"
+    },
+    {
+      "agent": "C",
+      "trial": 2,
+      "mode": "MOCK",
+      "run_id": "C-mock-t02-20261010T151747051616Z",
+      "status": "CANDIDATE_VALID",
+      "result": "runs/C_span_ledger/C-mock-t02-20261010T151747051616Z/result.json"
+    },
+    {
+      "agent": "A",
+      "trial": 3,
+      "mode": "MOCK",
+      "run_id": "A-mock-t03-20261010T151747063614Z",
+      "status": "CANDIDATE_VALID",
+      "result": "runs/A_gated_rewrite/A-mock-t03-20261010T151747063614Z/result.json"
+    },
+    {
+      "agent": "B",
+      "trial": 3,
+      "mode": "MOCK",
+      "run_id": "B-mock-t03-20261010T151747071608Z",
+      "status": "CANDIDATE_VALID",
+      "result": "runs/B_decision_ledger/B-mock-t03-20261010T151747071608Z/result.json"
+    },
+    {
+      "agent": "C",
+      "trial": 3,
+      "mode": "MOCK",
+      "run_id": "C-mock-t03-20261010T151747085607Z",
+      "status": "CANDIDATE_VALID",
+      "result": "runs/C_span_ledger/C-mock-t03-20261010T151747085607Z/result.json"
+    }
+  ],
+  "finished_utc": "2026-10-10T15:17:47+00:00"
+}

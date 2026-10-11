@@ -1,0 +1,16 @@
+{
+  "agent_id": "C",
+  "agent_name": "Span Ledger + Deterministic Python Rendering",
+  "stages": ["C.spans"],
+  "inference_calls_per_run": 1,
+  "python_role": "Validate every span against the source, then render the document deterministically by source-coordinate replacement. The candidate is written by Python, not by the model.",
+  "rendering_guarantee": "Conditional: given valid spans and the frozen word rule, every unmasked character equals the source. It says nothing about whether all personal data was detected.",
+  "competition_eligibility": {
+    "status": "UNVERIFIED",
+    "basis": "The brief says 'your system must replace the sensitive data' and allows an optional manual validation step, which suggests code may sit between the model and submission.txt. That is an inference, not a stated rule.",
+    "open_points": [
+      "Whether submission.txt may be produced by deterministic code from a model response is UNVERIFIED.",
+      "The prompt's raw response is a span list, not the document; how 'prompt and response quality' treats that is UNVERIFIED."
+    ]
+  }
+}

@@ -1,0 +1,37 @@
+CONSENTIMENTO INFORMADO — Autoridade Tributária e Aduaneira
+Data do documento: 13/01/2026    |    Referência: REF-2026-0012
+
+Nome do titular: Pedro Henrique Gomes
+Profissão: advogada
+Morada de contacto: Travessa do Pinhal, 16, 4700-291 Braga
+Telefone: +351 91 012 44 28    Email: pedro.henrique.gomes@example.org
+Identificador fiscal: 100000012
+Entidade responsável: Autoridade Tributária e Aduaneira
+
+Campo                         | Valor
+------------------------------+--------------------------------
+Processo                       | REF-2026-0012
+Data de registo                | 13/09/2026
+Valor administrativo          | 256,40 EUR
+
+Endereço de correspondência repetido: Travessa do Pinhal, 16, 4700-291 Braga.
+O nome da cidade do Porto é aqui uma localização institucional e deve permanecer visível.
+O documento foi revisto por Joana Carvalho e posteriormente confirmado por Pedro.
+O número REF-2026-0012 é uma referência de processo não pessoal nesta política.
+IBAN associado ao titular: PT50 0002 0123 1234 5678 9015 4.
+O nome Autoridade Tributária e Aduaneira refere-se a uma organização, não à identidade do titular.
+Contacto secundário: Joana Carvalho (filha).
+A data 13/09/2026 corresponde ao processamento do pedido e não à data de nascimento.
+Rede social indicada: @pedro_henrique_gomes12; perfil público da instituição: @instituicao_oficial.
+
+Observações complementares:
+A entidade responsável recebeu o pedido e confirmou que a documentação apresentada seria analisada no prazo habitual.
+O conteúdo deste registo descreve factos administrativos e deve continuar legível depois de removidos os identificadores pessoais.
+Durante o contacto posterior, Pedro solicitou uma cópia para arquivo e confirmou que a morada indicada continua atual.
+
+   
+  Nota de rodapé: verificar o registo.  
+
+  Item	Estado	Comentário
+  A	OK	--
+  B	Pendente	...

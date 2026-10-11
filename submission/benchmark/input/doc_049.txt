@@ -1,0 +1,33 @@
+INSURANCE CLAIM — National Health Service
+Document date: 23/02/2026    |    Reference: REF-2026-0049
+
+Subject name: Grace Morgan
+Occupation: accountant
+Contact address: 18 Willow Street, Bristol BS1 4QA
+Phone: +44 7700 000049    Email: grace.morgan@example.org
+Tax identifier: QQ000049C
+Responsible organisation: National Health Service
+
+Field                         | Value
+------------------------------+--------------------------------
+Case number                   | REF-2026-0049
+Processing date               | 24/09/2026
+Administrative amount         | GBP 737.40
+
+The date 24/09/2026 is a processing date, not a date of birth.
+The record was reviewed by Amelia Harris and later confirmed by Grace.
+Internal note: Grace submitted the requested forms by email.
+Social media username: @grace_morgan49; organisation profile: @official_organisation.
+Account identifier: GB82 WEST 1234 5698 7654 32.
+The reference REF-2026-0049 is a non-personal case code under this policy.
+The city of London is mentioned as general context and is not a personal address.
+Repeated mailing address: 18 Willow Street, Bristol BS1 4QA.
+The name National Health Service identifies an organisation, not the account holder.
+Emergency contact: Amelia Harris (brother).
+
+Additional observations:
+The organisation acknowledged the request and explained that the supporting documentation would be reviewed in due course.
+Administrative details that do not identify a person should remain readable after anonymisation.
+During a later call, Grace confirmed the request and asked for a copy of the final record.
+
+Final note: Grace Morgan confirmed that Grace refers to the same person.

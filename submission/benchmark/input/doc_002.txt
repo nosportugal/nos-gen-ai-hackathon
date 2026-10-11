@@ -1,0 +1,30 @@
+EMAIL — Câmara Municipal do Porto
+Data do documento: 03/03/2026    |    Referência: REF-2026-0002
+
+Nome do titular: João Pedro Almeida
+Profissão: engenheiro informático
+Morada de contacto: Avenida da República, 732, 4430-190 Vila Nova de Gaia
+Telefone: +351 91 002 74 38    Email: joão.pedro.almeida@example.org
+Identificador fiscal: 100000002
+Entidade responsável: Câmara Municipal do Porto
+
+Campo                         | Valor
+------------------------------+--------------------------------
+Processo                       | REF-2026-0002
+Data de registo                | 03/09/2026
+Valor administrativo          | 126,40 EUR
+
+O nome da cidade do Porto é aqui uma localização institucional e deve permanecer visível.
+Endereço de correspondência repetido: Avenida da República, 732, 4430-190 Vila Nova de Gaia.
+O número REF-2026-0002 é uma referência de processo não pessoal nesta política.
+A data 03/09/2026 corresponde ao processamento do pedido e não à data de nascimento.
+Nota interna: João enviou os documentos por correio eletrónico.
+O documento foi revisto por Gonçalo Pereira e posteriormente confirmado por João.
+IBAN associado ao titular: PT50 0002 0123 1234 5678 9015 4.
+O nome Câmara Municipal do Porto refere-se a uma organização, não à identidade do titular.
+Para: gonçalo.pereira@example.org
+
+Observações complementares:
+A entidade responsável recebeu o pedido e confirmou que a documentação apresentada seria analisada no prazo habitual.
+O conteúdo deste registo descreve factos administrativos e deve continuar legível depois de removidos os identificadores pessoais.
+Durante o contacto posterior, João solicitou uma cópia para arquivo e confirmou que a morada indicada continua atual.

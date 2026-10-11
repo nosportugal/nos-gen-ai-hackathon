@@ -1,0 +1,301 @@
+{
+  "ok": true,
+  "entries_received": 11,
+  "entries_resolved": 11,
+  "errors": [],
+  "warnings": [],
+  "resolved": [
+    {
+      "entry": 0,
+      "decision": "MASK",
+      "category": "PERSON_NAME",
+      "line": 5,
+      "first_token": 2,
+      "last_token": 5,
+      "quote": "Maria Conceição Oliveira Santos",
+      "reason": "MOCK label heuristic",
+      "start": 137,
+      "end": 168,
+      "components": [
+        {
+          "id": "L005.T02",
+          "start": 137,
+          "end": 142,
+          "text": "Maria"
+        },
+        {
+          "id": "L005.T03",
+          "start": 143,
+          "end": 152,
+          "text": "Conceição"
+        },
+        {
+          "id": "L005.T04",
+          "start": 153,
+          "end": 161,
+          "text": "Oliveira"
+        },
+        {
+          "id": "L005.T05",
+          "start": 162,
+          "end": 168,
+          "text": "Santos"
+        }
+      ]
+    },
+    {
+      "entry": 1,
+      "decision": "MASK",
+      "category": "GOV_ID",
+      "line": 8,
+      "first_token": 2,
+      "last_token": 2,
+      "quote": "097865413",
+      "reason": "MOCK label heuristic",
+      "start": 223,
+      "end": 232,
+      "components": [
+        {
+          "id": "L008.T02",
+          "start": 223,
+          "end": 232,
+          "text": "097865413"
+        }
+      ]
+    },
+    {
+      "entry": 2,
+      "decision": "MASK",
+      "category": "PHONE",
+      "line": 11,
+      "first_token": 2,
+      "last_token": 5,
+      "quote": "+351 912 345 678",
+      "reason": "MOCK label heuristic",
+      "start": 332,
+      "end": 348,
+      "components": [
+        {
+          "id": "L011.T02",
+          "start": 332,
+          "end": 336,
+          "text": "+351"
+        },
+        {
+          "id": "L011.T03",
+          "start": 337,
+          "end": 340,
+          "text": "912"
+        },
+        {
+          "id": "L011.T04",
+          "start": 341,
+          "end": 344,
+          "text": "345"
+        },
+        {
+          "id": "L011.T05",
+          "start": 345,
+          "end": 348,
+          "text": "678"
+        }
+      ]
+    },
+    {
+      "entry": 3,
+      "decision": "MASK",
+      "category": "EMAIL",
+      "line": 12,
+      "first_token": 2,
+      "last_token": 2,
+      "quote": "maria.santos@emailpessoal.pt",
+      "reason": "MOCK label heuristic",
+      "start": 357,
+      "end": 385,
+      "components": [
+        {
+          "id": "L012.T02",
+          "start": 357,
+          "end": 385,
+          "text": "maria.santos@emailpessoal.pt"
+        }
+      ]
+    },
+    {
+      "entry": 4,
+      "decision": "MASK",
+      "category": "PERSON_NAME",
+      "line": 50,
+      "first_token": 2,
+      "last_token": 3,
+      "quote": "António Santos",
+      "reason": "MOCK label heuristic",
+      "start": 2407,
+      "end": 2421,
+      "components": [
+        {
+          "id": "L050.T02",
+          "start": 2407,
+          "end": 2414,
+          "text": "António"
+        },
+        {
+          "id": "L050.T03",
+          "start": 2415,
+          "end": 2421,
+          "text": "Santos"
+        }
+      ]
+    },
+    {
+      "entry": 5,
+      "decision": "MASK",
+      "category": "PHONE",
+      "line": 51,
+      "first_token": 2,
+      "last_token": 2,
+      "quote": "+351961234567",
+      "reason": "MOCK label heuristic",
+      "start": 2441,
+      "end": 2454,
+      "components": [
+        {
+          "id": "L051.T02",
+          "start": 2441,
+          "end": 2454,
+          "text": "+351961234567"
+        }
+      ]
+    },
+    {
+      "entry": 6,
+      "decision": "MASK",
+      "category": "EMAIL",
+      "line": 52,
+      "first_token": 2,
+      "last_token": 2,
+      "quote": "antonio.santos@emailpessoal.pt",
+      "reason": "MOCK label heuristic",
+      "start": 2463,
+      "end": 2493,
+      "components": [
+        {
+          "id": "L052.T02",
+          "start": 2463,
+          "end": 2493,
+          "text": "antonio.santos@emailpessoal.pt"
+        }
+      ]
+    },
+    {
+      "entry": 7,
+      "decision": "MASK",
+      "category": "PERSON_NAME",
+      "line": 53,
+      "first_token": 2,
+      "last_token": 3,
+      "quote": "Joana Pereira",
+      "reason": "MOCK label heuristic",
+      "start": 2501,
+      "end": 2514,
+      "components": [
+        {
+          "id": "L053.T02",
+          "start": 2501,
+          "end": 2506,
+          "text": "Joana"
+        },
+        {
+          "id": "L053.T03",
+          "start": 2507,
+          "end": 2514,
+          "text": "Pereira"
+        }
+      ]
+    },
+    {
+      "entry": 8,
+      "decision": "MASK",
+      "category": "PHONE",
+      "line": 54,
+      "first_token": 2,
+      "last_token": 2,
+      "quote": "+351939876543",
+      "reason": "MOCK label heuristic",
+      "start": 2542,
+      "end": 2555,
+      "components": [
+        {
+          "id": "L054.T02",
+          "start": 2542,
+          "end": 2555,
+          "text": "+351939876543"
+        }
+      ]
+    },
+    {
+      "entry": 9,
+      "decision": "MASK",
+      "category": "EMAIL",
+      "line": 59,
+      "first_token": 2,
+      "last_token": 2,
+      "quote": "carlos.mendes@centromedicalisboa.pt",
+      "reason": "MOCK label heuristic",
+      "start": 2652,
+      "end": 2687,
+      "components": [
+        {
+          "id": "L059.T02",
+          "start": 2652,
+          "end": 2687,
+          "text": "carlos.mendes@centromedicalisboa.pt"
+        }
+      ]
+    },
+    {
+      "entry": 10,
+      "decision": "MASK",
+      "category": "PHONE",
+      "line": 60,
+      "first_token": 2,
+      "last_token": 2,
+      "quote": "+351213456789",
+      "reason": "MOCK label heuristic",
+      "start": 2699,
+      "end": 2712,
+      "components": [
+        {
+          "id": "L060.T02",
+          "start": 2699,
+          "end": 2712,
+          "text": "+351213456789"
+        }
+      ]
+    }
+  ],
+  "mask_ids": [
+    "L005.T02",
+    "L005.T03",
+    "L005.T04",
+    "L005.T05",
+    "L008.T02",
+    "L011.T02",
+    "L011.T03",
+    "L011.T04",
+    "L011.T05",
+    "L012.T02",
+    "L050.T02",
+    "L050.T03",
+    "L051.T02",
+    "L052.T02",
+    "L053.T02",
+    "L053.T03",
+    "L054.T02",
+    "L059.T02",
+    "L060.T02"
+  ],
+  "ambiguous_ids": [],
+  "keep_ids": [],
+  "approval": "mechanically validated against the frozen policy; no human review"
+}

@@ -1,0 +1,31 @@
+RECIBO DE VENCIMENTO — Universidade do Porto
+Data do documento: 14/02/2026    |    Referência: REF-2026-0013
+
+Nome do titular: Inês Matos
+Profissão: enfermeira
+Morada de contacto: Rua da Alegria, 184, 4000-042 Porto
+Telefone: +351 91 013 81 47    Email: inês.matos@example.org
+Identificador fiscal: 100000013
+Entidade responsável: Universidade do Porto
+
+Campo                         | Valor
+------------------------------+--------------------------------
+Processo                       | REF-2026-0013
+Data de registo                | 14/09/2026
+Valor administrativo          | 269,40 EUR
+
+Endereço de correspondência repetido: Rua da Alegria, 184, 4000-042 Porto.
+Titular da conta: Inês Matos.
+IBAN associado ao titular: PT50 0002 0123 1234 5678 9015 4.
+O documento foi revisto por André Santos e posteriormente confirmado por Inês.
+Movimento: transferência de 269,40 EUR; beneficiário: André Santos.
+Contacto secundário: André Santos (filha).
+O nome da cidade do Porto é aqui uma localização institucional e deve permanecer visível.
+Rede social indicada: @inês_matos13; perfil público da instituição: @instituicao_oficial.
+A descrição do movimento não foi alterada.
+Nota interna: Inês enviou os documentos por correio eletrónico.
+
+Observações complementares:
+A reconciliação mensal foi efetuada de acordo com os movimentos constantes do sistema contabilístico. O saldo indicado corresponde ao fecho do período.
+A instituição recomendou conservar os comprovativos e verificar a descrição dos movimentos antes de apresentar qualquer contestação.
+O titular Inês confirmou a receção do extrato e pediu esclarecimentos sobre a transferência registada.

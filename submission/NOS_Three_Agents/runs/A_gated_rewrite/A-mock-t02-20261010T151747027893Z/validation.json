@@ -1,0 +1,39 @@
+{
+  "structural_pass": true,
+  "strict": {
+    "pass": true,
+    "ignore_trailing_whitespace": false,
+    "expected_line_count": 60,
+    "output_line_count": 60,
+    "violation_counts": {},
+    "violations": [],
+    "violations_truncated": false
+  },
+  "pass_ignoring_trailing_whitespace": true,
+  "relaxed_violation_counts": {},
+  "alignment": {
+    "source_words": 355,
+    "output_words": 355,
+    "status": "ALIGNED",
+    "evaluable": true,
+    "cost": 0,
+    "optimal_alignments": 1,
+    "inserted": []
+  },
+  "alignment_state_counts": {
+    "I": 336,
+    "M": 19
+  },
+  "alignment_states": "IIIIIIIIIIIIIIIIIIIMMMMIIIIIIIMIIIIIIIIIIIIIIMMMMIMIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIMMIIMIMIMMIIIMIIIIIIIIIIIMIM",
+  "brief_anchor_lines": {
+    "applicable": true,
+    "pass": true,
+    "note": "compared with trailing whitespace ignored"
+  },
+  "markdown_fences": {
+    "source_fence_lines": 0,
+    "output_fence_lines": 0,
+    "added": false
+  },
+  "disclaimer": "Structural validity is not evidence that every personal value was masked or that nothing was over-masked."
+}

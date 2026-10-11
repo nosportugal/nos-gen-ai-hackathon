@@ -1,0 +1,79 @@
+{
+  "contract_version": "1.0",
+  "agent_id": "C",
+  "agent_name": "Span Ledger + Deterministic Python Rendering",
+  "run_id": "C-live-t01-20261010T173911550323Z",
+  "trial": 1,
+  "mode": "LIVE",
+  "label": "LIVE Gemini run",
+  "started_utc": "2026-10-10T17:39:11+00:00",
+  "hashes": {
+    "source_sha256": "a5f6989f043b946f4f4b2a818ca95778b611eb0a114dc417940dfbae33deed74",
+    "policy_sha256": "40d668d93658aaf53f330395ff646b5b7b4d89018e0dd943e79a6b7c5f8b7ee4",
+    "model_config_sha256": "9eb8a45098c9cb94ff115d7001e087b5f66fbd28e1b80333a3413659dccd74eb",
+    "freeze_manifest_sha256": "31cfbfbd7a7a07de96300f455b0c1a4ace33fc1c08ec0672ad23e718126971e4",
+    "agent_files_sha256": {
+      "system_prompt.txt": "e387051b6acb78468f41de26312c9e74f4b519ae54fb8f01665972cd6f2eec39",
+      "user_template.txt": "4e81a8a377b976e1686ca42e49399fd39bc99b284e0af7d08df4070c2cd07de6",
+      "span_schema.json": "2d76b63767f8395f9accec6cd3e7ae40b5533754bb6306ae24cf10dcb19ba898",
+      "config.json": "bce2b9e0fe84f808c7dfa7e0c6833c2b7c24993e85860873d68982f51a8063c7",
+      "renderer.py": "5b84151621030faae8fdd0f140256ea9bfd4abcda18e01eecf1b390ab5d0a380"
+    }
+  },
+  "model": {
+    "id": "gemini-3.8-flash",
+    "id_source": "env:NOS_GEMINI_MODEL",
+    "temperature": "model default (not sent)",
+    "max_output_tokens": 16384
+  },
+  "status": "PIPELINE_FAILED",
+  "failure_reason": "BAD_REQUEST: {\n  \"error\": {\n    \"code\": 400,\n    \"message\": \"Request contains an invalid argument.\",\n    \"status\": \"INVALID_ARGUMENT\"\n  }\n}\n",
+  "competition_eligibility": {
+    "status": "UNVERIFIED",
+    "basis": "The brief says 'your system must replace the sensitive data' and allows an optional manual validation step, which suggests code may sit between the model and submission.txt. That is an inference, not a stated rule.",
+    "open_points": [
+      "Whether submission.txt may be produced by deterministic code from a model response is UNVERIFIED.",
+      "The prompt's raw response is a span list, not the document; how 'prompt and response quality' treats that is UNVERIFIED."
+    ]
+  },
+  "validation": {},
+  "usage": {
+    "calls_submitted": 1,
+    "http_attempts": 1,
+    "prompt_tokens": "UNKNOWN",
+    "output_tokens": "UNKNOWN",
+    "thoughts_tokens": "UNKNOWN",
+    "total_tokens": "UNKNOWN",
+    "cost": "UNKNOWN"
+  },
+  "stages": [
+    {
+      "stage": "stage1_spans",
+      "status": "BAD_REQUEST",
+      "ok": false,
+      "finish_reason": null,
+      "http_status": 400,
+      "http_attempts": 1,
+      "model_latency_s": 6.6551,
+      "model_version": null,
+      "usage": {
+        "prompt_tokens": null,
+        "output_tokens": null,
+        "thoughts_tokens": null,
+        "total_tokens": null
+      },
+      "error": "{\n  \"error\": {\n    \"code\": 400,\n    \"message\": \"Request contains an invalid argument.\",\n    \"status\": \"INVALID_ARGUMENT\"\n  }\n}\n"
+    }
+  ],
+  "timings": {
+    "model_s": 6.6551,
+    "render_s": 0.0,
+    "validation_s": 0.0,
+    "pipeline_s": 6.6567
+  },
+  "artifacts": {
+    "request": "runs/C_span_ledger/C-live-t01-20261010T173911550323Z/stage1_request.json",
+    "stage1_spans_raw_response": "runs/C_span_ledger/C-live-t01-20261010T173911550323Z/stage1_spans_raw_response.json",
+    "result": "runs/C_span_ledger/C-live-t01-20261010T173911550323Z/result.json"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "agent_id": "B",
+  "agent_name": "Decision Ledger + LLM Rendering",
+  "stages": ["B.ledger", "B.render"],
+  "inference_calls_per_run": 2,
+  "python_role": "Validate the ledger mechanically, pass validated decisions to the second call, and check the rendered response for fidelity and ledger agreement. The second response is saved exactly as returned and never modified. A deterministic rendering is computed internally for comparison only and never replaces the candidate.",
+  "decision_approval": "Mechanical validation against the frozen policy only. No human reviews the ledger in this workflow.",
+  "competition_eligibility": {
+    "status": "UNVERIFIED",
+    "basis": "submission.txt would be an unmodified model response, but two prompts produce it.",
+    "open_points": [
+      "The brief asks for 'the exact prompt' (singular); whether a two-prompt pipeline may be filed in prompt.txt is UNVERIFIED.",
+      "The rendering prompt contains the decisions, so on its own it shows no detection logic."
+    ]
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "agent_id": "A",
+  "agent_name": "Gated Rewrite",
+  "stages": ["A.rewrite"],
+  "inference_calls_per_run": 1,
+  "python_role": "Validate only. The model response is saved exactly as returned and is never stripped, unwrapped, cleaned or rewritten. Blank-line removal is the model's job.",
+  "competition_eligibility": {
+    "status": "ELIGIBLE_UNDER_EVERY_READING_FOUND",
+    "basis": "submission.txt would be the unmodified model response to one prompt.",
+    "open_points": [
+      "How the hidden Prompt Evaluation uses prompt.txt is UNVERIFIED.",
+      "This agent sends a system instruction and a user message; prompt.txt holds one text, so the two would be submitted joined."
+    ]
+  }
+}

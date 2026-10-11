@@ -1,0 +1,25 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["entries"],
+  "properties": {
+    "entries": {
+      "type": "array",
+      "maxItems": 400,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["line", "first_token", "last_token", "quote", "decision", "category", "reason"],
+        "properties": {
+          "line": {"type": "integer", "minimum": 1},
+          "first_token": {"type": "integer", "minimum": 1},
+          "last_token": {"type": "integer", "minimum": 1},
+          "quote": {"type": "string", "maxLength": 400},
+          "decision": {"type": "string", "enum": ["MASK", "AMBIGUOUS", "KEEP"]},
+          "category": {"type": "string", "enum": ["PERSON_NAME", "BIRTH_DATE", "GOV_ID", "PROFESSIONAL_ID", "ADDRESS", "PHONE", "EMAIL", "FINANCIAL_ID", "BIOMETRIC_ID", "HEALTH", "DEMOGRAPHIC", "OCCUPATION", "FINANCIAL_ATTRIBUTE", "LIFESTYLE", "DATE_OTHER", "DOCUMENT_METADATA", "STRUCTURE", "NARRATIVE"]},
+          "reason": {"type": "string", "maxLength": 300}
+        }
+      }
+    }
+  }
+}

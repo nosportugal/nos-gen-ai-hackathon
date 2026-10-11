@@ -1,0 +1,124 @@
+{
+  "contract_version": "1.0",
+  "agent_id": "B",
+  "agent_name": "Decision Ledger + LLM Rendering",
+  "run_id": "B-mock-t02-20261010T151747035892Z",
+  "trial": 2,
+  "mode": "MOCK",
+  "label": "MOCK - produced by a local stand-in, not a Gemini result",
+  "started_utc": "2026-10-10T15:17:47+00:00",
+  "hashes": {
+    "source_sha256": "a5f6989f043b946f4f4b2a818ca95778b611eb0a114dc417940dfbae33deed74",
+    "policy_sha256": "40d668d93658aaf53f330395ff646b5b7b4d89018e0dd943e79a6b7c5f8b7ee4",
+    "model_config_sha256": "9eb8a45098c9cb94ff115d7001e087b5f66fbd28e1b80333a3413659dccd74eb",
+    "freeze_manifest_sha256": "35f37e8b0f71e4697e9e58010f9f2ffd684955b754c3dd4c8e358945dbbc4b2c",
+    "agent_files_sha256": {
+      "stage1_system_prompt.txt": "56f09e6b9be06fd21d5300279bc598451fcf8c30f9d8aaaf1091d99440ee9506",
+      "stage1_user_template.txt": "4e81a8a377b976e1686ca42e49399fd39bc99b284e0af7d08df4070c2cd07de6",
+      "stage2_system_prompt.txt": "ad2a9d6bbb9c9aab11061b357a5992f7fd392d7e7c2e8ab77376d67d519e9f26",
+      "stage2_user_template.txt": "c3b9162cee43324297d98937acad35c90702410d2a8dc9dcac4e41919ea807e1",
+      "ledger_schema.json": "2e799322295405df8493cf4be54f27e6eb0c0b920019e552bee29744eaea56bb",
+      "config.json": "0464019b55fb98488592e81fcdc711df31c66865c420f0e3b9ba72f28af3bac6"
+    }
+  },
+  "model": {
+    "id": "gemini-3.6-flash",
+    "id_source": "config",
+    "temperature": "model default (not sent)",
+    "max_output_tokens": 16384
+  },
+  "status": "CANDIDATE_VALID",
+  "failure_reason": null,
+  "competition_eligibility": {
+    "status": "UNVERIFIED",
+    "basis": "submission.txt would be an unmodified model response, but two prompts produce it.",
+    "open_points": [
+      "The brief asks for 'the exact prompt' (singular); whether a two-prompt pipeline may be filed in prompt.txt is UNVERIFIED.",
+      "The rendering prompt contains the decisions, so on its own it shows no detection logic."
+    ]
+  },
+  "validation": {
+    "structural_pass": true,
+    "pass_ignoring_trailing_whitespace": true,
+    "violation_counts": {},
+    "expected_line_count": 60,
+    "output_line_count": 60,
+    "alignment_status": "ALIGNED",
+    "alignment_evaluable": true,
+    "brief_anchor_lines_pass": true,
+    "markdown_fence_added": false,
+    "semantic_completeness": "NOT ASSESSED by structural validation",
+    "ledger_valid": true,
+    "ledger_entries": 11,
+    "ledger_errors": 0,
+    "ledger_warnings": 0,
+    "ledger_first_errors": [],
+    "decision_approval": "Mechanical validation against the frozen policy only. No human reviews the ledger in this workflow.",
+    "ledger_agreement_pass": true,
+    "equals_internal_reference_rendering": true
+  },
+  "usage": {
+    "calls_submitted": 2,
+    "http_attempts": 2,
+    "prompt_tokens": "UNKNOWN",
+    "output_tokens": "UNKNOWN",
+    "thoughts_tokens": "UNKNOWN",
+    "total_tokens": "UNKNOWN",
+    "cost": "UNKNOWN"
+  },
+  "stages": [
+    {
+      "stage": "stage1_ledger",
+      "status": "OK",
+      "ok": true,
+      "finish_reason": "STOP",
+      "http_status": null,
+      "http_attempts": 1,
+      "model_latency_s": 0.0002,
+      "model_version": "MOCK",
+      "usage": {
+        "prompt_tokens": null,
+        "output_tokens": null,
+        "thoughts_tokens": null,
+        "total_tokens": null
+      },
+      "error": null
+    },
+    {
+      "stage": "stage2_render",
+      "status": "OK",
+      "ok": true,
+      "finish_reason": "STOP",
+      "http_status": null,
+      "http_attempts": 1,
+      "model_latency_s": 0.0003,
+      "model_version": "MOCK",
+      "usage": {
+        "prompt_tokens": null,
+        "output_tokens": null,
+        "thoughts_tokens": null,
+        "total_tokens": null
+      },
+      "error": null
+    }
+  ],
+  "timings": {
+    "model_s": 0.0005,
+    "render_s": 0.0,
+    "validation_s": 0.0011,
+    "pipeline_s": 0.0114
+  },
+  "artifacts": {
+    "stage1_request": "runs/B_decision_ledger/B-mock-t02-20261010T151747035892Z/stage1_request.json",
+    "stage1_ledger_raw_response": "runs/B_decision_ledger/B-mock-t02-20261010T151747035892Z/stage1_ledger_raw_response.json",
+    "stage1_ledger_raw_text": "runs/B_decision_ledger/B-mock-t02-20261010T151747035892Z/stage1_ledger_raw_text.txt",
+    "stage1_ledger": "runs/B_decision_ledger/B-mock-t02-20261010T151747035892Z/stage1_ledger.json",
+    "stage1_ledger_validation": "runs/B_decision_ledger/B-mock-t02-20261010T151747035892Z/stage1_ledger_validation.json",
+    "stage2_request": "runs/B_decision_ledger/B-mock-t02-20261010T151747035892Z/stage2_request.json",
+    "stage2_render_raw_response": "runs/B_decision_ledger/B-mock-t02-20261010T151747035892Z/stage2_render_raw_response.json",
+    "stage2_render_raw_text": "runs/B_decision_ledger/B-mock-t02-20261010T151747035892Z/stage2_render_raw_text.txt",
+    "candidate": "runs/B_decision_ledger/B-mock-t02-20261010T151747035892Z/candidate.txt",
+    "validation": "runs/B_decision_ledger/B-mock-t02-20261010T151747035892Z/validation.json",
+    "result": "runs/B_decision_ledger/B-mock-t02-20261010T151747035892Z/result.json"
+  }
+}

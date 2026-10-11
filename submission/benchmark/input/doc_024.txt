@@ -1,0 +1,38 @@
+FORMULÁRIO DE CANDIDATURA — Instituto Português do Desporto e Juventude
+Data do documento: 25/01/2026    |    Referência: REF-2026-0024
+
+Nome do titular: Patrícia Moreira
+Profissão: enfermeira
+Morada de contacto: Rua de Cedofeita, 91, 4050-174 Porto
+Telefone: +351 91 024 88 56    Email: patrícia.moreira@example.org
+Identificador fiscal: 100000024
+Entidade responsável: Instituto Português do Desporto e Juventude
+
+Campo                         | Valor
+------------------------------+--------------------------------
+Processo                       | REF-2026-0024
+Data de registo                | 25/09/2026
+Valor administrativo          | 412,40 EUR
+
+IBAN associado ao titular: PT50 0002 0123 1234 5678 9015 4.
+O nome da cidade do Porto é aqui uma localização institucional e deve permanecer visível.
+Rede social indicada: @patrícia_moreira24; perfil público da instituição: @instituicao_oficial.
+Nota interna: Patrícia enviou os documentos por correio eletrónico.
+A data 25/09/2026 corresponde ao processamento do pedido e não à data de nascimento.
+O documento foi revisto por Mariana Correia e posteriormente confirmado por Patrícia.
+Contacto secundário: Mariana Correia (filha).
+O número REF-2026-0024 é uma referência de processo não pessoal nesta política.
+Endereço de correspondência repetido: Rua de Cedofeita, 91, 4050-174 Porto.
+O nome Instituto Português do Desporto e Juventude refere-se a uma organização, não à identidade do titular.
+
+Observações complementares:
+A entidade responsável recebeu o pedido e confirmou que a documentação apresentada seria analisada no prazo habitual.
+O conteúdo deste registo descreve factos administrativos e deve continuar legível depois de removidos os identificadores pessoais.
+Durante o contacto posterior, Patrícia solicitou uma cópia para arquivo e confirmou que a morada indicada continua atual.
+
+   
+  Nota de rodapé: verificar o registo.  
+
+  Item	Estado	Comentário
+  A	OK	--
+  B	Pendente	...

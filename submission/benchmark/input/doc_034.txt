@@ -1,0 +1,31 @@
+ATA DE REUNIÃO — Universidade do Porto
+Data do documento: 08/11/2026    |    Referência: REF-2026-0034
+
+Nome do titular: Alice Brito
+Profissão: advogada
+Morada de contacto: Avenida da República, 732, 4430-190 Vila Nova de Gaia
+Telefone: +351 91 034 58 46    Email: alice.brito@example.org
+Identificador fiscal: 100000034
+Entidade responsável: Universidade do Porto
+
+Campo                         | Valor
+------------------------------+--------------------------------
+Processo                       | REF-2026-0034
+Data de registo                | 09/09/2026
+Valor administrativo          | 542,40 EUR
+
+O nome da cidade do Porto é aqui uma localização institucional e deve permanecer visível.
+Contacto secundário: João Pedro Almeida (irmão).
+O documento foi revisto por João Pedro Almeida e posteriormente confirmado por Alice.
+O número REF-2026-0034 é uma referência de processo não pessoal nesta política.
+A data 09/09/2026 corresponde ao processamento do pedido e não à data de nascimento.
+IBAN associado ao titular: PT50 0002 0123 1234 5678 9015 4.
+Endereço de correspondência repetido: Avenida da República, 732, 4430-190 Vila Nova de Gaia.
+O nome Universidade do Porto refere-se a uma organização, não à identidade do titular.
+Nota interna: Alice enviou os documentos por correio eletrónico.
+Rede social indicada: @alice_brito34; perfil público da instituição: @instituicao_oficial.
+
+Observações complementares:
+A entidade responsável recebeu o pedido e confirmou que a documentação apresentada seria analisada no prazo habitual.
+O conteúdo deste registo descreve factos administrativos e deve continuar legível depois de removidos os identificadores pessoais.
+Durante o contacto posterior, Alice solicitou uma cópia para arquivo e confirmou que a morada indicada continua atual.

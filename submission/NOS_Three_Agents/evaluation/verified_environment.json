@@ -1,0 +1,31 @@
+{
+  "python": "3.12.7",
+  "packages": {
+    "PyMuPDF": "1.27.2.3",
+    "pytest": "9.1.1",
+    "flake8": "7.4.1",
+    "presidio-analyzer": "2.2.364",
+    "presidio-anonymizer": "2.2.364",
+    "spacy": "3.8.16",
+    "xx-ent-wiki-sm": "3.8.0",
+    "great-expectations": "1.24.0",
+    "pandas": "3.0.6",
+    "langchain-core": "1.6.9",
+    "langchain-google-genai": "4.4.1",
+    "langchain-openai": "1.7.0"
+  },
+  "tests": {
+    "passed": 132,
+    "skipped": 1,
+    "skip_reason": "Real-document validation was not selected"
+  },
+  "pip_check": "passed",
+  "repository_flake8": "passed",
+  "source_hashes_and_fresh_pdf_extraction": "passed",
+  "indexed_secret_scan": "no configured matches",
+  "api_calls_during_verification": 0,
+  "previous_freeze_archive": "evaluation/freeze_history/freeze_35f37e8b0f71e469.json",
+  "previous_freeze_sha256": "35f37e8b0f71e4697e9e58010f9f2ffd684955b754c3dd4c8e358945dbbc4b2c",
+  "active_masking_policy": "shared/policy/masking_policy_v1.json",
+  "scope": "Local offline checks, not live-model or enterprise certification"
+}

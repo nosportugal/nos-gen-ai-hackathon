@@ -1,0 +1,53 @@
+{
+  "benchmark_id": "bench-live-20261010T173924Z",
+  "mode": "LIVE",
+  "started_utc": "2026-10-10T17:39:24+00:00",
+  "model_id": "gemini-3.8-flash",
+  "freeze_ok": true,
+  "freeze_manifest_sha256": "31cfbfbd7a7a07de96300f455b0c1a4ace33fc1c08ec0672ad23e718126971e4",
+  "planned_inference_requests": 3,
+  "runs": [
+    {
+      "agent": "A",
+      "trial": 1,
+      "mode": "LIVE",
+      "run_id": "A-live-t01-20261010T173924760633Z",
+      "status": "CANDIDATE_VALID",
+      "result": "runs/A_gated_rewrite/A-live-t01-20261010T173924760633Z/result.json"
+    },
+    {
+      "agent": "A",
+      "trial": 2,
+      "mode": "LIVE",
+      "run_id": "A-live-t02-20261010T173952578165Z",
+      "status": "CANDIDATE_VALID",
+      "result": "runs/A_gated_rewrite/A-live-t02-20261010T173952578165Z/result.json"
+    },
+    {
+      "agent": "A",
+      "trial": 3,
+      "mode": "LIVE",
+      "run_id": "A-live-t03-20261010T174227546792Z",
+      "status": "CANDIDATE_VALID",
+      "result": "runs/A_gated_rewrite/A-live-t03-20261010T174227546792Z/result.json"
+    }
+  ],
+  "model_preflight": {
+    "ok": true,
+    "http_status": 200,
+    "name": "models/gemini-3.8-flash",
+    "version": "3.0",
+    "input_token_limit": 1048576,
+    "output_token_limit": 65536,
+    "default_temperature": 1,
+    "supported_generation_methods": [
+      "generateContent",
+      "countTokens",
+      "createCachedContent",
+      "batchGenerateContent"
+    ]
+  },
+  "budget_remaining_before": 18,
+  "finished_utc": "2026-10-10T17:42:58+00:00",
+  "budget_remaining_after": 13
+}

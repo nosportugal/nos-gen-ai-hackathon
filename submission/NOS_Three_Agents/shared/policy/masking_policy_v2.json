@@ -1,0 +1,70 @@
+{
+  "objective": {
+    "primary": "Remove identifying information about natural persons while retaining the document's factual meaning and utility.",
+    "not_equivalent_to_full_gdpr_anonymity": true,
+    "scope": "Any document type; medical documents receive explicit clinical-content preservation.",
+    "legal_basis_note": "GDPR Article 4 defines personal data; Article 9 identifies special categories. Special-category status alone does not determine MASK under this competition-specific, meaning-preserving policy."
+  },
+  "document_context": {
+    "rule": "Infer type from title, headings, field labels, and substantive content. Do not assume medical solely because the challenge's sample is medical.",
+    "types": ["MEDICAL", "LEGAL", "FINANCIAL", "EMPLOYMENT", "EDUCATIONAL", "ADMINISTRATIVE", "OTHER", "MIXED"],
+    "medical": "KEEP symptoms, diagnoses, medical history, genetics, medication, doses, tests, measurements, treatment, and clinically relevant event dates by default. MASK patient and third-party identifiers; mask exceptional identifying descriptions only when clearly reidentifying.",
+    "other": "KEEP substantive facts, amounts, obligations, outcomes, academic results, professional facts, and administrative events unless a separate identification rule requires masking.",
+    "mixed": "Apply local section purpose, while considering identifiers across the whole document."
+  },
+  "decision_priority": [
+    "1. Preserve the four verified anchor lines exactly.",
+    "2. Mask direct identifiers of any natural person, including recurring partial names.",
+    "3. Mask high-confidence indirect identifiers that identify a particular person in context; do not mask generic attributes merely because they are personal.",
+    "4. Preserve document-type essential facts, especially clinical content, unless rule 2 or 3 applies.",
+    "5. Preserve generic institution names, headings, metadata, narrative and all remaining characters.",
+    "6. If an indirect-identification claim is unsupported, KEEP and classify AMBIGUOUS for ledger reporting."
+  ],
+  "identifiability_test": {
+    "questions": ["Is this an identifier of a natural person rather than an institution or concept?", "Does it directly identify, contact, locate or uniquely reference that person?", "Could the text's combination of attributes reasonably single out a specific person, without inventing outside facts?", "Would removing this span destroy substantive medical or other document meaning?"],
+    "threshold": "Mask indirect attributes only when the document itself provides strong, concrete singling-out evidence. Do not speculate about external databases, employer headcounts or rarity.",
+    "minimum_masking": "Mask the smallest set of identifying tokens sufficient under the selected policy; do not rewrite, generalize, or redact entire sentences.",
+    "no_sensitive_inference": "Do not infer religion, politics, ethnicity, sexuality, or health from visits, employers, names or other ambiguous clues."
+  },
+  "ambiguity_rule": {"status": "PROVISIONAL", "render_ambiguous_as": "KEEP", "text": "AMBIGUOUS means potentially personal but insufficient evidence to require masking. Ledger agents record AMBIGUOUS; rendering keeps the original token. Clinical information is KEEP by design, not automatically AMBIGUOUS."},
+  "categories": {
+    "MASK": [
+      {"id": "PERSON_NAME", "description": "Personal names of patients, relatives, witnesses, staff and other natural persons, including name particles and contextually resolved shortened mentions. Do not mask titles or kinship labels."},
+      {"id": "BIRTH_DATE", "description": "Individual date of birth, including dates written in words."},
+      {"id": "GOV_ID", "description": "Individual tax, citizen card, social security, national health, passport and similar identifiers."},
+      {"id": "PERSONAL_RECORD_ID", "description": "Patient, student, employee, individual customer or account number uniquely referring to a person; not generic document reference numbers."},
+      {"id": "PROFESSIONAL_ID", "description": "Individual professional registration or licence number; not institution-wide identifiers."},
+      {"id": "ADDRESS", "description": "Personal residential or postal address, including street, building, unit, postal code and locality. Do not mask a facility's address merely because it is an address."},
+      {"id": "PHONE", "description": "Personal or individually assigned telephone number; preserve generic institutional switchboard numbers unless linked to a person."},
+      {"id": "EMAIL", "description": "Personal or individually assigned professional email; preserve generic organizational inboxes."},
+      {"id": "FINANCIAL_ID", "description": "Personal bank account/IBAN, payment card data, individual insurance policy and financial account numbers."},
+      {"id": "BIOMETRIC_ID", "description": "Individual biometric template/record identifiers, not clinical descriptions of biometric measurements."},
+      {"id": "ONLINE_ID", "description": "Individually identifying account handles, user IDs and unique device identifiers linked to a natural person."},
+      {"id": "CONTEXTUAL_UNIQUE_IDENTIFIER", "description": "Attribute or combination of attributes demonstrably singling out a specific person in this document; mask only identifying tokens necessary, preserving substantive context where possible."}
+    ],
+    "AMBIGUOUS": [
+      {"id": "QUASI_IDENTIFIER", "description": "Age, non-birth dates, city, nationality, education, employer, job title or family links without strong singling-out evidence."},
+      {"id": "SPECIAL_CATEGORY_ATTRIBUTE", "description": "Personal religion, ethnicity, politics, union membership or sexuality: legally sensitive but not automatically a MASK target under this identity-focused policy; do not infer these from weak cues."},
+      {"id": "FINANCIAL_ATTRIBUTE", "description": "Income, assets, coverage amount, plan type and financial circumstances that are not account identifiers."},
+      {"id": "THIRD_PARTY_SENSITIVE", "description": "Sensitive narrative about a relative or other third party; protect their direct identifiers while retaining meaningful facts by default."}
+    ],
+    "KEEP": [
+      {"id": "MEDICAL_CONTENT", "description": "Symptoms, diagnoses, medical and family history, genetics, medication, dosages, examinations, measurements, blood type, treatments and outcomes unless explicitly identifying."},
+      {"id": "DOCUMENT_METADATA", "description": "Document title, institution name, document date and generic document reference, including the verified anchor lines."},
+      {"id": "INSTITUTION", "description": "Hospital, university, insurer, employer or other organization's name when not used as a uniquely identifying personal descriptor."},
+      {"id": "GENERAL_ATTRIBUTE", "description": "Generic job, marital status, age, religion, lifestyle, insurance provider, income or other attribute without demonstrated identification risk, subject to ambiguity logging."},
+      {"id": "EVENT_DATE", "description": "Consultation, admission, surgery, document or other event dates unless strongly identifying in combination."},
+      {"id": "STRUCTURE", "description": "Headings, field labels and section delimiters."},
+      {"id": "NARRATIVE", "description": "All other substantive words, titles, relationship words, units, punctuation and connecting text."}
+    ]
+  },
+  "examples": [
+    {"input": "Paciente: Ana Silva. Diagnóstico: diabetes tipo 2.", "output": "Paciente: * *. Diagnóstico: diabetes tipo 2.", "why": "Mask name, preserve diagnosis."},
+    {"input": "Telefone: +351 912 345 678; email: ana@exemplo.pt", "output": "Telefone: * * * *; email: *", "why": "One asterisk per whitespace-separated identifier group."},
+    {"input": "Admissão: 15 de abril de 2025. Nascimento: 12/03/1978.", "output": "Admissão: 15 de abril de 2025. Nascimento: *.", "why": "Keep admission date; mask birth date."},
+    {"input": "Hospital de Santa Maria. Profissão: professora.", "output": "Hospital de Santa Maria. Profissão: professora.", "why": "Institution and generic occupation are contextual."},
+    {"input": "Contacto: (Inês Vaz, irmã) ines.vaz@exemplo.pt", "output": "Contacto: (* *, irmã) *", "why": "Protect third-party name and email; preserve relationship."}
+  ],
+  "scope_note": "The hidden reference's exact masking scope is UNVERIFIED. This version intentionally protects identity while retaining clinical and other substantive information; it does not claim GDPR-complete anonymization.",
+  "referenes": ["GDPR Regulation (EU) 2016/679 Articles 4 and 9", "NIST SP 800-122 Guide to Protecting the Confidentiality of Personally Identifiable Information", "NOS JunctionX Lisbon 2026 challenge brief p.2"]
+}

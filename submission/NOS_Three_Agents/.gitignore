@@ -1,0 +1,7 @@
+.venv/
+.env
+__pycache__/
+*.pyc
+# Re-created by references/fetch_references.py; not redistributed here.
+references/nos-gen-ai-hackathon/
+references/official/

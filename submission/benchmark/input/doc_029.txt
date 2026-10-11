@@ -1,0 +1,31 @@
+PEDIDO DE APOIO SOCIAL — Hospital de São João
+Data do documento: 03/06/2026    |    Referência: REF-2026-0029
+
+Nome do titular: Nuno Cardoso
+Profissão: professora
+Morada de contacto: Rua da Liberdade, 27, 3000-120 Coimbra
+Telefone: +351 91 029 73 51    Email: nuno.cardoso@example.org
+Identificador fiscal: 100000029
+Entidade responsável: Hospital de São João
+
+Campo                         | Valor
+------------------------------+--------------------------------
+Processo                       | REF-2026-0029
+Data de registo                | 04/09/2026
+Valor administrativo          | 477,40 EUR
+
+Nota interna: Nuno enviou os documentos por correio eletrónico.
+IBAN associado ao titular: PT50 0002 0123 1234 5678 9015 4.
+O número REF-2026-0029 é uma referência de processo não pessoal nesta política.
+Endereço de correspondência repetido: Rua da Liberdade, 27, 3000-120 Coimbra.
+A data 04/09/2026 corresponde ao processamento do pedido e não à data de nascimento.
+O documento foi revisto por David Tavares e posteriormente confirmado por Nuno.
+O nome da cidade do Porto é aqui uma localização institucional e deve permanecer visível.
+O nome Hospital de São João refere-se a uma organização, não à identidade do titular.
+Rede social indicada: @nuno_cardoso29; perfil público da instituição: @instituicao_oficial.
+Contacto secundário: David Tavares (cônjuge).
+
+Observações complementares:
+A entidade responsável recebeu o pedido e confirmou que a documentação apresentada seria analisada no prazo habitual.
+O conteúdo deste registo descreve factos administrativos e deve continuar legível depois de removidos os identificadores pessoais.
+Durante o contacto posterior, Nuno solicitou uma cópia para arquivo e confirmou que a morada indicada continua atual.

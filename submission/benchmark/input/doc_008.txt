@@ -1,0 +1,35 @@
+DECLARAÇÃO PROFISSIONAL — Hospital de São João
+Data do documento: 09/09/2026    |    Referência: REF-2026-0008
+
+Nome do titular: Duarte Oliveira
+Profissão: engenheiro informático
+Morada de contacto: Avenida da República, 732, 4430-190 Vila Nova de Gaia
+Telefone: +351 91 008 96 52    Email: duarte.oliveira@example.org
+Identificador fiscal: 100000008
+Entidade responsável: Hospital de São João
+
+Campo                         | Valor
+------------------------------+--------------------------------
+Processo                       | REF-2026-0008
+Data de registo                | 09/09/2026
+Valor administrativo          | 204,40 EUR
+
+Rede social indicada: @duarte_oliveira8; perfil público da instituição: @instituicao_oficial.
+Endereço de correspondência repetido: Avenida da República, 732, 4430-190 Vila Nova de Gaia.
+IBAN associado ao titular: PT50 0002 0123 1234 5678 9015 4.
+O documento foi revisto por Teresa Figueiredo e posteriormente confirmado por Duarte.
+O nome da cidade do Porto é aqui uma localização institucional e deve permanecer visível.
+O número REF-2026-0008 é uma referência de processo não pessoal nesta política.
+O nome Hospital de São João refere-se a uma organização, não à identidade do titular.
+Contacto secundário: Teresa Figueiredo (filha).
+Nota interna: Duarte enviou os documentos por correio eletrónico.
+A data 09/09/2026 corresponde ao processamento do pedido e não à data de nascimento.
+
+Observações complementares:
+A entidade responsável recebeu o pedido e confirmou que a documentação apresentada seria analisada no prazo habitual.
+O conteúdo deste registo descreve factos administrativos e deve continuar legível depois de removidos os identificadores pessoais.
+Durante o contacto posterior, Duarte solicitou uma cópia para arquivo e confirmou que a morada indicada continua atual.
+
+  Item	Estado	Comentário
+  A	OK	--
+  B	Pendente	...

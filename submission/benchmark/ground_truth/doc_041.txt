@@ -1,0 +1,25 @@
+CLINICAL REPORT — Royal London Hospital
+Document date: 15/06/2026    |    Reference: REF-2026-0041
+Subject name: * *
+Occupation: accountant
+Contact address: * * *, * * *
+Phone: * * *    Email: *
+Tax identifier: *
+Responsible organisation: Royal London Hospital
+Field                         | Value
+------------------------------+--------------------------------
+Case number                   | REF-2026-0041
+Processing date               | 16/09/2026
+Administrative amount         | GBP 633.40
+Account identifier: * * * * * *.
+Emergency contact: * * (spouse).
+The name Royal London Hospital identifies an organisation, not the account holder.
+The record was reviewed by * * and later confirmed by *.
+The date 16/09/2026 is a processing date, not a date of birth.
+The condition was considered stable and follow-up was recommended.
+Internal note: * submitted the requested forms by email.
+Diagnosis: ankle sprain.
+Additional observations:
+The consultation took place without complications. Staff recorded observations and provided routine follow-up instructions.
+The medical condition is retained as clinical context under this benchmark policy rather than being automatically replaced.
+During follow-up, * confirmed receipt of the written instructions and requested a copy for personal records.

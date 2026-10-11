@@ -1,0 +1,10 @@
+<document>
+{{DOCUMENT}}</document>
+
+<token_index>
+{{TOKEN_INDEX}}
+</token_index>
+
+<decisions>
+{{DECISIONS}}
+</decisions>

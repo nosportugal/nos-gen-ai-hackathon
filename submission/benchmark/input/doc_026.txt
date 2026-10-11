@@ -1,0 +1,29 @@
+FICHA DE FILIAÇÃO POLÍTICA — Hospital de São João
+Data do documento: 27/03/2026    |    Referência: REF-2026-0026
+
+Nome do titular: Raquel Coelho
+Profissão: advogada
+Morada de contacto: Rua da Alegria, 184, 4000-042 Porto
+Telefone: +351 91 026 62 94    Email: raquel.coelho@example.org
+Identificador fiscal: 100000026
+Entidade responsável: Hospital de São João
+
+Campo                         | Valor
+------------------------------+--------------------------------
+Processo                       | REF-2026-0026
+Data de registo                | 01/09/2026
+Valor administrativo          | 438,40 EUR
+
+Pessoa associada à filiação: Raquel Coelho.
+O nome da cidade do Porto é aqui uma localização institucional e deve permanecer visível.
+Rede social indicada: @raquel_coelho26; perfil público da instituição: @instituicao_oficial.
+A data 01/09/2026 corresponde ao processamento do pedido e não à data de nascimento.
+O nome Hospital de São João refere-se a uma organização, não à identidade do titular.
+Endereço de correspondência repetido: Rua da Alegria, 184, 4000-042 Porto.
+IBAN associado ao titular: PT50 0002 0123 1234 5678 9015 4.
+Nota interna: Raquel enviou os documentos por correio eletrónico.
+
+Observações complementares:
+A adesão é voluntária e foi registada apenas para fins administrativos internos. A orientação política associada à pessoa é um dado particularmente sensível.
+O nome da organização é mantido como contexto, mas a ligação nominal entre a pessoa e a filiação é protegida neste benchmark.
+Na mensagem de confirmação, Raquel pediu que os seus contactos não fossem partilhados com terceiros.

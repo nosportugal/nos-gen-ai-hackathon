@@ -1,0 +1,29 @@
+RELATÓRIO CLÍNICO — Banco de Portugal
+Data do documento: 02/02/2026    |    Referência: REF-2026-0001
+
+Nome do titular: Ana Sofia Martins
+Profissão: enfermeira
+Morada de contacto: Avenida da República, 732, 4430-190 Vila Nova de Gaia
+Telefone: +351 91 001 37 19    Email: ana.sofia.martins@example.org
+Identificador fiscal: 100000001
+Entidade responsável: Banco de Portugal
+
+Campo                         | Valor
+------------------------------+--------------------------------
+Processo                       | REF-2026-0001
+Data de registo                | 02/09/2026
+Valor administrativo          | 113,40 EUR
+
+Diagnóstico: asma.
+Profissional responsável: Marta Isabel Lopes.
+Rede social indicada: @ana_sofia_martins1; perfil público da instituição: @instituicao_oficial.
+O número REF-2026-0001 é uma referência de processo não pessoal nesta política.
+Contacto secundário: Marta Isabel Lopes (irmão).
+O documento foi revisto por Marta Isabel Lopes e posteriormente confirmado por Ana.
+Endereço de correspondência repetido: Avenida da República, 732, 4430-190 Vila Nova de Gaia.
+Nota interna: Ana enviou os documentos por correio eletrónico.
+
+Observações complementares:
+A consulta decorreu sem intercorrências. A equipa registou os sinais vitais, explicou os procedimentos e entregou recomendações gerais de acompanhamento.
+A informação relativa ao diagnóstico é relevante para o tratamento e não constitui, por si só, um identificador pessoal nesta política de teste.
+Na nota de seguimento, Ana confirmou ter compreendido as indicações. O registo administrativo foi atualizado sem alterar a data do episódio.

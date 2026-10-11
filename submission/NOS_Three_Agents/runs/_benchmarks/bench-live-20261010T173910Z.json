@@ -1,0 +1,51 @@
+{
+  "benchmark_id": "bench-live-20261010T173910Z",
+  "mode": "LIVE",
+  "started_utc": "2026-10-10T17:39:10+00:00",
+  "model_id": "gemini-3.8-flash",
+  "freeze_ok": true,
+  "freeze_manifest_sha256": "31cfbfbd7a7a07de96300f455b0c1a4ace33fc1c08ec0672ad23e718126971e4",
+  "planned_inference_requests": 3,
+  "runs": [
+    {
+      "agent": "C",
+      "trial": 1,
+      "mode": "LIVE",
+      "run_id": "C-live-t01-20261010T173911550323Z",
+      "status": "PIPELINE_FAILED",
+      "result": "runs/C_span_ledger/C-live-t01-20261010T173911550323Z/result.json"
+    },
+    {
+      "agent": "C",
+      "trial": 2,
+      "mode": "LIVE",
+      "status": "NOT_RUN",
+      "failure_reason": "SKIPPED: trial 1 failed with BAD_REQUEST, a configuration-level error that a repeat cannot fix"
+    },
+    {
+      "agent": "C",
+      "trial": 3,
+      "mode": "LIVE",
+      "status": "NOT_RUN",
+      "failure_reason": "SKIPPED: trial 1 failed with BAD_REQUEST, a configuration-level error that a repeat cannot fix"
+    }
+  ],
+  "model_preflight": {
+    "ok": true,
+    "http_status": 200,
+    "name": "models/gemini-3.8-flash",
+    "version": "3.0",
+    "input_token_limit": 1048576,
+    "output_token_limit": 65536,
+    "default_temperature": 1,
+    "supported_generation_methods": [
+      "generateContent",
+      "countTokens",
+      "createCachedContent",
+      "batchGenerateContent"
+    ]
+  },
+  "budget_remaining_before": 19,
+  "finished_utc": "2026-10-10T17:39:18+00:00",
+  "budget_remaining_after": 18
+}

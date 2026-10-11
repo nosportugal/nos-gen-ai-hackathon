@@ -1,0 +1,71 @@
+{
+  "benchmark_id": "bench-live-20261010T151834Z",
+  "mode": "LIVE",
+  "started_utc": "2026-10-10T15:18:34+00:00",
+  "blocked": "BLOCKED: no API key in GEMINI_API_KEY / GOOGLE_API_KEY (environment or .env)",
+  "runs": [
+    {
+      "agent": "A",
+      "trial": 1,
+      "mode": "LIVE",
+      "status": "NOT_RUN",
+      "failure_reason": "BLOCKED: BLOCKED: no API key in GEMINI_API_KEY / GOOGLE_API_KEY (environment or .env)"
+    },
+    {
+      "agent": "B",
+      "trial": 1,
+      "mode": "LIVE",
+      "status": "NOT_RUN",
+      "failure_reason": "BLOCKED: BLOCKED: no API key in GEMINI_API_KEY / GOOGLE_API_KEY (environment or .env)"
+    },
+    {
+      "agent": "C",
+      "trial": 1,
+      "mode": "LIVE",
+      "status": "NOT_RUN",
+      "failure_reason": "BLOCKED: BLOCKED: no API key in GEMINI_API_KEY / GOOGLE_API_KEY (environment or .env)"
+    },
+    {
+      "agent": "A",
+      "trial": 2,
+      "mode": "LIVE",
+      "status": "NOT_RUN",
+      "failure_reason": "BLOCKED: BLOCKED: no API key in GEMINI_API_KEY / GOOGLE_API_KEY (environment or .env)"
+    },
+    {
+      "agent": "B",
+      "trial": 2,
+      "mode": "LIVE",
+      "status": "NOT_RUN",
+      "failure_reason": "BLOCKED: BLOCKED: no API key in GEMINI_API_KEY / GOOGLE_API_KEY (environment or .env)"
+    },
+    {
+      "agent": "C",
+      "trial": 2,
+      "mode": "LIVE",
+      "status": "NOT_RUN",
+      "failure_reason": "BLOCKED: BLOCKED: no API key in GEMINI_API_KEY / GOOGLE_API_KEY (environment or .env)"
+    },
+    {
+      "agent": "A",
+      "trial": 3,
+      "mode": "LIVE",
+      "status": "NOT_RUN",
+      "failure_reason": "BLOCKED: BLOCKED: no API key in GEMINI_API_KEY / GOOGLE_API_KEY (environment or .env)"
+    },
+    {
+      "agent": "B",
+      "trial": 3,
+      "mode": "LIVE",
+      "status": "NOT_RUN",
+      "failure_reason": "BLOCKED: BLOCKED: no API key in GEMINI_API_KEY / GOOGLE_API_KEY (environment or .env)"
+    },
+    {
+      "agent": "C",
+      "trial": 3,
+      "mode": "LIVE",
+      "status": "NOT_RUN",
+      "failure_reason": "BLOCKED: BLOCKED: no API key in GEMINI_API_KEY / GOOGLE_API_KEY (environment or .env)"
+    }
+  ]
+}

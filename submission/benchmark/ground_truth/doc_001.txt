@@ -1,0 +1,25 @@
+RELATÓRIO CLÍNICO — Banco de Portugal
+Data do documento: 02/02/2026    |    Referência: REF-2026-0001
+Nome do titular: * * *
+Profissão: enfermeira
+Morada de contacto: * * *, *, * * * * *
+Telefone: * * * * *    Email: *
+Identificador fiscal: *
+Entidade responsável: Banco de Portugal
+Campo                         | Valor
+------------------------------+--------------------------------
+Processo                       | REF-2026-0001
+Data de registo                | 02/09/2026
+Valor administrativo          | 113,40 EUR
+Diagnóstico: asma.
+Profissional responsável: * * *.
+Rede social indicada: *; perfil público da instituição: @instituicao_oficial.
+O número REF-2026-0001 é uma referência de processo não pessoal nesta política.
+Contacto secundário: * * * (irmão).
+O documento foi revisto por * * * e posteriormente confirmado por *.
+Endereço de correspondência repetido: * * *, *, * * * * *.
+Nota interna: * enviou os documentos por correio eletrónico.
+Observações complementares:
+A consulta decorreu sem intercorrências. A equipa registou os sinais vitais, explicou os procedimentos e entregou recomendações gerais de acompanhamento.
+A informação relativa ao diagnóstico é relevante para o tratamento e não constitui, por si só, um identificador pessoal nesta política de teste.
+Na nota de seguimento, * confirmou ter compreendido as indicações. O registo administrativo foi atualizado sem alterar a data do episódio.

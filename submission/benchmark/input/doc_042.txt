@@ -1,0 +1,35 @@
+EMAIL CORRESPONDENCE — University of Manchester
+Document date: 16/07/2026    |    Reference: REF-2026-0042
+
+Subject name: James Wilson
+Occupation: researcher
+Contact address: 7 Harbour Road, Dublin D02 KX31
+Phone: +44 7700 000042    Email: james.wilson@example.org
+Tax identifier: QQ000042C
+Responsible organisation: University of Manchester
+
+Field                         | Value
+------------------------------+--------------------------------
+Case number                   | REF-2026-0042
+Processing date               | 17/09/2026
+Administrative amount         | GBP 646.40
+
+From: james.wilson@example.org
+Repeated mailing address: 7 Harbour Road, Dublin D02 KX31.
+Subject: confirmation of supporting documents
+Internal note: James submitted the requested forms by email.
+The record was reviewed by Daniel Foster and later confirmed by James.
+The reference REF-2026-0042 is a non-personal case code under this policy.
+The date 17/09/2026 is a processing date, not a date of birth.
+Account identifier: GB82 WEST 1234 5698 7654 32.
+The name University of Manchester identifies an organisation, not the account holder.
+
+Additional observations:
+The organisation acknowledged the request and explained that the supporting documentation would be reviewed in due course.
+Administrative details that do not identify a person should remain readable after anonymisation.
+During a later call, James confirmed the request and asked for a copy of the final record.
+
+   
+  Footnote: check the record.  
+
+Final note: James Wilson confirmed that James refers to the same person.

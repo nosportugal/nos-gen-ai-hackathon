@@ -1,0 +1,30 @@
+FAMILY RECORD — University of Manchester
+Document date: 21/12/2026    |    Reference: REF-2026-0047
+
+Subject name: Amelia Harris
+Occupation: researcher
+Contact address: 18 Willow Street, Bristol BS1 4QA
+Phone: +44 7700 000047    Email: amelia.harris@example.org
+Tax identifier: QQ000047C
+Responsible organisation: University of Manchester
+
+Field                         | Value
+------------------------------+--------------------------------
+Case number                   | REF-2026-0047
+Processing date               | 22/09/2026
+Administrative amount         | GBP 711.40
+
+The reference REF-2026-0047 is a non-personal case code under this policy.
+Emergency contact: Charlotte Evans (spouse).
+The name University of Manchester identifies an organisation, not the account holder.
+Repeated mailing address: 18 Willow Street, Bristol BS1 4QA.
+Family member: Charlotte Evans; relationship: spouse.
+Social media username: @amelia_harris47; organisation profile: @official_organisation.
+The city of London is mentioned as general context and is not a personal address.
+Internal note: Amelia submitted the requested forms by email.
+Account identifier: GB82 WEST 1234 5698 7654 32.
+
+Additional observations:
+The household submitted an update concerning dependants and requested a revised family record.
+Family relationships are kept for context, but the identities of the individuals are protected.
+In the next call, Amelia confirmed that the statement would be used only for the application.

@@ -1,0 +1,24 @@
+{
+  "provider": "Google Gemini API (REST generateContent, no SDK)",
+  "api_base": "https://generativelanguage.googleapis.com/v1beta",
+  "model_id": "gemini-3.6-flash",
+  "model_id_env_override": "NOS_GEMINI_MODEL",
+  "model_id_rationale": "Listed as Stable in Google's model catalogue and named as the replacement for gemini-2.0-flash (the organisers' tutorial model, listed with a shutdown date of 1 June 2026). Access with the team's key is NOT yet verified.",
+  "temperature": null,
+  "temperature_rationale": "null = not sent, so the model default applies. Google's Gemini 3 guide (page dated 2026-10-09) says: 'For all Gemini 3 models, we strongly recommend keeping the temperature parameter at its default value of 1.0' and warns that lowering it 'may lead to unexpected behavior, such as looping or degraded performance'. The organisers' tutorial passes 0.0, but to gemini-2.0-flash, which is past its listed shutdown date. No temperature guarantees identical outputs across runs.",
+  "thinking": "not configured; the model default applies and thinking tokens are recorded when the API reports them",
+  "rest_surface_evidence": "Google API discovery document v1beta, revision 20261008: models.generateContent exists; GenerationConfig has responseMimeType, responseSchema, maxOutputTokens, candidateCount, temperature. Per-model support for gemini-3.6-flash is NOT verified without a key.",
+  "max_output_tokens": 16384,
+  "timeout_s": 120,
+  "max_transient_retries_per_stage": 1,
+  "global_request_budget": 24,
+  "api_key_env": ["GEMINI_API_KEY", "GOOGLE_API_KEY"],
+  "chars_per_token_floor": 2.0,
+  "max_input_tokens_allowed": 100000,
+  "documented_limits": {
+    "input_tokens": 1048576,
+    "output_tokens": 65536,
+    "source": "https://ai.google.dev/gemini-api/docs/models/gemini-3.6-flash, read 2026-10-10 through a summarising fetch tool"
+  },
+  "pricing": "UNKNOWN - no verified rate was retrieved; costs are not estimated"
+}

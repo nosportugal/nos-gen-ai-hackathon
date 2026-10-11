@@ -1,0 +1,95 @@
+{
+  "policy_id": "nos-masking-policy",
+  "version": "1.0",
+  "status": "PROVISIONAL. Frozen for the internal benchmark on 2026-10-10. Not an official rule set: the organisers' materials define none of the items marked provisional below.",
+  "mask_symbol": "*",
+  "coordinates": "zero-based Python code-point offsets into the canonical source, half-open intervals [start, end)",
+  "official_rules": [
+    {
+      "rule": "Replace each anonymized word with a single asterisk; a two-word name becomes two asterisks.",
+      "source": "Challenge brief p.2, 'The core of the challenge', item 2",
+      "status": "VERIFIED"
+    },
+    {
+      "rule": "Keep the original formatting and meaning; the only change in layout is that empty lines are removed.",
+      "source": "Challenge brief p.2, item 3",
+      "status": "VERIFIED"
+    },
+    {
+      "rule": "A correct output starts with the four anchor lines below, unmasked.",
+      "source": "Challenge brief p.2, item 3",
+      "status": "VERIFIED"
+    }
+  ],
+  "verified_anchor_lines": [
+    "Relatório de Admissão - Centro Médico Lisboa",
+    "Data: 15 de abril de 2025",
+    "Referência: ADM-2025-04-15-089",
+    "Informações do Paciente:"
+  ],
+  "newline": {
+    "convention": "LF",
+    "final_newline": "optional and not significant; comparison is by line sequence",
+    "carriage_returns": "any CR in a candidate is a violation",
+    "status": "PROVISIONAL"
+  },
+  "blank_lines": {
+    "rule": "A line that is empty or contains only whitespace characters is removed. No other line is removed, joined or split.",
+    "status": "PROVISIONAL for whitespace-only lines (the brief says only 'empty lines')"
+  },
+  "whitespace": {
+    "rule": "Whitespace on retained lines is preserved exactly, including leading, repeated, tab and trailing whitespace.",
+    "pre_declared_diagnostic": "Each candidate is also checked with trailing whitespace ignored, because it is unknown whether the hidden reference keeps the line-end spaces that the PDF extraction emits. The strict result is the primary one.",
+    "status": "PROVISIONAL"
+  },
+  "word_rule": {
+    "status": "PROVISIONAL",
+    "definition": "A word is a maximal run of non-whitespace characters containing at least one letter or digit. A run with no letter or digit (for example a lone hyphen) is punctuation and is never masked.",
+    "open_punctuation": "([{\"'«“‘",
+    "close_punctuation": ")]}\"'»”’,;:!?.",
+    "surrounding_punctuation": "Opening punctuation at the start of a word and closing punctuation at its end are kept when the word is masked.",
+    "internal_characters": "Everything between them is the word's core and is replaced by one asterisk: internal hyphens, slashes, dots, commas, at-signs, plus signs, currency signs and unit suffixes.",
+    "consequences": {
+      "hyphens": "12345678-9ZX0 -> * ; Ex-fumante -> *",
+      "emails": "nome@exemplo.pt -> *",
+      "spaced_numbers": "one asterisk per whitespace-separated group: +351 912 345 678 -> * * * *",
+      "unspaced_numbers": "+351961234567 -> *",
+      "dates": "12/03/1978 -> * ; a date written as several words needs one asterisk per masked word",
+      "attached_punctuation": "Santos, -> *, ; (João, -> (*, ; 123) -> *)",
+      "existing_asterisks": "an asterisk already in the source is ordinary content and is preserved; a token consisting only of asterisks is not a word"
+    },
+    "agent_text": "A word is a maximal run of characters with no whitespace inside. To mask a word, replace it with exactly one asterisk (*), but keep any opening punctuation ( [ { \" ' « at its start and any closing punctuation ) ] } \" ' » , ; : ! ? . at its end. Hyphens, slashes, dots, at-signs, plus signs, currency signs and units inside the word are part of the word and disappear with it. A value written as several space-separated groups (for example a phone or card number in four groups) needs one asterisk per group. Never output two asterisks for one word and never merge two words into one asterisk."
+  },
+  "ambiguity_rule": {
+    "status": "PROVISIONAL",
+    "render_ambiguous_as": "KEEP",
+    "text": "Values in an AMBIGUOUS category are recorded by ledger agents with decision AMBIGUOUS and are rendered unmasked. They never block rendering. In the reference they are excluded from the primary accuracy denominators and reported separately."
+  },
+  "categories": {
+    "MASK": [
+      {"id": "PERSON_NAME", "description": "Given names and surnames of any natural person (patient, relatives, contacts, staff): every word of the name, including particles inside it and short forms used later. Titles (Dr., Sra.) and relationship words (irmão, mãe) are not part of the name."},
+      {"id": "BIRTH_DATE", "description": "A person's date of birth."},
+      {"id": "GOV_ID", "description": "Government or administrative identifiers of a person: tax number, citizen or identity card, social security number, health-user number, passport."},
+      {"id": "PROFESSIONAL_ID", "description": "Professional licence or registration number of a named person."},
+      {"id": "ADDRESS", "description": "Every word of a person's home or postal address value: street, door number, unit, postal code, locality and city."},
+      {"id": "PHONE", "description": "Telephone numbers of a person."},
+      {"id": "EMAIL", "description": "E-mail addresses of a person."},
+      {"id": "FINANCIAL_ID", "description": "Payment card number, card expiry and security code, bank account or IBAN, insurance policy number."},
+      {"id": "BIOMETRIC_ID", "description": "Identifiers of stored biometric records such as fingerprint or face template IDs."}
+    ],
+    "AMBIGUOUS": [
+      {"id": "HEALTH", "description": "Symptoms, diagnoses, family medical history, genetic findings, medication and doses, requested exams and clinical measurements (height, weight, blood type, blood pressure)."},
+      {"id": "DEMOGRAPHIC", "description": "Sex, ethnicity, age values, marital status, religion, number of children."},
+      {"id": "OCCUPATION", "description": "Occupation, employer and professional specialty."},
+      {"id": "FINANCIAL_ATTRIBUTE", "description": "Income and insurance plan name."},
+      {"id": "LIFESTYLE", "description": "Habits and substance use."},
+      {"id": "DATE_OTHER", "description": "Years, dates or durations of clinical or life events that are neither a birth date nor the document date."}
+    ],
+    "KEEP": [
+      {"id": "DOCUMENT_METADATA", "description": "Document title, issuing institution name, document date and document reference number."},
+      {"id": "STRUCTURE", "description": "Section headings and field labels."},
+      {"id": "NARRATIVE", "description": "All other words: titles, relationship words, units, connecting text."}
+    ]
+  },
+  "scope_note": "Which categories the hidden reference masks is UNVERIFIED. Version 1.0 masks direct identifiers and contact, financial and biometric identifiers, and records special-category and quasi-identifying attributes as AMBIGUOUS without masking them. An earlier draft of the document stored in the organisers' notebook lists a broader set as sensitive; that is a hint from a different document version, not a rule."
+}

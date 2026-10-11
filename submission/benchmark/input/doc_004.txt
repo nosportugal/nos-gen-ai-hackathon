@@ -1,0 +1,35 @@
+FORMULÁRIO DE CANDIDATURA — Instituto Português do Desporto e Juventude
+Data do documento: 05/05/2026    |    Referência: REF-2026-0004
+
+Nome do titular: Rui Miguel Costa
+Profissão: técnico de laboratório
+Morada de contacto: Rua dos Limoeiros, 48, 2780-102 Oeiras
+Telefone: +351 91 004 48 76    Email: rui.miguel.costa@example.org
+Identificador fiscal: 100000004
+Entidade responsável: Instituto Português do Desporto e Juventude
+
+Campo                         | Valor
+------------------------------+--------------------------------
+Processo                       | REF-2026-0004
+Data de registo                | 05/09/2026
+Valor administrativo          | 152,40 EUR
+
+O documento foi revisto por Pedro Henrique Gomes e posteriormente confirmado por Rui.
+Nota interna: Rui enviou os documentos por correio eletrónico.
+A data 05/09/2026 corresponde ao processamento do pedido e não à data de nascimento.
+Rede social indicada: @rui_miguel_costa4; perfil público da instituição: @instituicao_oficial.
+IBAN associado ao titular: PT50 0002 0123 1234 5678 9015 4.
+O nome da cidade do Porto é aqui uma localização institucional e deve permanecer visível.
+O nome Instituto Português do Desporto e Juventude refere-se a uma organização, não à identidade do titular.
+O número REF-2026-0004 é uma referência de processo não pessoal nesta política.
+Endereço de correspondência repetido: Rua dos Limoeiros, 48, 2780-102 Oeiras.
+Contacto secundário: Pedro Henrique Gomes (irmão).
+
+Observações complementares:
+A entidade responsável recebeu o pedido e confirmou que a documentação apresentada seria analisada no prazo habitual.
+O conteúdo deste registo descreve factos administrativos e deve continuar legível depois de removidos os identificadores pessoais.
+Durante o contacto posterior, Rui solicitou uma cópia para arquivo e confirmou que a morada indicada continua atual.
+
+  Item	Estado	Comentário
+  A	OK	--
+  B	Pendente	...

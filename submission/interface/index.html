@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Anonymizing Tool</title>
+<style>
+:root {
+  --bg: #000000;
+  --panel: #ffffff;
+  --panel-ink: #111111;
+  --panel-muted: #6b6b6b;
+  --panel-line: #e4e4e4;
+  --ink: #ededed;
+  --muted: #8c8c8c;
+  --line: #262626;
+  --mark-bg: #000000;
+  --mark-ink: #ffffff;
+  color-scheme: dark;
+}
+:root[data-theme="light"] {
+  --bg: #ffffff;
+  --ink: #111111;
+  --muted: #6b6b6b;
+  --line: #e4e4e4;
+  --panel: #000000;
+  --panel-ink: #ededed;
+  --panel-muted: #8c8c8c;
+  --panel-line: #262626;
+  --mark-bg: #ffffff;
+  --mark-ink: #000000;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html { background: var(--bg); }
+body {
+  margin: 0; min-height: 100vh;
+  background: var(--bg); color: var(--ink);
+  font: 15px/1.6 ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  padding: 0 1.5rem 3rem;
+  -webkit-font-smoothing: antialiased;
+}
+main { max-width: 70rem; margin: 0 auto; }
+header { padding: 5rem 0 3rem; max-width: 42rem; }
+h1 {
+  font-size: clamp(1.9rem, 4.5vw, 3rem); font-weight: 600;
+  line-height: 1.1; letter-spacing: -.04em; margin: 0 0 1rem;
+}
+header p { margin: 0; color: var(--muted); font-size: 1.15rem; max-width: 34rem; }
+.panels { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+section {
+  background: var(--panel); color: var(--panel-ink);
+  border-radius: 10px; overflow: hidden; min-width: 0;
+}
+section h2 {
+  margin: 0; padding: .85rem 1.25rem; font-size: .85rem; font-weight: 500;
+  color: var(--panel-muted); border-bottom: 1px solid var(--panel-line);
+}
+pre {
+  margin: 0; padding: 1.25rem;
+  font: .85rem/1.8 ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  white-space: pre-wrap; overflow-wrap: anywhere;
+}
+mark {
+  background: var(--mark-bg); color: var(--mark-ink);
+  padding: .05em .25em; border-radius: 0;
+}
+.m {
+  display: inline-block; min-width: 1.4em; text-align: center;
+  background: var(--mark-bg); color: var(--mark-ink);
+  line-height: 1.3; border-radius: 0; font-weight: 700;
+}
+.note { margin: 1.25rem 0 0; color: var(--muted); font-size: .9rem; }
+footer {
+  margin-top: 3rem; padding-top: 1.25rem; border-top: 1px solid var(--line);
+  color: var(--muted); font-size: .85rem;
+}
+button {
+  font: inherit; font-size: .85rem; color: var(--ink); background: transparent;
+  border: 1px solid var(--line); border-radius: 10px;
+  padding: .4rem .9rem; cursor: pointer;
+}
+button:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+.bar { display: flex; justify-content: flex-end; padding-top: 1.5rem; }
+@media (max-width: 720px) {
+  header { padding: 3rem 0 2rem; }
+  .panels { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<main>
+<div class="bar"><button id="theme" type="button">Change theme</button></div>
+
+<header>
+<h1>Your data, Without a Trace.</h1>
+<p>The Anonymizer removes sensitive information while preserving everything else.</p>
+</header>
+
+<div class="panels">
+<section aria-labelledby="orig">
+<h2 id="orig">Original</h2>
+<pre id="original">Loading...</pre>
+</section>
+
+<section aria-labelledby="anon">
+<h2 id="anon">Anonymized</h2>
+<pre id="anonymized">Loading...</pre>
+</section>
+</div>
+
+<p class="note" id="status">Extracted PDF text on the left. Anonymized and privacy-protected text on the right.</p>
+
+<footer>
+Made with Gemini API (Google) and PyMuPDF. NOS Gen-AI Hackathon, JunctionX Lisbon 2026.
+</footer>
+</main>
+
+<script>
+// Files are loaded next to this page: submission/interface/index.html reads
+// submission/raw_uncensored_document.txt and submission/submission.txt.
+// Serve the repository with:  python -m http.server   (from the repo root)
+var ORIGINAL_URL = "../raw_uncensored_document.txt";
+var SUBMISSION_URL = "../submission.txt";
+
+// BEGIN CORE (pure functions, no DOM)
+function nonEmptyLines(text) {
+  return text.split(/\r?\n/).filter(function (l) { return l.trim() !== ""; });
+}
+
+// Pair original and anonymized lines. A word is highlighted when the
+// anonymized word contains "*" and differs from the original word. A line
+// whose word count differs is shown without highlights.
+function alignLines(original, submission) {
+  var o = nonEmptyLines(original);
+  var s = nonEmptyLines(submission);
+  var result = { lines: [], aligned: 0, total: o.length, lineMismatch: false };
+  if (o.length !== s.length) {
+    result.lineMismatch = true;
+    o.forEach(function (l) {
+      result.lines.push([{ text: l.replace(/\s+$/, ""), masked: false }]);
+    });
+    return result;
+  }
+  o.forEach(function (orig, i) {
+    var parts = orig.replace(/\s+$/, "").split(/(\s+)/);
+    var oWords = orig.trim().split(/\s+/);
+    var sWords = s[i].trim().split(/\s+/);
+    if (oWords.length !== sWords.length) {
+      result.lines.push([{ text: orig.replace(/\s+$/, ""), masked: false }]);
+      return;
+    }
+    var idx = 0;
+    result.aligned += 1;
+    result.lines.push(parts.map(function (part) {
+      if (part.trim() === "") { return { text: part, masked: false }; }
+      var sw = sWords[idx];
+      idx += 1;
+      return { text: part, masked: sw.indexOf("*") !== -1 && part !== sw };
+    }));
+  });
+  return result;
+}
+// END CORE
+
+function showOriginal(result) {
+  var pre = document.getElementById("original");
+  pre.textContent = "";
+  result.lines.forEach(function (segs, i) {
+    segs.forEach(function (seg) {
+      if (seg.masked) {
+        var mark = document.createElement("mark");
+        mark.textContent = seg.text;
+        pre.appendChild(mark);
+      } else {
+        pre.appendChild(document.createTextNode(seg.text));
+      }
+    });
+    if (i < result.lines.length - 1) { pre.appendChild(document.createTextNode("\n")); }
+  });
+}
+
+function showAnonymized(text) {
+  var pre = document.getElementById("anonymized");
+  pre.textContent = "";
+  text.replace(/\s+$/, "").split("*").forEach(function (chunk, i) {
+    if (i > 0) {
+      var span = document.createElement("span");
+      span.className = "m";
+      span.textContent = "*";
+      pre.appendChild(span);
+    }
+    pre.appendChild(document.createTextNode(chunk));
+  });
+}
+
+function fail(message) {
+  document.getElementById("original").textContent = "";
+  document.getElementById("anonymized").textContent = "";
+  document.getElementById("status").textContent = message;
+}
+
+function load(url) {
+  return fetch(url, { cache: "no-store" }).then(function (r) {
+    if (!r.ok) { throw new Error(url + " (HTTP " + r.status + ")"); }
+    return r.text();
+  });
+}
+
+function main() {
+  if (location.protocol === "file:") {
+    fail("This page cannot read files when opened directly. From the " +
+      "repository root run: python -m http.server  and open " +
+      "http://localhost:8000/submission/interface/");
+    return;
+  }
+  Promise.all([load(ORIGINAL_URL), load(SUBMISSION_URL)]).then(function (t) {
+    if (!t[0].trim()) { throw new Error("raw_uncensored_document.txt is empty. Run: python -m agent"); }
+    if (!t[1].trim()) { throw new Error("submission.txt is empty. Run: python -m agent"); }
+    var result = alignLines(t[0], t[1]);
+    showOriginal(result);
+    showAnonymized(t[1]);
+    var masked = (t[1].match(/\*/g) || []).length;
+    var note = masked + " words masked. " + result.aligned + " of " +
+      result.total + " lines aligned.";
+    if (result.lineMismatch) { note += " Line counts differ: no highlights."; }
+    document.getElementById("status").textContent = note;
+  }).catch(function (err) {
+    fail("Could not load: " + err.message);
+  });
+}
+
+var root = document.documentElement;
+document.getElementById("theme").addEventListener("click", function () {
+  root.dataset.theme = root.dataset.theme === "light" ? "dark" : "light";
+});
+main();
+</script>
+</body>
+</html>

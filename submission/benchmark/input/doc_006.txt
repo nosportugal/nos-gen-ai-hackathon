@@ -1,0 +1,32 @@
+FICHA DE FILIAÇÃO POLÍTICA — Banco de Portugal
+Data do documento: 07/07/2026    |    Referência: REF-2026-0006
+
+Nome do titular: Tiago Manuel Ribeiro
+Profissão: professora
+Morada de contacto: Rua da Liberdade, 27, 3000-120 Coimbra
+Telefone: +351 91 006 22 14    Email: tiago.manuel.ribeiro@example.org
+Identificador fiscal: 100000006
+Entidade responsável: Banco de Portugal
+
+Campo                         | Valor
+------------------------------+--------------------------------
+Processo                       | REF-2026-0006
+Data de registo                | 07/09/2026
+Valor administrativo          | 178,40 EUR
+
+O nome da cidade do Porto é aqui uma localização institucional e deve permanecer visível.
+O registo não autoriza a divulgação de contactos a outras entidades.
+Pessoa associada à filiação: Tiago Manuel Ribeiro.
+Endereço de correspondência repetido: Rua da Liberdade, 27, 3000-120 Coimbra.
+A data 07/09/2026 corresponde ao processamento do pedido e não à data de nascimento.
+Nota interna: Tiago enviou os documentos por correio eletrónico.
+Rede social indicada: @tiago_manuel_ribeiro6; perfil público da instituição: @instituicao_oficial.
+O número REF-2026-0006 é uma referência de processo não pessoal nesta política.
+
+Observações complementares:
+A adesão é voluntária e foi registada apenas para fins administrativos internos. A orientação política associada à pessoa é um dado particularmente sensível.
+O nome da organização é mantido como contexto, mas a ligação nominal entre a pessoa e a filiação é protegida neste benchmark.
+Na mensagem de confirmação, Tiago pediu que os seus contactos não fossem partilhados com terceiros.
+
+   
+  Nota de rodapé: verificar o registo.  

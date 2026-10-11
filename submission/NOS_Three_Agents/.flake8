@@ -1,0 +1,4 @@
+[flake8]
+# Default rules and the default 79-column limit, as in the competition's
+# lint workflow. Only third-party and reference folders are skipped.
+exclude = .venv,references,runs,input,__pycache__

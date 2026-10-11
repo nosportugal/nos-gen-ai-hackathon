@@ -1,0 +1,29 @@
+POLITICAL MEMBERSHIP FORM — University of Manchester
+Document date: 20/11/2026    |    Reference: REF-2026-0046
+
+Subject name: William Parker
+Occupation: researcher
+Contact address: 7 Harbour Road, Dublin D02 KX31
+Phone: +44 7700 000046    Email: william.parker@example.org
+Tax identifier: QQ000046C
+Responsible organisation: University of Manchester
+
+Field                         | Value
+------------------------------+--------------------------------
+Case number                   | REF-2026-0046
+Processing date               | 21/09/2026
+Administrative amount         | GBP 698.40
+
+Affiliated organisation: Labour Party.
+Repeated mailing address: 7 Harbour Road, Dublin D02 KX31.
+Registered member: William Parker.
+The record was reviewed by Noah Thompson and later confirmed by William.
+The date 21/09/2026 is a processing date, not a date of birth.
+Social media username: @william_parker46; organisation profile: @official_organisation.
+The member did not consent to public disclosure of contact details.
+Internal note: William submitted the requested forms by email.
+
+Additional observations:
+Membership was recorded voluntarily for internal administration. The link between a named individual and political affiliation is sensitive.
+The organisation name is preserved as context, while identifying details of the member are masked.
+In a confirmation email, William requested that personal contact details not be shared.

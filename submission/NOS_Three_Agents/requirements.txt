@@ -1,0 +1,6 @@
+# Tested on Python 3.11.9 (Windows 11), 2026-10-10.
+# Runtime: only PyMuPDF. The Gemini adapter uses the standard library.
+PyMuPDF==1.27.2.3
+# Tests and lint (the competition's lint workflow runs flake8 defaults).
+pytest==9.1.1
+flake8==7.4.1

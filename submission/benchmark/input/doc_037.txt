@@ -1,0 +1,30 @@
+RELATÓRIO DE FISIOTERAPIA — Instituto Português do Desporto e Juventude
+Data do documento: 11/02/2026    |    Referência: REF-2026-0037
+
+Nome do titular: David Tavares
+Profissão: professora
+Morada de contacto: Rua da Liberdade, 27, 3000-120 Coimbra
+Telefone: +351 91 037 69 03    Email: david.tavares@example.org
+Identificador fiscal: 100000037
+Entidade responsável: Instituto Português do Desporto e Juventude
+
+Campo                         | Valor
+------------------------------+--------------------------------
+Processo                       | REF-2026-0037
+Data de registo                | 12/09/2026
+Valor administrativo          | 581,40 EUR
+
+O documento foi revisto por Beatriz Sousa e posteriormente confirmado por David.
+A evolução foi considerada favorável e foi recomendado acompanhamento regular.
+IBAN associado ao titular: PT50 0002 0123 1234 5678 9015 4.
+Endereço de correspondência repetido: Rua da Liberdade, 27, 3000-120 Coimbra.
+Rede social indicada: @david_tavares37; perfil público da instituição: @instituicao_oficial.
+O número REF-2026-0037 é uma referência de processo não pessoal nesta política.
+Nota interna: David enviou os documentos por correio eletrónico.
+Profissional responsável: Beatriz Sousa.
+O nome Instituto Português do Desporto e Juventude refere-se a uma organização, não à identidade do titular.
+
+Observações complementares:
+A consulta decorreu sem intercorrências. A equipa registou os sinais vitais, explicou os procedimentos e entregou recomendações gerais de acompanhamento.
+A informação relativa ao diagnóstico é relevante para o tratamento e não constitui, por si só, um identificador pessoal nesta política de teste.
+Na nota de seguimento, David confirmou ter compreendido as indicações. O registo administrativo foi atualizado sem alterar a data do episódio.

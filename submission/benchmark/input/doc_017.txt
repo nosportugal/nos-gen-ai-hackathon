@@ -1,0 +1,30 @@
+RELATÓRIO DE FISIOTERAPIA — Banco de Portugal
+Data do documento: 18/06/2026    |    Referência: REF-2026-0017
+
+Nome do titular: Ricardo Nunes
+Profissão: engenheiro informático
+Morada de contacto: Avenida da República, 732, 4430-190 Vila Nova de Gaia
+Telefone: +351 91 017 29 23    Email: ricardo.nunes@example.org
+Identificador fiscal: 100000017
+Entidade responsável: Banco de Portugal
+
+Campo                         | Valor
+------------------------------+--------------------------------
+Processo                       | REF-2026-0017
+Data de registo                | 18/09/2026
+Valor administrativo          | 321,40 EUR
+
+Rede social indicada: @ricardo_nunes17; perfil público da instituição: @instituicao_oficial.
+O número REF-2026-0017 é uma referência de processo não pessoal nesta política.
+IBAN associado ao titular: PT50 0002 0123 1234 5678 9015 4.
+A evolução foi considerada favorável e foi recomendado acompanhamento regular.
+Profissional responsável: Vasco Fernandes.
+O nome Banco de Portugal refere-se a uma organização, não à identidade do titular.
+Nota interna: Ricardo enviou os documentos por correio eletrónico.
+Diagnóstico: entorse do tornozelo.
+Endereço de correspondência repetido: Avenida da República, 732, 4430-190 Vila Nova de Gaia.
+
+Observações complementares:
+A consulta decorreu sem intercorrências. A equipa registou os sinais vitais, explicou os procedimentos e entregou recomendações gerais de acompanhamento.
+A informação relativa ao diagnóstico é relevante para o tratamento e não constitui, por si só, um identificador pessoal nesta política de teste.
+Na nota de seguimento, Ricardo confirmou ter compreendido as indicações. O registo administrativo foi atualizado sem alterar a data do episódio.

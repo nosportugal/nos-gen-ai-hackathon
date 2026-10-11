@@ -1,0 +1,7 @@
+# agent/ and benchmark/ (install from submission/: pip install -r requirements.txt)
+PyMuPDF==1.27.2.3
+langchain-core==1.6.9
+langchain-google-genai==4.4.1
+langchain-openai==1.7.0
+pytest==9.1.1
+flake8==7.4.1

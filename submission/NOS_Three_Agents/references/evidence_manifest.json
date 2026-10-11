@@ -1,0 +1,65 @@
+{
+  "generated_utc": "2026-10-10T14:59:42+00:00",
+  "official_downloads": [
+    {
+      "role": "event challenge brief (NOT the document to anonymize)",
+      "url": "https://lisbon.hackjunction.com/assets/challenges/NOS%20-%20JunctionX%20Lisbon%202026.pdf",
+      "http_status": 200,
+      "last_modified": "Fri, 09 Oct 2026 11:30:58 GMT",
+      "download_status": "DOWNLOADED",
+      "path": "references/official/NOS - JunctionX Lisbon 2026.pdf",
+      "size_bytes": 125289,
+      "sha256": "32d95aa8b2cdbf7e226422e28f71841f681992ae72248fcfcd712340776055b1",
+      "is_pdf": true,
+      "pages": 5,
+      "pdf_title": "The *-Files: Call for Anonymizing Prompts",
+      "pdf_author": "NOS",
+      "pdf_creator": "Typst 0.15.1",
+      "pdf_created": "D:20261008091953+01'00"
+    },
+    {
+      "role": "event regulations",
+      "url": "https://lisbon.hackjunction.com/assets/JunctionX%20Lisbon%202026%20-%20Official%20Regulations.pdf",
+      "http_status": 200,
+      "last_modified": "Fri, 09 Oct 2026 11:30:58 GMT",
+      "download_status": "DOWNLOADED",
+      "path": "references/official/JunctionX Lisbon 2026 - Official Regulations.pdf",
+      "size_bytes": 227500,
+      "sha256": "c7715ec22bb25fb75559cacb1e96fb7dcfc073c7b867c8177c351c38f0f014ae",
+      "is_pdf": true,
+      "pages": 6,
+      "pdf_title": "",
+      "pdf_author": "",
+      "pdf_creator": "OpenAI Prism",
+      "pdf_created": "D:20260921084727Z"
+    }
+  ],
+  "repository": {
+    "url": "https://github.com/nosportugal/nos-gen-ai-hackathon",
+    "status": "CLONED",
+    "checked_out_branch": "main",
+    "head_commit": "c4995b0400232bdbff5343190a3409e615fb924d",
+    "head_commit_date": "2025-05-07T22:59:17+01:00",
+    "origin_main": "c4995b0400232bdbff5343190a3409e615fb924d",
+    "origin_junctionx_branch": "3c90e7e5deb833de8412dd369b990c44aef6cb7e",
+    "working_tree_dirty_files": 0,
+    "note": "main is the default branch teams fork; the JunctionX edits live on the unmerged branch junctionx-lisbon-readme (pull request 36)."
+  },
+  "target_document": {
+    "role": "document to anonymize (the actual target)",
+    "source": "https://github.com/nosportugal/nos-gen-ai-hackathon raw_data/document_to_anonymize.pdf",
+    "status": "COPIED_FROM_CHECKOUT",
+    "path": "input/original/document_to_anonymize.pdf",
+    "size_bytes": 68002,
+    "sha256": "ea79a07011b68dc97fb6f728153de1f4326f714cf747a7d76fc9c2afe6672d77",
+    "is_pdf": true,
+    "pages": 2,
+    "pdf_title": "",
+    "pdf_author": "João Pedro Raimundo",
+    "pdf_creator": "Microsoft® Word for Microsoft 365",
+    "pdf_created": "D:20250506175100+01'00'",
+    "identical_to_checkout_file": true,
+    "git_blob_main": "940537534f813b118dc833f07f9f30d3ddfef0c0",
+    "git_blob_junctionx_branch": "940537534f813b118dc833f07f9f30d3ddfef0c0"
+  }
+}
