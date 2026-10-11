@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>REDACTOR // Censor personal data</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Share+Tech+Mono&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="grid-floor"></div>
+  <div class="scanlines"></div>
+
+  <nav class="nav">
+    <div class="logo"><span class="logo-mark">R</span><span class="logo-text">REDACTOR<em>_</em></span></div>
+    <span class="pill"><i class="led"></i>SYS ONLINE // NOTHING STORED // DETECTION BY GEMINI</span>
+  </nav>
+
+  <header class="hero">
+    <p class="kicker">&gt; PRIVACY PROTOCOL v1.0</p>
+    <h1 data-text="CENSOR PERSONAL DATA">CENSOR PERSONAL DATA<br><span class="grad">IN SECONDS</span></h1>
+    <p class="sub">Feed it a PDF, Word, text or image file (scans and photos too). Get the same format back with names, contacts, IDs and financial details wiped.</p>
+  </header>
+
+  <main>
+    <section id="upload" class="card">
+      <div id="drop" class="drop" tabindex="0" role="button" aria-label="Drop a file here or press Enter to choose one">
+        <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+        <input id="file" type="file" accept=".pdf,.docx,.txt,.png,.jpg,.jpeg" hidden>
+        <div class="drop-icon">
+          <svg viewBox="0 0 24 24" width="44" height="44" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="square"><path d="M12 17V4m0 0 5 5m-5-5L7 9"/><path d="M3 15v5h18v-5"/></svg>
+        </div>
+        <h2 class="drop-title">DROP FILE HERE</h2>
+        <p class="or"><span>OR</span></p>
+        <button id="browse" class="btn primary" type="button">UPLOAD FROM DEVICE</button>
+        <div class="types"><span class="tag pdf">PDF</span><span class="tag doc">DOCX</span><span class="tag txt">TXT</span><span class="tag img">PNG / JPG</span><small>MAX 10 MB</small></div>
+      </div>
+
+      <fieldset class="keep">
+        <legend>KEEP VISIBLE (OPTIONAL)</legend>
+        <div class="checks">
+          <label><input type="checkbox" value="name"> Names and places</label>
+          <label><input type="checkbox" value="date"> Dates</label>
+          <label><input type="checkbox" value="number"> Numbers and IDs</label>
+          <label><input type="checkbox" value="email"> E-mails</label>
+          <label><input type="checkbox" value="visual"> Faces and signatures (images)</label>
+        </div>
+        <input id="keepTerms" type="text" maxlength="500" placeholder="Specific words to keep, separated by commas (e.g. Lisboa, Maria Silva)" aria-label="Words to keep">
+      </fieldset>
+
+      <div id="progress" class="progress" hidden>
+        <div class="spinner"></div>
+        <div><strong id="pname"></strong><p>SCANNING AND CENSORING PERSONAL DATA<span class="blink">_</span></p></div>
+      </div>
+      <p id="error" class="error" role="alert" hidden></p>
+    </section>
+
+    <section id="result" hidden>
+      <div class="card summary">
+        <div class="file-info">
+          <div id="ficon" class="ficon">PDF</div>
+          <div>
+            <strong id="fname"></strong>
+            <p><span id="count" class="badge"></span> <span class="muted" id="fsize"></span></p>
+          </div>
+        </div>
+        <div class="actions">
+          <a id="download" class="btn primary">DOWNLOAD CENSORED FILE</a>
+          <button id="reset" class="btn ghost" type="button">UPLOAD ANOTHER</button>
+        </div>
+      </div>
+
+      <div class="panes">
+        <div class="card pane"><h3><span class="dot"></span>ORIGINAL</h3><pre id="original"></pre><img id="origImg" class="pimg" alt="Original image" hidden></div>
+        <div class="card pane"><h3><span class="dot ok"></span>CENSORED</h3><pre id="censored"></pre><img id="cenImg" class="pimg" alt="Censored image" hidden></div>
+      </div>
+    </section>
+
+    <section class="features">
+      <div class="feat"><span class="num">01</span><strong>Same format back</strong><p>PDF in, PDF out. Word in, Word out. Tables and layout stay.</p></div>
+      <div class="feat"><span class="num">02</span><strong>Private by design</strong><p>Nothing is stored. Sensitive words are removed from the file itself.</p></div>
+      <div class="feat"><span class="num">03</span><strong>Review before download</strong><p>Compare original and censored side by side.</p></div>
+    </section>
+  </main>
+
+  <footer>NOS GEN-AI HACKATHON // REDACTOR</footer>
+  <script src="/app.js"></script>
+</body>
+</html>

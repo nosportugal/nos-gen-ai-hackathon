@@ -24,17 +24,17 @@ You'll need an active Google account to access Google AI tools at [Create a Goog
 To generate your API key:
 
 a. Go to [Google AI Studio](https://aistudio.google.com/) and log in with your Google account.  
-b. Click on the **‚ÄúGet API Key‚Äù** button.  
-c. Select **‚ÄúCreate API key‚Äù** (or **‚ÄúCriar chave de API‚Äù** if in Portuguese).  
-d. A window will open where you‚Äôll create an API key under a new project.  
-e. **Important:** Save the generated API key in a safe place ‚Äî you'll need it later!
+b. Click on the **ìGet API Keyî** button.  
+c. Select **ìCreate API keyî** (or **ìCriar chave de APIî** if in Portuguese).  
+d. A window will open where youíll create an API key under a new project.  
+e. **Important:** Save the generated API key in a safe place ó you'll need it later!
 
 ## 2. Setup
 In this section, we'll walk you through the essential setup steps needed to get started with your project. Follow these instructions carefully!
 
 ### 2.1. Git tutorial
 
-If you're new to Git, it‚Äôs important to understand how to manage your code effectively. To help you get started, we have provided a Git tutorial at [Git Tutorial](tutorials/git_tutorial.md). This tutorial will guide you through the fundamental concepts and commands you'll need to commit your changes and collaborate with your team.
+If you're new to Git, itís important to understand how to manage your code effectively. To help you get started, we have provided a Git tutorial at [Git Tutorial](tutorials/git_tutorial.md). This tutorial will guide you through the fundamental concepts and commands you'll need to commit your changes and collaborate with your team.
 
 ## 3. Utils
 
@@ -53,3 +53,30 @@ Converting PDF documents to text can be essential for leveraging existing conten
 
 In this section, we will outline the expectations for project submission. Understanding these guidelines is crucial to ensure your work is evaluated correctly. There are specific methods and criteria for submission, which you should follow closely to enhance your chances of success. Make sure to read through the following points carefully.
 For more detailed information on the submission process and what is expected, please refer to the [Submission Process Guide](submission/README.md).
+
+## 5. Web App (Redactor)
+
+Interactive front end (HTML/CSS/JS) + small Python server. Upload a PDF, DOCX, TXT, PNG or JPG file (scans and photos are OCR'd and blacked out) and get the same format back with personal data censored (each sensitive word becomes `*`).
+
+```bash
+pip install -r submission/app/requirements.txt
+copy submission\app\.env.example submission\app\.env   # then put your Gemini API key in submission\app\.env (git-ignored, never commit it)
+python submission/app/server.py
+# open http://127.0.0.1:8000
+```
+
+- `submission/app/llm.py` - Gemini detector: a prompt-engineered (system prompt + few-shot example) call that returns the exact sensitive strings; temperature 0, JSON schema output
+- `submission/app/anonymizer.py` - masks the strings Gemini returns (one `*` per word) per format; falls back to built-in regex rules if Gemini is unavailable
+- `submission/app/server.py` - static files + `POST /api/anonymize` (max 10 MB, nothing is stored; detection calls the Gemini API)
+- `submission/app/static/` - drag & drop UI with original vs censored preview and download
+
+Libraries: PyMuPDF (PDFs are redacted in place, so tables and layout are preserved; AGPL-licensed), python-docx, RapidOCR (local OCR for images and scanned PDFs).
+
+
+### Regenerating the hackathon submission
+
+```bash
+python submission/generate_submission.py   # needs GEMINI_API_KEY in submission/app/.env
+```
+
+Writes `submission/submission.txt` (the text to be evaluated) and `submission/anonymized_document.pdf` using the same Gemini pipeline as the web app. The exact prompt is in `submission/prompt.txt`.
