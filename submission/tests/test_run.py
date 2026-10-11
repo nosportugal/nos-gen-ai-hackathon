@@ -1,0 +1,66 @@
+import json
+
+import pytest
+
+import run
+from anonimizador.extract import extract_lines
+from anonimizador.prompt import build_prompt
+
+pytestmark = pytest.mark.skipif(
+    not run.DEFAULT_PDF.exists(), reason="official PDF missing"
+)
+
+
+def fake_generate(prompt, model, json_output, **kwargs):
+    """Mask only the patient's name, as a model would."""
+    assert json_output
+    lines = extract_lines(run.DEFAULT_PDF)
+    masked = [
+        "Nome: *" if line.startswith("Nome: Maria") else line
+        for line in lines
+    ]
+    entities = [{"text": "Maria Conceição Oliveira Santos",
+                 "category": "Pessoa", "article": "4.º",
+                 "reason": "Nome da paciente"}]
+    return json.dumps({"masked_lines": masked, "entities": entities})
+
+
+def test_run_writes_submission_prompt_and_log(tmp_path):
+    summary = run.run(out_dir=tmp_path, runs_dir=tmp_path / "runs",
+                      generate_fn=fake_generate)
+
+    submission = (tmp_path / "submission.txt").read_text(encoding="utf-8")
+    original = extract_lines(run.DEFAULT_PDF)
+    out_lines = submission.splitlines()
+    assert len(out_lines) == len(original)
+    assert "Nome: * * * *" in out_lines
+    assert out_lines[0] == original[0]
+
+    prompt = (tmp_path / "prompt.txt").read_text(encoding="utf-8")
+    assert prompt == build_prompt(original, "A")
+    for name in ("submission.txt", "prompt.txt"):
+        assert b"\r\n" not in (tmp_path / name).read_bytes()
+
+    logs = list((tmp_path / "runs").glob("*.json"))
+    assert len(logs) == 1
+    assert summary["lines"] == len(original)
+    texts = [w["text"] for w in summary["masked_words"]]
+    assert texts[:4] == ["Maria", "Conceição", "Oliveira", "Santos"]
+    # The fake model only masks the name; the safety net catches the rest.
+    assert "12345678-9ZX0" in texts
+    assert "maria.santos@emailpessoal.pt" in texts
+    assert summary["safety_net_masks"] > 0
+
+
+def test_missing_output_folder_is_created(tmp_path):
+    out_dir = tmp_path / "novo" / "pasta"
+    run.run(out_dir=out_dir, runs_dir=tmp_path / "runs",
+            generate_fn=fake_generate)
+    assert (out_dir / "submission.txt").exists()
+
+
+def test_consecutive_runs_keep_separate_logs(tmp_path):
+    for _ in range(2):
+        run.run(out_dir=tmp_path, runs_dir=tmp_path / "runs",
+                generate_fn=fake_generate)
+    assert len(list((tmp_path / "runs").glob("*.json"))) == 2
