@@ -28,7 +28,6 @@ def extract_text_from_pdf(path: str) -> str:
     return text
 
 raw_text = extract_text_from_pdf(pdf_path)
-print(raw_text)
 
 
 
@@ -114,11 +113,10 @@ def main():
         system_instructions
         + "\n\n<document>\n" + raw_text + "\n</document>"
     )
-    print("Calling Gemini, this can take up to a minute...")
+
     output = generate_content(full_prompt, 0.0)
     masked_text = drop_empty_lines(strip_fences(get_response_text(output)))
 
-    print(masked_text)
     with open(output_path, "w", encoding="utf-8") as f:
         f.write(masked_text)
 
