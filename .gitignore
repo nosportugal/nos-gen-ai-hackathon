@@ -179,3 +179,16 @@ __pypackages__/
 # Pipfile.lock
 # poetry.lock
 # pdm.lock
+
+# macOS Finder metadata
+.DS_Store
+
+
+# Projeto CodingBros: ficheiros gerados localmente
+saida/
+
+# Frontend (Untrace)
+# A regra lib/ acima (pacotes Python) apanharia submission/src/frontend/src/lib
+!submission/src/frontend/src/lib/
+# O projeto usa bun.lock; o npm install cria este ficheiro localmente
+submission/src/frontend/package-lock.json
