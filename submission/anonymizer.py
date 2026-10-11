@@ -34,14 +34,39 @@ print(raw_text)
 
 def drop_empty_lines(text: str) -> str:
     """The only layout change allowed by the brief: remove empty lines."""
-1    lines = (line.rstrip() for line in text.splitlines())
-    return "\n".join(line for line in lines if line.strip()) 
+    # 1. Break the text into a list of lines
+    raw_lines = text.splitlines()
+    
+    # 2. Loop through and strip trailing whitespace from each line
+    rstripped_lines = []
+    for line in raw_lines:
+        rstripped_lines.append(line.rstrip())
+        
+    # 3. Filter out lines that are completely empty or just spaces
+    filtered_lines = []
+    for line in rstripped_lines:
+        if line.strip():
+            filtered_lines.append(line)
+            
+    # 4. Join the valid lines back together with newlines
+    return "\n".join(filtered_lines)
+
+
 
 def strip_fences(text: str) -> str:
     """Removes markdown code fences if the model adds them."""
-    lines = [ln for ln in text.splitlines()
-             if not ln.strip().startswith("```")]
-    return "\n".join(lines)
+    # 1. Break the text into a list of lines
+    raw_lines = text.splitlines()
+    
+    # 2. Loop through and keep lines that don't start with ```
+    filtered_lines = []
+    for line in raw_lines:
+        # Check if the line, ignoring leading spaces, starts with a fence
+        if not line.strip().startswith("```"):
+            filtered_lines.append(line)
+            
+    # 3. Join the remaining lines back together
+    return "\n".join(filtered_lines)
 
 
 def read_prompt_file(path: str) -> str:
